@@ -34,7 +34,7 @@ const uuid_1 = require("uuid");
 const types = __importStar(require("./types"));
 const axios_1 = __importDefault(require("axios"));
 const quick_lru_1 = __importDefault(require("quick-lru"));
-const CHATGPT_MODEL = "text-davinci-003";
+const CHATGPT_MODEL = "text-embedding-ada-002";
 const USER_LABEL_DEFAULT = "User";
 const ASSISTANT_LABEL_DEFAULT = "ChatGPT";
 class ChatGPTAPI {

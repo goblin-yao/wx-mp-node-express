@@ -18,12 +18,10 @@
         })
           .then((response) => response.json())
           .then((data) => {
-            debugger;
-            console.log(data);
+            console.log("success=>", data);
           })
           .catch((data) => {
-            debugger;
-            console.log(data);
+            console.log("error=>", data);
           });
       };
     </script>
