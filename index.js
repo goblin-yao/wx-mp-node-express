@@ -42,6 +42,18 @@ app.post("/api/chat", async (req, res) => {
   res.send(response);
 });
 
+app.get("/api/getModels", async (req, res) => {
+  const { question } = req.body;
+  // send a message and wait for the response
+  let response = {};
+  try {
+    response = await chatGPTapi.getModels(question);
+  } catch (error) {
+    response.error = error;
+  }
+  res.send(response);
+});
+
 const port = process.env.PORT || 80;
 
 async function bootstrap() {

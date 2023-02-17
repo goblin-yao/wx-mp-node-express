@@ -6,6 +6,7 @@
   <body>
     <p>question: <input id="question" value="1+1=?" /></p>
     <p><button id="submit">Submit</button></p>
+    <p><button id="getModels">getModels</button></p>
 
     <script>
       submit.onclick = function () {
@@ -19,6 +20,21 @@
           .then((response) => response.json())
           .then((data) => {
             console.log("success=>", data);
+          })
+          .catch((data) => {
+            console.log("error=>", data);
+          });
+      };
+      getModels.onclick = function () {
+        fetch("/api/getModels", {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            console.log("success models=>", data);
           })
           .catch((data) => {
             console.log("error=>", data);

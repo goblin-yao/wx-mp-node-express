@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
+    "compilets": "cd ./chatgptlib_src && tsc --watch",
     "dev": "nodemon --exec 'npm start'"
   },
   "author": "",
