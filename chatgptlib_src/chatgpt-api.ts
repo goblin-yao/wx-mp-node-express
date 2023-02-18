@@ -100,7 +100,7 @@ export class ChatGPTAPI {
 
     this._completionParams = {
       model: CHATGPT_MODEL,
-      temperature: 0.8,
+      temperature: 0.4, // 0.2 使用什么采样温度，介于 0 和 2 之间。较高的值（如 0.8）将使输出更加随机，而较低的值（如 0.2）将使输出更加集中和确定。
       top_p: 1.0,
       presence_penalty: 1.0,
       ...completionParams,
@@ -230,7 +230,6 @@ export class ChatGPTAPI {
               Authorization: `Bearer ${this._apiKey}`,
             },
           });
-          console.log("==>>", response);
           if (this._debug) {
             console.log(response);
           }
@@ -262,6 +261,8 @@ export class ChatGPTAPI {
           }
 
           result.detail = response.data;
+
+          console.log("==>result>", result);
 
           return resolve(result);
         } catch (error) {
@@ -426,7 +427,7 @@ Current date: ${currentDate}${this._sepToken}\n\n`;
   protected async _defaultUpsertMessage(
     message: types.ChatMessage
   ): Promise<void> {
-    console.log("upsertMessage", message.id, message);
+    console.log("==>upsertMessage>", message.id, message);
     await this._messageStore.set(message.id, message);
   }
 }
