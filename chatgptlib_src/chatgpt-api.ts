@@ -85,7 +85,7 @@ export class ChatGPTAPI {
       debug = false,
       messageStore,
       completionParams,
-      maxModelTokens = 4096,
+      maxModelTokens = 1024,//4096
       maxResponseTokens = 1000,
       userLabel = USER_LABEL_DEFAULT,
       assistantLabel = ASSISTANT_LABEL_DEFAULT,
