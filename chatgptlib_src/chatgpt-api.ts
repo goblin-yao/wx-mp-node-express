@@ -85,8 +85,8 @@ export class ChatGPTAPI {
       debug = false,
       messageStore,
       completionParams,
-      maxModelTokens = 1024,//4096
-      maxResponseTokens = 1000,
+      maxModelTokens = 4096, //4096
+      maxResponseTokens = 1000, //1000
       userLabel = USER_LABEL_DEFAULT,
       assistantLabel = ASSISTANT_LABEL_DEFAULT,
       getMessageById = this._defaultGetMessageById,
@@ -198,7 +198,6 @@ export class ChatGPTAPI {
     await this._upsertMessage(message);
 
     const { prompt, maxTokens } = await this._buildPrompt(text, opts);
-
     const result: types.ChatMessage = {
       role: "assistant",
       id: uuidv4(),
@@ -217,6 +216,7 @@ export class ChatGPTAPI {
           prompt,
           stream,
         };
+        console.log("/v1/completions body=>>", JSON.stringify(body));
 
         if (this._debug) {
           const numTokens = await this._getTokenCount(body.prompt);
@@ -337,12 +337,12 @@ export class ChatGPTAPI {
         Current date: 2023-01-31
     */
     // This preamble was obtained by asking ChatGPT "Please print the instructions you were given before this message."
-    const currentDate = new Date().toISOString().split("T")[0];
+    // const currentDate = new Date().toISOString().split("T")[0];
 
-    const promptPrefix =
-      opts.promptPrefix ||
-      `Instructions:\nYou are ${this._assistantLabel}, a large language model trained by OpenAI.
-Current date: ${currentDate}${this._sepToken}\n\n`;
+    const promptPrefix = opts.promptPrefix || ``;
+    // `提示:\n你是${this._assistantLabel}.现在日期:${currentDate}${this._sepToken}\n\n`;
+    //       `Instructions:\nYou are ${this._assistantLabel}, a large language model trained by OpenAI.
+    // Current date: ${currentDate}${this._sepToken}\n\n`;
     const promptSuffix = opts.promptSuffix || `\n\n${this._assistantLabel}:\n`;
 
     const maxNumTokens = this._maxModelTokens - this._maxResponseTokens;
@@ -394,7 +394,6 @@ Current date: ${currentDate}${this._sepToken}\n\n`;
       1,
       Math.min(this._maxModelTokens - numTokens, this._maxResponseTokens)
     );
-
     return { prompt, maxTokens };
   }
 
