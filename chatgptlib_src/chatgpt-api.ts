@@ -266,7 +266,7 @@ export class ChatGPTAPI {
 
           return resolve(result);
         } catch (error) {
-          console.log("error", error);
+          console.log("error=>", error);
           return reject({
             statusCode: error?.response?.status || -1,
             data: error?.response?.data || "服务内部错误",
