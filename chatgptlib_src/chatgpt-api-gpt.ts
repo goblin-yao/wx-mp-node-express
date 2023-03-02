@@ -227,9 +227,8 @@ export class ChatGPTAPITURBO {
             },
           });
 
-          if (this._debug) {
-            console.log(response);
-          }
+          console.log("response=>", response);
+
           if (200 != response.status) {
             const msg = `ChatGPT error ${
               response.status || response.statusText
