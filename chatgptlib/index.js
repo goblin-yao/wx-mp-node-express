@@ -15,5 +15,6 @@ var __exportStar = (this && this.__exportStar) || function(m, exports) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 __exportStar(require("./chatgpt-api"), exports);
+__exportStar(require("./chatgpt-api-gpt"), exports);
 __exportStar(require("./types"), exports);
-//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiaW5kZXguanMiLCJzb3VyY2VSb290IjoiIiwic291cmNlcyI6WyIuLi9jaGF0Z3B0bGliX3NyYy9pbmRleC50cyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiOzs7Ozs7Ozs7Ozs7Ozs7O0FBQUEsZ0RBQTZCO0FBQzdCLDBDQUF1QiIsInNvdXJjZXNDb250ZW50IjpbImV4cG9ydCAqIGZyb20gJy4vY2hhdGdwdC1hcGknXG5leHBvcnQgKiBmcm9tICcuL3R5cGVzJ1xuIl19
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiaW5kZXguanMiLCJzb3VyY2VSb290IjoiIiwic291cmNlcyI6WyIuLi9jaGF0Z3B0bGliX3NyYy9pbmRleC50cyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiOzs7Ozs7Ozs7Ozs7Ozs7O0FBQUEsZ0RBQThCO0FBQzlCLG9EQUFrQztBQUNsQywwQ0FBd0IiLCJzb3VyY2VzQ29udGVudCI6WyJleHBvcnQgKiBmcm9tIFwiLi9jaGF0Z3B0LWFwaVwiO1xuZXhwb3J0ICogZnJvbSBcIi4vY2hhdGdwdC1hcGktZ3B0XCI7XG5leHBvcnQgKiBmcm9tIFwiLi90eXBlc1wiO1xuIl19

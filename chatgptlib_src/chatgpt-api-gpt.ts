@@ -9,12 +9,12 @@ import axios from "axios";
 import QuickLRU from "quick-lru";
 
 import {
-  CHATGPT_MODEL,
+  CHATGPT_MODEL_GPT,
   USER_LABEL_DEFAULT,
   ASSISTANT_LABEL_DEFAULT,
 } from "./config";
 
-export class ChatGPTAPI {
+export class ChatGPTAPITURBO {
   protected _apiKey: string;
   protected _apiBaseUrl: string;
   protected _apiReverseProxyUrl: string;
@@ -99,7 +99,7 @@ export class ChatGPTAPI {
     this._debug = !!debug;
 
     this._completionParams = {
-      model: CHATGPT_MODEL,
+      model: CHATGPT_MODEL_GPT,
       temperature: 0.4, // 0.2 使用什么采样温度，介于 0 和 2 之间。较高的值（如 0.8）将使输出更加随机，而较低的值（如 0.2）将使输出更加集中和确定。
       top_p: 1.0,
       presence_penalty: 1.0,
@@ -151,10 +151,10 @@ export class ChatGPTAPI {
    *
    * If you want to receive a stream of partial responses, use `opts.onProgress`.
    * If you want to receive the full response, including message and conversation IDs,
-   * you can use `opts.onConversationResponse` or use the `ChatGPTAPI.getConversation`
+   * you can use `opts.onConversationResponse` or use the `ChatGPTAPITURBO.getConversation`
    * helper.
    *
-   * Set `debug: true` in the `ChatGPTAPI` constructor to log more info on the full prompt sent to the OpenAI completions API. You can override the `promptPrefix` and `promptSuffix` in `opts` to customize the prompt.
+   * Set `debug: true` in the `ChatGPTAPITURBO` constructor to log more info on the full prompt sent to the OpenAI completions API. You can override the `promptPrefix` and `promptSuffix` in `opts` to customize the prompt.
    *
    * @param message - The prompt message to send
    * @param opts.conversationId - Optional ID of a conversation to continue (defaults to a random UUID)
@@ -197,7 +197,7 @@ export class ChatGPTAPI {
     };
     await this._upsertMessage(message);
 
-    const { prompt, maxTokens } = await this._buildPrompt(text, opts);
+    const { maxTokens } = await this._buildPrompt(text, opts);
     const result: types.ChatMessage = {
       role: "assistant",
       id: uuidv4(),
@@ -209,19 +209,15 @@ export class ChatGPTAPI {
     const responseP = new Promise<types.ChatMessage>(
       async (resolve, reject) => {
         const url =
-          this._apiReverseProxyUrl || `${this._apiBaseUrl}/v1/completions`;
+          this._apiReverseProxyUrl || `${this._apiBaseUrl}/v1/chat/completions`;
+
         const body = {
           max_tokens: maxTokens,
           ...this._completionParams,
-          prompt,
+          messages: [{ role: "user", content: text }],
           stream,
         };
-        console.log("/v1/completions body=>>", JSON.stringify(body));
-
-        if (this._debug) {
-          const numTokens = await this._getTokenCount(body.prompt);
-          console.log(`sendMessage (${numTokens} tokens)`, body);
-        }
+        console.log("/v1/chat/completions body=>>", JSON.stringify(body));
 
         try {
           const response = await axios.post(url, body, {
@@ -230,6 +226,7 @@ export class ChatGPTAPI {
               Authorization: `Bearer ${this._apiKey}`,
             },
           });
+
           if (this._debug) {
             console.log(response);
           }
@@ -246,9 +243,9 @@ export class ChatGPTAPI {
           if (response?.data?.id) {
             result.id = response.data.id;
           }
-
+          console.log("response?.data?.choices=>", response?.data?.choices);
           if (response?.data?.choices?.length) {
-            result.text = response.data.choices[0].text.trim();
+            result.text = response.data.choices[0].message.content.trim();
           } else {
             const res = response.data as any;
             return reject(

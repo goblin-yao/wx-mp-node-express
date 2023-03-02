@@ -14,7 +14,8 @@ export type SendMessageOptions = {
 
 export interface ChatMessage {
   id: string;
-  text: string;
+  text?: string;
+  message?: string;
   role: Role;
   parentMessageId?: string;
   conversationId?: string;
