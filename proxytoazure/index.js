@@ -14,7 +14,18 @@ async function apiChat(question) {
     console.log("error=>", error);
   }
 }
+async function apiGetModels() {
+  try {
+    const url = `https://wxchatnodeexpressazure.azurewebsites.net/api/getModels`;
+    const response = await axios.get(`${url}`, {
+      headers: { "Content-Type": "application/json" },
+      timeout: 300000,
+    });
+    console.log("response=>", response);
+    return response.data;
+  } catch (error) {
+    console.log("error=>", error);
+  }
+}
 
-module.exports = {
-  apiChat,
-};
+module.exports = { apiGetModels, apiChat };

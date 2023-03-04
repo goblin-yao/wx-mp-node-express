@@ -24,14 +24,23 @@ app.get("/api/wx_openid", async (req, res) => {
   }
 });
 
-// 更新计数
+// todo 做一个通用的，可以考虑UDP
 app.post("/api/chat", async (req, res) => {
   const { question } = req.body;
-  console.log("question=>", question);
   // send a message and wait for the response
   let response = {};
   try {
     response = await proxyToAzure.apiChat(question);
+  } catch (error) {
+    response.error = error;
+  }
+  res.send(response);
+});
+
+app.get("/api/getModels", async (req, res) => {
+  let response = {};
+  try {
+    response = await proxyToAzure.apiGetModels();
   } catch (error) {
     response.error = error;
   }
