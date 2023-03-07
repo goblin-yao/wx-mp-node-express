@@ -1,6 +1,8 @@
 const RESPONSE_CODE = { SUCCESS: 200, ERROR: -1 };
 const MAX_LIMIT_PERDAY = 5;
+const MAX_HISTORY_RECORD = 6;
 module.exports = {
   RESPONSE_CODE,
   MAX_LIMIT_PERDAY,
+  MAX_HISTORY_RECORD,
 };

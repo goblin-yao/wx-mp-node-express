@@ -1,7 +1,11 @@
 const express = require("express");
 const router = express.Router();
 const { ChatUsers, ChatMessages, ChatUsersLimit } = require("../database");
-const { RESPONSE_CODE, MAX_LIMIT_PERDAY } = require("../constants");
+const {
+  RESPONSE_CODE,
+  MAX_LIMIT_PERDAY,
+  MAX_HISTORY_RECORD,
+} = require("../constants");
 
 // 校验用户是否已经有登录
 router.post("/user/auth", async (req, res) => {
@@ -101,7 +105,14 @@ router.post("/chatmessage/add", async (req, res) => {
 router.post("/chatmessage/history", async (req, res) => {
   const openid = req.headers["x-wx-openid"];
   try {
-    const result = await ChatMessages.findAll({ where: { openid } });
+    const result = await ChatMessages.findAll({
+      where: { openid },
+      order: [
+        // 将转义 title 并针对有效方向列表进行降序排列
+        ["createdAt", "DESC"],
+      ],
+      limit: MAX_HISTORY_RECORD,
+    });
 
     res.send({
       code: RESPONSE_CODE.SUCCESS,
