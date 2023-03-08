@@ -21,10 +21,15 @@ async function WXMsgChecker(openid, content) {
     //     errcode: 41001,
     //     errmsg: 'access_token missing rid: 64083e89-5d0117e2-419e0f1d'
     //   }
-    return {
-      code: RESPONSE_CODE.SUCCESS,
-      data: result.data,
-    };
+    if (result?.data?.result?.suggest == "pass") {
+      return {
+        code: RESPONSE_CODE.SUCCESS,
+      };
+    } else {
+      return {
+        code: RESPONSE_CODE.ERROR,
+      };
+    }
   } catch (error) {
     console.log("error=>", error);
     return {

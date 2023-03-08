@@ -99,17 +99,17 @@ router.post("/chatmessage/add", async (req, res) => {
           openid,
           msgType,
           content,
-          attachment: data,
+          attachment: JSON.stringify(data),
         });
         res.send({
           code: RESPONSE_CODE.SUCCESS,
-          data: result,
         });
         break;
       }
       default:
     }
   } catch (error) {
+    console.log("eerrr=>", error);
     res.send({
       code: RESPONSE_CODE.ERROR,
     });

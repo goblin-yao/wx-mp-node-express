@@ -23,6 +23,9 @@ yarn-error.log*
 .idea
 
 readme_temp.md
+Dockerfile.development
+docker-compose.yml
+.cloudbase
 
 .logs/
 yarn.lock
