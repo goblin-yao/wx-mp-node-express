@@ -6,6 +6,7 @@ const {
   MAX_LIMIT_PERDAY,
   MAX_HISTORY_RECORD,
 } = require("../constants");
+const WXMsgChecker = require("../utils/msg_checker");
 
 // 校验用户是否已经有登录
 router.post("/user/auth", async (req, res) => {
@@ -64,9 +65,13 @@ router.post("/chatmessage/add", async (req, res) => {
   const { msgType, data } = req.body;
   try {
     const content = data.text;
+
     switch (msgType) {
       // 1表示用户的文字信息
       case 1: {
+        // 校验文本信息
+        await WXMsgChecker(openid, content);
+
         const result = await ChatMessages.create({
           openid,
           msgType,
