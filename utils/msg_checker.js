@@ -15,7 +15,8 @@ async function WXMsgChecker(openid, content) {
         timeout: 30000,
       }
     );
-    console.log("WXMsgChecker=>", result.data);
+    console.log("WXMsgCheckerbody=>", result.body);
+    console.log("WXMsgCheckerdata=>", result.data);
     // data: {
     //     errcode: 41001,
     //     errmsg: 'access_token missing rid: 64083e89-5d0117e2-419e0f1d'

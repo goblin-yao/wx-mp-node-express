@@ -16,6 +16,7 @@ app.use(logger);
 
 app.use("/", indexRouter);
 app.use("/openai", openaiRouter);
+app.use("/api", openaiRouter); //为了兼容老的接口
 app.use("/miniprogram", miniprogramRouter);
 
 const port = process.env.PORT || 80;

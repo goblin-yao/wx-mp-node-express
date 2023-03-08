@@ -43,15 +43,28 @@ router.post("/user/register", async (req, res) => {
   const openid = req.headers["x-wx-openid"];
   const { avatarUrl, nickName } = req.body;
   try {
-    const result = await ChatUsers.create({
-      openid,
-      avatarUrl: avatarUrl,
-      nickName: nickName,
+    let hasUser = await ChatUsers.findOne({
+      where: {
+        openid,
+      },
     });
-    res.send({
-      code: RESPONSE_CODE.SUCCESS,
-      data: result,
-    });
+    if (hasUser) {
+      res.send({
+        code: RESPONSE_CODE.ERROR,
+        data: hasUser,
+      });
+      console.log("user already exist", openid);
+    } else {
+      const result = await ChatUsers.create({
+        openid,
+        avatarUrl: avatarUrl,
+        nickName: nickName,
+      });
+      res.send({
+        code: RESPONSE_CODE.SUCCESS,
+        data: result,
+      });
+    }
   } catch (error) {
     res.send({
       code: RESPONSE_CODE.ERROR,
@@ -69,9 +82,6 @@ router.post("/chatmessage/add", async (req, res) => {
     switch (msgType) {
       // 1表示用户的文字信息
       case 1: {
-        // 校验文本信息
-        await WXMsgChecker(openid, content);
-
         const result = await ChatMessages.create({
           openid,
           msgType,
@@ -220,6 +230,13 @@ router.post("/limit/get", async (req, res) => {
       chat_left_nums: MAX_LIMIT_PERDAY,
     });
   }
+});
+
+router.post("/miniprogram/checker/text", async (req, res) => {
+  const openid = req.headers["x-wx-openid"];
+  const { content } = req.body;
+
+  return await WXMsgChecker(openid, content);
 });
 
 module.exports = router;
