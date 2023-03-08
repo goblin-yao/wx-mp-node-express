@@ -220,6 +220,7 @@
     <p><button id="getLimit">getLimit</button></p>
     <p><button id="addMessage">addMessage</button></p>
     <p><button id="getMessageHistory">getMessageHistory</button></p>
+    <p><button id="messageChecker">messageChecker</button></p>
 
     <p><button id="getModels">getModels</button></p>
     <p><textarea id="result_textare" cols="100" rows="50"></textarea></p>
@@ -344,6 +345,23 @@
         .then((response) => response.json())
         .then((data) => {
           console.log("/miniprogram/chatmessage/add", data);
+        })
+        .catch((data) => {
+          console.log("error=>", data);
+        });
+    };
+    messageChecker.onclick = function () {
+      fetch("/miniprogram/checker/text", {
+        method: "POST",
+        headers: {
+          "x-wx-openid": _openid.value,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ content: question.value }),
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          console.log("/miniprogram/checker/text", data);
         })
         .catch((data) => {
           console.log("error=>", data);

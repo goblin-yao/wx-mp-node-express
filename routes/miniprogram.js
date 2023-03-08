@@ -232,11 +232,12 @@ router.post("/limit/get", async (req, res) => {
   }
 });
 
-router.post("/miniprogram/checker/text", async (req, res) => {
+router.post("/checker/text", async (req, res) => {
   const openid = req.headers["x-wx-openid"];
   const { content } = req.body;
 
-  return await WXMsgChecker(openid, content);
+  const result = await WXMsgChecker(openid, content);
+  res.send(result);
 });
 
 module.exports = router;

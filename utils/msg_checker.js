@@ -5,17 +5,17 @@ async function WXMsgChecker(openid, content) {
     const url = `http://api.weixin.qq.com/wxa/msg_sec_check`;
     const result = await axios.post(
       url,
-      JSON.stringify({
+      {
         openid,
         version: 2,
         scene: 2,
         content,
-      }),
+      },
       {
+        headers: { "Content-Type": "application/json" },
         timeout: 30000,
       }
     );
-    console.log("WXMsgCheckerbody=>", result.body);
     console.log("WXMsgCheckerdata=>", result.data);
     // data: {
     //     errcode: 41001,
