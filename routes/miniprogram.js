@@ -5,6 +5,7 @@ const {
   RESPONSE_CODE,
   MAX_LIMIT_PERDAY,
   MAX_HISTORY_RECORD,
+  MAX_HISTORY_SAVE,
 } = require("../constants");
 const WXMsgChecker = require("../utils/msg_checker");
 
@@ -120,7 +121,8 @@ router.post("/chatmessage/add", async (req, res) => {
 router.post("/chatmessage/history", async (req, res) => {
   const openid = req.headers["x-wx-openid"];
   try {
-    const result = await ChatMessages.findAll({
+    const { count, rows } = await ChatMessages.findAndCountAll({
+      attributes: { exclude: ["attachment"] },
       where: { openid },
       order: [
         // 将转义 title 并针对有效方向列表进行降序排列
@@ -128,15 +130,27 @@ router.post("/chatmessage/history", async (req, res) => {
       ],
       limit: MAX_HISTORY_RECORD,
     });
-
     res.send({
       code: RESPONSE_CODE.SUCCESS,
-      data: result,
+      data: { count, rows },
     });
+    //超过记录数，删除总数之前的一半
+    if (count > MAX_HISTORY_SAVE) {
+      console.log("ccc=>", count, MAX_HISTORY_SAVE);
+      ChatMessages.destroy({
+        where: { openid },
+        order: [
+          // 将转义 title 并针对有效方向列表进行降序排列
+          ["createdAt", "DESC"],
+        ],
+        limit: MAX_HISTORY_SAVE / 2,
+      });
+      //超过这个数值，删掉一半数据
+    }
   } catch (error) {
     res.send({
       code: RESPONSE_CODE.ERROR,
-      data: [],
+      data: { count: 0, rows: [] },
     });
   }
 });
