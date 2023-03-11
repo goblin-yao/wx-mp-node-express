@@ -1,12 +1,5 @@
 const express = require("express");
 const router = express.Router();
-const { ChatUsers, ChatMessages, ChatUsersLimit } = require("../database");
-const {
-  RESPONSE_CODE,
-  MAX_LIMIT_PERDAY,
-  MAX_HISTORY_RECORD,
-  MAX_HISTORY_SAVE,
-} = require("../constants");
 const WXMsgChecker = require("../utils/msg_checker");
 const CustomMessageSend = require("../utils/msg_send");
 const proxyToAzure = require("../proxytoazure");
