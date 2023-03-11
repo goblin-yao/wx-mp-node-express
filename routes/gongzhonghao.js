@@ -8,6 +8,8 @@ const proxyToAzure = require("../proxytoazure");
 router.post("/messages/send", async (req, res) => {
   // 从 header 中取appid，如果 from-appid 不存在，则不是资源复用场景，可以直接传空字符串，使用环境所属账号发起云调用
   const appid = req.headers["x-wx-from-appid"] || "";
+  console.log("unionid=>", req.headers["x-wx-from-unionid"] || "");
+
   const { ToUserName, FromUserName, MsgType, Content, CreateTime } = req.body;
   console.log("推送接收的账号", { appid, body: req.body });
   if (MsgType === "text") {
