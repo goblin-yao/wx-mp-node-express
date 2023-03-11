@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const WXMsgChecker = require("../utils/msg_checker");
-const CustomMessageSend = require("../utils/msg_send");
+const customSendMessage = require("../utils/msg_send");
 const proxyToAzure = require("../proxytoazure");
 
 // 微信消息推送 https://developers.weixin.qq.com/miniprogram/dev/wxcloudrun/src/development/weixin/callback.html
@@ -14,7 +14,7 @@ router.post("/messages/send", async (req, res) => {
   if (MsgType === "text") {
     const msgResult = await WXMsgChecker(openid, Content);
     let replyMsg = "";
-    if (msgResult.code === -1) {
+    if (msgResult.code !== -1) {
       replyMsg = "内容含有敏感词";
     } else {
       try {
@@ -25,7 +25,7 @@ router.post("/messages/send", async (req, res) => {
       }
     }
     // 小程序、公众号可用
-    await CustomMessageSend(appid, {
+    await customSendMessage(appid, {
       touser: FromUserName,
       msgtype: "text",
       text: {
