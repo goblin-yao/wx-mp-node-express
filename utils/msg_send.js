@@ -8,6 +8,7 @@ async function customSendMessage(appid, mess) {
     });
     return result.body;
   } catch (error) {
+    console.log("message/custom/send error", error);
     return -1;
   }
 }
