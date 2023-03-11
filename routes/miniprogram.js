@@ -250,7 +250,7 @@ router.post("/checker/text", async (req, res) => {
   const openid = req.headers["x-wx-openid"];
   const { content } = req.body;
 
-  const result = await WXMsgChecker(openid, content);
+  const result = await WXMsgChecker(content, { openid });
   res.send(result);
 });
 

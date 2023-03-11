@@ -1,12 +1,15 @@
 const axios = require("axios");
 const { RESPONSE_CODE } = require("../constants");
-async function WXMsgChecker(openid, content) {
+async function WXMsgChecker(content, option) {
   try {
-    const url = `http://api.weixin.qq.com/wxa/msg_sec_check`;
+    let url = `http://api.weixin.qq.com/wxa/msg_sec_check`;
+    if (option.appid) {
+      url = `http://api.weixin.qq.com/wxa/msg_sec_check?from_appid=${option.appid}`;
+    }
     const result = await axios.post(
       url,
       {
-        openid,
+        openid: option.openid,
         version: 2,
         scene: 2,
         content,
