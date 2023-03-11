@@ -6,6 +6,7 @@ async function customSendMessage(appid, mess) {
       headers: { "Content-Type": "application/json" },
       timeout: 30000,
     });
+    console.log("message/custom/send result=>", result);
     return result.body;
   } catch (error) {
     console.log("message/custom/send error", error);

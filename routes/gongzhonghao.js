@@ -11,14 +11,16 @@ router.post("/messages/send", async (req, res) => {
   const { ToUserName, FromUserName, MsgType, Content, CreateTime } = req.body;
   console.log("推送接收的账号", { appid, body: req.body });
   if (MsgType === "text") {
-    const msgResult = await WXMsgChecker(FromUserName, Content);
+    const msgResult = await WXMsgChecker(
+      "o9Onv5BcWuj8o8-78-N1S-HTur7k",
+      Content
+    );
     let replyMsg = "";
-    if (msgResult.code !== -1) {
+    if (msgResult.code === -1) {
       replyMsg = "内容含有敏感词";
     } else {
       try {
         let response = await proxyToAzure.apiChat(Content);
-        console.log("response=>", response);
         replyMsg = response.text;
       } catch (error) {
         replyMsg = "服务器超时";
