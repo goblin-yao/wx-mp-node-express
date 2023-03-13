@@ -47,7 +47,7 @@ const ChatMessages = sequelize.define("chat_messages", {
   },
 });
 
-const ChatUsersLimit = sequelize.define("chat_users_limit", {
+const ChatUsersLimit = sequelize.define("chat_users_limits", {
   openid: {
     type: DataTypes.STRING,
     allowNull: false,
@@ -58,11 +58,30 @@ const ChatUsersLimit = sequelize.define("chat_users_limit", {
   },
 });
 
+const ChatUsersShareHistory = sequelize.define("chat_users_share_histories", {
+  // 分享人
+  openid: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
+  // 谁进入分享页面
+  by_openid: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
+  // 分享的标记，预留
+  share_flag: {
+    type: DataTypes.STRING,
+    allowNull: true,
+  },
+});
+
 // 数据库初始化方法
 async function init() {
   await ChatUsers.sync({ alter: false });
   await ChatMessages.sync({ alter: false });
   await ChatUsersLimit.sync({ alter: false });
+  await ChatUsersShareHistory.sync({ alter: false });
 }
 
 // 导出初始化方法和模型
@@ -71,4 +90,5 @@ module.exports = {
   ChatUsers,
   ChatMessages,
   ChatUsersLimit,
+  ChatUsersShareHistory,
 };

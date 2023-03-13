@@ -7,6 +7,7 @@ const logger = morgan("tiny");
 const indexRouter = require("./routes/index");
 const openaiRouter = require("./routes/openai");
 const miniprogramRouter = require("./routes/miniprogram");
+const gzhRouter = require("./routes/gongzhonghao");
 const app = express();
 
 app.use(express.urlencoded({ extended: false }));
@@ -18,6 +19,7 @@ app.use("/", indexRouter);
 app.use("/openai", openaiRouter);
 app.use("/api", openaiRouter); //为了兼容老的接口
 app.use("/miniprogram", miniprogramRouter);
+app.use("/gongzhonghao", gzhRouter);
 
 const port = process.env.PORT || 80;
 
