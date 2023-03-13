@@ -5,13 +5,26 @@ const customSendMessage = require("../utils/msg_send");
 const proxyToAzure = require("../proxytoazure");
 
 // 微信消息推送 https://developers.weixin.qq.com/miniprogram/dev/wxcloudrun/src/development/weixin/callback.html
-router.post("/messages/send", async (req, res) => {
+router.post("/message/send", async (req, res) => {
   // 从 header 中取appid，如果 from-appid 不存在，则不是资源复用场景，可以直接传空字符串，使用环境所属账号发起云调用
   const appid = req.headers["x-wx-from-appid"] || "";
-  console.log("unionid=>", req.headers["x-wx-from-unionid"] || "");
-
+  // unionid=>
+  // 推送接收的账号 {
+  // appid: '',
+  // body: {
+  // ToUserName: 'gh_31cb7255c884',
+  // FromUserName: 'oWl8_5slEAh0Ow7hR_-4pedtFB_Q',
+  // CreateTime: 1678528047,
+  // MsgType: 'text',
+  // Content: '1+1',
+  // MsgId: 24030743352527428
+  // }
+  // }
   const { ToUserName, FromUserName, MsgType, Content, CreateTime } = req.body;
-  console.log("推送接收的账号", { appid, body: req.body });
+  console.log("推送接收的账号", {
+    body: req.body,
+    headers: req.headers,
+  });
   if (MsgType === "text") {
     const msgResult = await WXMsgChecker(Content, {
       openid: FromUserName,
@@ -31,7 +44,6 @@ router.post("/messages/send", async (req, res) => {
     // 小程序、公众号可用
     try {
       let _reslut = await customSendMessage(appid, {
-        openid: FromUserName,
         touser: FromUserName,
         msgtype: "text",
         text: {

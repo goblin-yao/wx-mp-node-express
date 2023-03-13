@@ -270,6 +270,7 @@
     userAuth.onclick = function () {
       fetch("/miniprogram/user/auth", {
         method: "POST",
+        body: JSON.stringify({ share_from_openid: "o9Onv5G8VI6McHnrSTY6lCpWcKSI" }),
         headers: {
           "x-wx-openid": _openid.value,
           "Content-Type": "application/json",

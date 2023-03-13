@@ -1,6 +1,9 @@
 const axios = require("axios");
 async function customSendMessage(appid, mess) {
-  const url = `http://api.weixin.qq.com/cgi-bin/message/custom/send?from_appid=${appid}`;
+  let url = `http://api.weixin.qq.com/cgi-bin/message/custom/send`;
+  if (appid) {
+    url = `http://api.weixin.qq.com/cgi-bin/message/custom/send?from_appid=${appid}`;
+  }
   try {
     const result = await axios.post(url, mess, {
       headers: { "Content-Type": "application/json" },

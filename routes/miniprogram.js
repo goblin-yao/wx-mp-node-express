@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const { ChatUsers, ChatMessages, ChatUsersLimit } = require("../database");
+const mpController = require("../controllers/miniprogram");
 const {
   RESPONSE_CODE,
   MAX_LIMIT_PERDAY,
@@ -9,40 +10,40 @@ const {
 } = require("../constants");
 const WXMsgChecker = require("../utils/msg_checker");
 
-// 校验用户是否已经有登录
+// 校验用户是否已经有登录，未来可以考虑将这两个接口合并
+// 计算分享次数 10次/每人，每日最多6人
 router.post("/user/auth", async (req, res) => {
   const openid = req.headers["x-wx-openid"];
-  console.log("1=>", openid);
+  const { share_from_openid } = req.body;
   try {
-    let result = await ChatUsers.findOne({
+    let [result] = await ChatUsers.findOrCreate({
       where: {
         openid,
       },
     });
-    if (result) {
-      res.send({
-        code: RESPONSE_CODE.SUCCESS,
-        data: result,
-      });
-    } else {
-      res.send({
-        code: RESPONSE_CODE.ERROR,
-        data: { openid },
-      });
-    }
+    res.send({
+      code: RESPONSE_CODE.SUCCESS,
+      data: result,
+    });
   } catch (error) {
+    console.log("errro", error);
     // 未登录时需要传openid给小程序，这样方便后面的操作身份
     res.send({
       code: RESPONSE_CODE.ERROR,
       data: { openid },
     });
+  } finally {
+    //添加分享次数
+    if (openid !== share_from_openid) {
+      await mpController.addLimitNumFromShare(openid, share_from_openid);
+    }
   }
 });
 
 //用户注册
 router.post("/user/register", async (req, res) => {
   const openid = req.headers["x-wx-openid"];
-  const { avatarUrl, nickName } = req.body;
+  const { avatarUrl = 1, nickName = 1 } = req.body;
   try {
     let hasUser = await ChatUsers.findOne({
       where: {
@@ -143,7 +144,7 @@ router.post("/chatmessage/history", async (req, res) => {
           // 将转义 title 并针对有效方向列表进行降序排列
           ["createdAt", "DESC"],
         ],
-        limit: MAX_HISTORY_SAVE / 2,
+        limit: MAX_HISTORY_SAVE - MAX_HISTORY_RECORD,
       });
       //超过这个数值，删掉一半数据
     }
@@ -164,7 +165,7 @@ router.post("/limit/reduce", async (req, res) => {
     userLimit = await ChatUsersLimit.findOne({ where: { openid } });
     //最近更新时间小于今天凌晨0点 且当前次数小于最大次数, 说明需要更新了,
     if (
-      new Date(userLimit.updateAt) <
+      new Date(userLimit.updatedAt) <
         new Date(new Date().toLocaleDateString()).getTime() &&
       userLimit.chat_left_nums < MAX_LIMIT_PERDAY
     ) {
@@ -218,7 +219,7 @@ router.post("/limit/get", async (req, res) => {
     userLimit = await ChatUsersLimit.findOne({ where: { openid } });
     //最近更新时间小于今天凌晨0点 且当前次数小于最大次数, 说明需要更新了,
     if (
-      new Date(userLimit.updateAt) <
+      new Date(userLimit.updatedAt) <
         new Date(new Date().toLocaleDateString()).getTime() &&
       userLimit.chat_left_nums < MAX_LIMIT_PERDAY
     ) {
