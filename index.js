@@ -8,6 +8,8 @@ const indexRouter = require("./routes/index");
 const openaiRouter = require("./routes/openai");
 const miniprogramRouter = require("./routes/miniprogram");
 const gzhRouter = require("./routes/gongzhonghao");
+// const proxyAPI = require("./routes/proxy-api");
+
 const app = express();
 
 app.use(express.urlencoded({ extended: false }));
@@ -20,6 +22,7 @@ app.use("/openai", openaiRouter);
 app.use("/api", openaiRouter); //为了兼容老的接口
 app.use("/miniprogram", miniprogramRouter);
 app.use("/gongzhonghao", gzhRouter);
+// app.use("/proxyapi", proxyAPI);
 
 const port = process.env.PORT || 80;
 
