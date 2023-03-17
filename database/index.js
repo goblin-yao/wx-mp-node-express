@@ -37,6 +37,18 @@ const ChatMessages = sequelize.define("chat_messages", {
     type: DataTypes.TINYINT,
     allowNull: false,
   },
+  conversationId: {
+    type: DataTypes.STRING,
+    allowNull: true,
+  },
+  messageId: {
+    type: DataTypes.STRING,
+    allowNull: true,
+  },
+  parentMessageId: {
+    type: DataTypes.STRING,
+    allowNull: true,
+  },
   content: {
     type: DataTypes.TEXT,
     allowNull: false,

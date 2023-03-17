@@ -80,6 +80,9 @@ router.post("/chatmessage/add", async (req, res) => {
   const { msgType, data } = req.body;
   try {
     const content = data.text;
+    const conversationId = data.conversationId;
+    const parentMessageId = data.parentMessageId;
+    const messageId = data.id;
 
     switch (msgType) {
       // 1表示用户的文字信息
@@ -88,6 +91,9 @@ router.post("/chatmessage/add", async (req, res) => {
           openid,
           msgType,
           content,
+          conversationId,
+          parentMessageId,
+          messageId,
         });
         res.send({
           code: RESPONSE_CODE.SUCCESS,
@@ -101,6 +107,9 @@ router.post("/chatmessage/add", async (req, res) => {
           openid,
           msgType,
           content,
+          conversationId,
+          parentMessageId,
+          messageId,
           attachment: JSON.stringify(data),
         });
         res.send({
