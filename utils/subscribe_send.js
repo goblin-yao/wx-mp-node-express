@@ -18,7 +18,7 @@ async function subscribeSend(option) {
           },
           //积分数量
           number2: {
-            value: LIMIT_NUM_FROM_SHARE_PERDAY.LIMIT_NUM_FROM_SHARE_PERDAY,
+            value: LIMIT_NUM_FROM_SHARE_PERDAY.MAX_NUM_PERSHARE,
           },
           // 温馨提醒
           thing3: {
