@@ -9,6 +9,7 @@ const {
   MAX_HISTORY_SAVE,
 } = require("../constants");
 const WXMsgChecker = require("../utils/msg_checker");
+const SubscribSend = require("../utils/subscribe_send");
 
 // 校验用户是否已经有登录，未来可以考虑将这两个接口合并
 // 计算分享次数 10次/每人，每日最多6人
@@ -261,6 +262,12 @@ router.post("/checker/text", async (req, res) => {
   const { content } = req.body;
 
   const result = await WXMsgChecker(content, { openid });
+  res.send(result);
+});
+router.post("/subscribe/test", async (req, res) => {
+  const openid = req.headers["x-wx-openid"];
+
+  const result = await SubscribSend({ toOpenId: openid });
   res.send(result);
 });
 
