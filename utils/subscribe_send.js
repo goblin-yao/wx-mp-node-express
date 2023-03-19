@@ -8,7 +8,7 @@ async function subscribeSend(option) {
       {
         touser: option.toOpenId,
         template_id: "gDR3LuQ-JEOtfmT_ug40QcT6uk4kFPTHMuAVXyD3GqQ",
-        page: "index",
+        page: "/pages/index/index",
         miniprogram_state: "trial", //跳转小程序类型：developer为开发版；trial为体验版；formal为正式版；默认为正式版
         lang: "zh_CN",
         data: {
