@@ -7,6 +7,7 @@ const {
   MAX_LIMIT_PERDAY,
   MAX_HISTORY_RECORD,
   MAX_HISTORY_SAVE,
+  TIME_FOR_NEW_USER,
 } = require("../constants");
 const WXMsgChecker = require("../utils/msg_checker");
 const SubscribSend = require("../utils/subscribe_send");
@@ -247,7 +248,10 @@ router.post("/limit/get", async (req, res) => {
   } catch (error) {
     //没有记录，创建最新的
     if (!userLimit) {
-      await ChatUsersLimit.create({ openid, chat_left_nums: MAX_LIMIT_PERDAY });
+      await ChatUsersLimit.create({
+        openid,
+        chat_left_nums: TIME_FOR_NEW_USER,
+      });
     }
     // 出现异常就返回新的
     return res.send({
@@ -266,6 +270,7 @@ router.post("/checker/text", async (req, res) => {
 });
 router.post("/subscribe/test", async (req, res) => {
   const openid = req.headers["x-wx-openid"];
+  console.log("req.headers=>", req.headers);
 
   const result = await SubscribSend({ toOpenId: openid });
   res.send(result);
