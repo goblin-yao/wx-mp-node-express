@@ -16,6 +16,7 @@ const chatGPTTurboapi = new chatgptlib.ChatGPTAPITURBO({
 });
 
 function getChatGPTAPI() {
+  return chatGPTapi
   // return chatGPTTurboapi;
   // if (process.env.CHATGPT_MODEL === "gpt-3.5-turbo") {
   //   return chatGPTTurboapi;

@@ -6,7 +6,7 @@ const axios = require("axios");
 //       `${url}?question=${encodeURIComponent(question)}`,
 //       {
 //         headers: { "Content-Type": "application/json" },
-//         timeout: 30000,
+//         timeout: 60000,
 //       }
 //     );
 //     return response.data;
@@ -27,7 +27,7 @@ async function apiChat(question) {
     // const url = `http://localhost:3000/api/chat`; // for local dev
     const response = await axios.post(url, body, {
       headers: { "Content-Type": "application/json" },
-      timeout: 30000,
+      timeout: 60000,
     });
     console.log("request time=>", new Date() - statTime);
     return response.data;
@@ -46,7 +46,7 @@ async function apiGetModels() {
     const url = `https://wxchatnodeexpressazure.azurewebsites.net/api/getModels`;
     const response = await axios.get(`${url}`, {
       headers: { "Content-Type": "application/json" },
-      timeout: 300000,
+      timeout: 60000,
     });
     console.log("response=>", response);
     return response.data;
