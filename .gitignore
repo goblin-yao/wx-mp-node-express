@@ -23,6 +23,7 @@ yarn-error.log*
 .idea
 
 readme_temp.md
+_temp/
 Dockerfile.development
 docker-compose.yml
 .cloudbase

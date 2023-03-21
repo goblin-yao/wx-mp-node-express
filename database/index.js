@@ -17,6 +17,16 @@ const ChatUsers = sequelize.define("chat_users", {
     type: DataTypes.STRING,
     allowNull: false,
   },
+  unionid: {
+    type: DataTypes.STRING,
+    allowNull: true,
+  },
+  // 公众号的openid，打通 unionid，后期全部通过unionid标记身份
+  // head头的信息参考项目中的 _temp/request_head.md 
+  gzh_openid: {
+    type: DataTypes.STRING,
+    allowNull: true,
+  },
   avatarUrl: {
     type: DataTypes.STRING,
     allowNull: true,
