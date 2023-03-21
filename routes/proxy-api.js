@@ -6,11 +6,13 @@ const chatgptlib = require("../chatgptlib");
 //这个来源是由wx-mp-node项目中的ts文件构建出来的
 const chatGPTapi = new chatgptlib.ChatGPTAPI({
   apiKey: process.env.OPENAI_API_KEY,
-  apiReverseProxyUrl: "http://localhost:3000",
+  // apiReverseProxyUrl: "http://localhost:3000/proxy",
+  apiReverseProxyUrl: "https://wxchatnodeexpressazure.azurewebsites.net/proxy",
 });
 const chatGPTTurboapi = new chatgptlib.ChatGPTAPITURBO({
   apiKey: process.env.OPENAI_API_KEY,
-  apiReverseProxyUrl: "http://localhost:3000",
+  // apiReverseProxyUrl: "http://localhost:3000/proxy",
+  apiReverseProxyUrl: "https://wxchatnodeexpressazure.azurewebsites.net/proxy",
 });
 
 function getChatGPTAPI() {

@@ -21,7 +21,7 @@ yarn-error.log*
 
 # IDE
 .idea
-
+_temp/
 readme_temp.md
 Dockerfile.development
 docker-compose.yml
