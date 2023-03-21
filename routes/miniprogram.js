@@ -7,18 +7,22 @@ const {
   MAX_LIMIT_PERDAY,
   MAX_HISTORY_RECORD,
   MAX_HISTORY_SAVE,
+  TIME_FOR_NEW_USER,
 } = require("../constants");
 const WXMsgChecker = require("../utils/msg_checker");
+const SubscribSend = require("../utils/subscribe_send");
 
 // 校验用户是否已经有登录，未来可以考虑将这两个接口合并
 // 计算分享次数 10次/每人，每日最多6人
 router.post("/user/auth", async (req, res) => {
   const openid = req.headers["x-wx-openid"];
+  const unionid = req.headers["x-wx-unionid"];
   const { share_from_openid } = req.body;
   try {
     let [result] = await ChatUsers.findOrCreate({
       where: {
         openid,
+        unionid,
       },
     });
     res.send({
@@ -43,6 +47,7 @@ router.post("/user/auth", async (req, res) => {
 //用户注册
 router.post("/user/register", async (req, res) => {
   const openid = req.headers["x-wx-openid"];
+  const unionid = req.headers["x-wx-unionid"];
   const { avatarUrl = 1, nickName = 1 } = req.body;
   try {
     let hasUser = await ChatUsers.findOne({
@@ -59,6 +64,7 @@ router.post("/user/register", async (req, res) => {
     } else {
       const result = await ChatUsers.create({
         openid,
+        unionid,
         avatarUrl: avatarUrl,
         nickName: nickName,
       });
@@ -80,6 +86,9 @@ router.post("/chatmessage/add", async (req, res) => {
   const { msgType, data } = req.body;
   try {
     const content = data.text;
+    const conversationId = data.conversationId;
+    const parentMessageId = data.parentMessageId;
+    const messageId = data.id;
 
     switch (msgType) {
       // 1表示用户的文字信息
@@ -88,6 +97,9 @@ router.post("/chatmessage/add", async (req, res) => {
           openid,
           msgType,
           content,
+          conversationId,
+          parentMessageId,
+          messageId,
         });
         res.send({
           code: RESPONSE_CODE.SUCCESS,
@@ -101,6 +113,9 @@ router.post("/chatmessage/add", async (req, res) => {
           openid,
           msgType,
           content,
+          conversationId,
+          parentMessageId,
+          messageId,
           attachment: JSON.stringify(data),
         });
         res.send({
@@ -237,7 +252,10 @@ router.post("/limit/get", async (req, res) => {
   } catch (error) {
     //没有记录，创建最新的
     if (!userLimit) {
-      await ChatUsersLimit.create({ openid, chat_left_nums: MAX_LIMIT_PERDAY });
+      await ChatUsersLimit.create({
+        openid,
+        chat_left_nums: TIME_FOR_NEW_USER,
+      });
     }
     // 出现异常就返回新的
     return res.send({
@@ -252,6 +270,13 @@ router.post("/checker/text", async (req, res) => {
   const { content } = req.body;
 
   const result = await WXMsgChecker(content, { openid });
+  res.send(result);
+});
+router.post("/subscribe/test", async (req, res) => {
+  const openid = req.headers["x-wx-openid"];
+  console.log("req.headers=>", req.headers);
+
+  const result = await SubscribSend({ toOpenId: openid });
   res.send(result);
 });
 

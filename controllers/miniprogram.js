@@ -8,6 +8,7 @@ const {
   MAX_HISTORY_SAVE,
   LIMIT_NUM_FROM_SHARE_PERDAY,
 } = require("../constants");
+const SubscribSend = require("../utils/subscribe_send");
 
 mpController.addLimitNumFromShare = async (openid, share_from_openid) => {
   // 判断今天总记录数是否大于指定次数
@@ -52,6 +53,7 @@ mpController.addLimitNumFromShare = async (openid, share_from_openid) => {
           LIMIT_NUM_FROM_SHARE_PERDAY.MAX_NUM_PERSHARE,
       });
       await userLimit.save();
+      await SubscribSend({ toOpenId: share_from_openid });
     }
   }
 };
