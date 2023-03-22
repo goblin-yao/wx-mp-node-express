@@ -352,7 +352,8 @@ export class ChatGPTAPI {
 
     const promptPrefix =
       opts.promptPrefix ||
-      `提示:\n你是${this._assistantLabel}.使用简洁，拟人化的方式回答问题${this._sepToken}\n\n`;
+      `Instructions:\nYou are${this._assistantLabel}, respond to questions using concise, anthropomorphic style${this._sepToken}\n\n`;
+    // `提示:\n你是${this._assistantLabel}.使用简洁，拟人化的方式回答问题${this._sepToken}\n\n`;
     // `提示:\n你是${this._assistantLabel}.现在日期:${currentDate}${this._sepToken}\n\n`;
     //       `Instructions:\nYou are ${this._assistantLabel}, a large language model trained by OpenAI.
     // Current date: ${currentDate}${this._sepToken}\n\n`;

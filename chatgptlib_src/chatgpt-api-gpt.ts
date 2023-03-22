@@ -216,7 +216,8 @@ export class ChatGPTAPITURBO {
           max_tokens: maxTokens,
           ...this._completionParams,
           messages: [
-            { role: "system", content: `你是${this._assistantLabel}.使用简洁，拟人化的方式回答问题` },
+            // { role: "system", content: `你是${this._assistantLabel}.使用简洁，拟人化的方式回答问题` },
+            { role: "system", content: `You are${this._assistantLabel}, respond to questions using concise, anthropomorphic style` },
             { role: "user", content: text },
           ],
           stream,
