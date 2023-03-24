@@ -53,7 +53,7 @@ mpController.addLimitNumFromShare = async (openid, share_from_openid) => {
           LIMIT_NUM_FROM_SHARE_PERDAY.MAX_NUM_PERSHARE,
       });
       await userLimit.save();
-      await SubscribSend({ toOpenId: share_from_openid });
+      // await SubscribSend({ toOpenId: share_from_openid });
     }
   }
 };
