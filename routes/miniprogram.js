@@ -16,13 +16,13 @@ const SubscribSend = require("../utils/subscribe_send");
 // 计算分享次数 10次/每人，每日最多6人
 router.post("/user/auth", async (req, res) => {
   const openid = req.headers["x-wx-openid"];
-  const unionid = req.headers["x-wx-unionid"];
+  // const unionid = req.headers["x-wx-unionid"];
   const { share_from_openid } = req.body;
   try {
     let [result] = await ChatUsers.findOrCreate({
       where: {
         openid,
-        unionid,
+        // unionid,
       },
     });
     res.send({
@@ -47,7 +47,7 @@ router.post("/user/auth", async (req, res) => {
 //用户注册
 router.post("/user/register", async (req, res) => {
   const openid = req.headers["x-wx-openid"];
-  const unionid = req.headers["x-wx-unionid"];
+  // const unionid = req.headers["x-wx-unionid"];
   const { avatarUrl = 1, nickName = 1 } = req.body;
   try {
     let hasUser = await ChatUsers.findOne({
@@ -64,7 +64,7 @@ router.post("/user/register", async (req, res) => {
     } else {
       const result = await ChatUsers.create({
         openid,
-        unionid,
+        // unionid,
         avatarUrl: avatarUrl,
         nickName: nickName,
       });
