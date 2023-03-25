@@ -1,9 +1,14 @@
 import { config } from 'dotenv';
-config({ path: `.env.development.local` });
+// live环境配置在微信云托管
+if (process.env.NODE_ENV === 'development') {
+  config({ path: `.env.development.local` });
+}
 
-export const CREDENTIALS = process.env.CREDENTIALS === 'true';
-export const { OPENAI_API_KEY, CHATGPT_MODEL_GPT, CHATGPT_MODEL, MYSQL_USERNAME, MYSQL_PASSWORD, MYSQL_ADDRESS, PORT, LOG_FORMAT, LOG_DIR } =
-  process.env;
+export const { OPENAI_API_KEY, CHATGPT_MODEL_GPT, CHATGPT_MODEL, MYSQL_USERNAME, MYSQL_PASSWORD, MYSQL_ADDRESS } = process.env;
+export const PORT = 80;
+export const NODE_ENV = process.env.NODE_ENV || 'production';
+export const LOG_FORMAT = 'dev';
+export const LOG_DIR = '../logs';
 
 export const CONSTANTS = {
   RESPONSE_CODE: { SUCCESS: 200, ERROR: -1 },

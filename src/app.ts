@@ -6,7 +6,7 @@ import hpp from 'hpp';
 import morgan from 'morgan';
 import swaggerJSDoc from 'swagger-jsdoc';
 import swaggerUi from 'swagger-ui-express';
-import { PORT, LOG_FORMAT } from '@config';
+import { PORT, LOG_FORMAT, NODE_ENV } from '@config';
 import DB from '@databases';
 import { Routes } from '@interfaces/routes.interface';
 import errorMiddleware from '@middlewares/error.middleware';
@@ -19,7 +19,7 @@ class App {
 
   constructor(routes: Routes[]) {
     this.app = express();
-    this.env = 'development';
+    this.env = NODE_ENV || 'development';
     this.port = PORT || 80;
 
     this.connectToDatabase();
