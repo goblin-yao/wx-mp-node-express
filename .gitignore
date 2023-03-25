@@ -8,6 +8,7 @@
 /build
 /dist
 /logs
+/src/logs
 
 # misc
 .DS_Store
