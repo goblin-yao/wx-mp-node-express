@@ -1,0 +1,541 @@
+2023-03-24 16:50:31 error: uncaughtException: connect ECONNREFUSED 127.0.0.1:3306
+SequelizeConnectionRefusedError: connect ECONNREFUSED 127.0.0.1:3306
+    at ConnectionManager.connect (/Users/junping.yao/workspace_others/ai-chat/wx-mp-node-express/node_modules/sequelize/src/dialects/mysql/connection-manager.js:116:17)
+    at processTicksAndRejections (node:internal/process/task_queues:96:5)
+    at async ConnectionManager._connect (/Users/junping.yao/workspace_others/ai-chat/wx-mp-node-express/node_modules/sequelize/src/dialects/abstract/connection-manager.js:326:24)
+    at async /Users/junping.yao/workspace_others/ai-chat/wx-mp-node-express/node_modules/sequelize/src/dialects/abstract/connection-manager.js:250:32
+2023-03-24 16:50:31 error: uncaughtException: connect ECONNREFUSED 127.0.0.1:3306
+SequelizeConnectionRefusedError: connect ECONNREFUSED 127.0.0.1:3306
+    at ConnectionManager.connect (/Users/junping.yao/workspace_others/ai-chat/wx-mp-node-express/node_modules/sequelize/src/dialects/mysql/connection-manager.js:116:17)
+    at processTicksAndRejections (node:internal/process/task_queues:96:5)
+    at async ConnectionManager._connect (/Users/junping.yao/workspace_others/ai-chat/wx-mp-node-express/node_modules/sequelize/src/dialects/abstract/connection-manager.js:326:24)
+    at async /Users/junping.yao/workspace_others/ai-chat/wx-mp-node-express/node_modules/sequelize/src/dialects/abstract/connection-manager.js:250:32
+2023-03-24 16:50:40 error: uncaughtException: connect ECONNREFUSED 127.0.0.1:3306
+SequelizeConnectionRefusedError: connect ECONNREFUSED 127.0.0.1:3306
+    at ConnectionManager.connect (/Users/junping.yao/workspace_others/ai-chat/wx-mp-node-express/node_modules/sequelize/src/dialects/mysql/connection-manager.js:116:17)
+    at processTicksAndRejections (node:internal/process/task_queues:96:5)
+    at async ConnectionManager._connect (/Users/junping.yao/workspace_others/ai-chat/wx-mp-node-express/node_modules/sequelize/src/dialects/abstract/connection-manager.js:326:24)
+    at async /Users/junping.yao/workspace_others/ai-chat/wx-mp-node-express/node_modules/sequelize/src/dialects/abstract/connection-manager.js:250:32
+2023-03-24 16:50:40 error: uncaughtException: connect ECONNREFUSED 127.0.0.1:3306
+SequelizeConnectionRefusedError: connect ECONNREFUSED 127.0.0.1:3306
+    at ConnectionManager.connect (/Users/junping.yao/workspace_others/ai-chat/wx-mp-node-express/node_modules/sequelize/src/dialects/mysql/connection-manager.js:116:17)
+    at processTicksAndRejections (node:internal/process/task_queues:96:5)
+    at async ConnectionManager._connect (/Users/junping.yao/workspace_others/ai-chat/wx-mp-node-express/node_modules/sequelize/src/dialects/abstract/connection-manager.js:326:24)
+    at async /Users/junping.yao/workspace_others/ai-chat/wx-mp-node-express/node_modules/sequelize/src/dialects/abstract/connection-manager.js:250:32
+2023-03-24 16:51:46 error: uncaughtException: connect ECONNREFUSED 127.0.0.1:3306
+SequelizeConnectionRefusedError: connect ECONNREFUSED 127.0.0.1:3306
+    at ConnectionManager.connect (/Users/junping.yao/workspace_others/ai-chat/wx-mp-node-express/node_modules/sequelize/src/dialects/mysql/connection-manager.js:116:17)
+    at processTicksAndRejections (node:internal/process/task_queues:96:5)
+    at async ConnectionManager._connect (/Users/junping.yao/workspace_others/ai-chat/wx-mp-node-express/node_modules/sequelize/src/dialects/abstract/connection-manager.js:326:24)
+    at async /Users/junping.yao/workspace_others/ai-chat/wx-mp-node-express/node_modules/sequelize/src/dialects/abstract/connection-manager.js:250:32
+2023-03-24 16:51:46 error: uncaughtException: connect ECONNREFUSED 127.0.0.1:3306
+SequelizeConnectionRefusedError: connect ECONNREFUSED 127.0.0.1:3306
+    at ConnectionManager.connect (/Users/junping.yao/workspace_others/ai-chat/wx-mp-node-express/node_modules/sequelize/src/dialects/mysql/connection-manager.js:116:17)
+    at processTicksAndRejections (node:internal/process/task_queues:96:5)
+    at async ConnectionManager._connect (/Users/junping.yao/workspace_others/ai-chat/wx-mp-node-express/node_modules/sequelize/src/dialects/abstract/connection-manager.js:326:24)
+    at async /Users/junping.yao/workspace_others/ai-chat/wx-mp-node-express/node_modules/sequelize/src/dialects/abstract/connection-manager.js:250:32
+2023-03-24 16:52:45 error: uncaughtException: connect ECONNREFUSED 127.0.0.1:3306
+SequelizeConnectionRefusedError: connect ECONNREFUSED 127.0.0.1:3306
+    at ConnectionManager.connect (/Users/junping.yao/workspace_others/ai-chat/wx-mp-node-express/node_modules/sequelize/src/dialects/mysql/connection-manager.js:116:17)
+    at processTicksAndRejections (node:internal/process/task_queues:96:5)
+    at async ConnectionManager._connect (/Users/junping.yao/workspace_others/ai-chat/wx-mp-node-express/node_modules/sequelize/src/dialects/abstract/connection-manager.js:326:24)
+    at async /Users/junping.yao/workspace_others/ai-chat/wx-mp-node-express/node_modules/sequelize/src/dialects/abstract/connection-manager.js:250:32
+2023-03-24 16:52:45 error: uncaughtException: connect ECONNREFUSED 127.0.0.1:3306
+SequelizeConnectionRefusedError: connect ECONNREFUSED 127.0.0.1:3306
+    at ConnectionManager.connect (/Users/junping.yao/workspace_others/ai-chat/wx-mp-node-express/node_modules/sequelize/src/dialects/mysql/connection-manager.js:116:17)
+    at processTicksAndRejections (node:internal/process/task_queues:96:5)
+    at async ConnectionManager._connect (/Users/junping.yao/workspace_others/ai-chat/wx-mp-node-express/node_modules/sequelize/src/dialects/abstract/connection-manager.js:326:24)
+    at async /Users/junping.yao/workspace_others/ai-chat/wx-mp-node-express/node_modules/sequelize/src/dialects/abstract/connection-manager.js:250:32
+2023-03-24 16:54:17 error: uncaughtException: connect ECONNREFUSED 127.0.0.1:3306
+SequelizeConnectionRefusedError: connect ECONNREFUSED 127.0.0.1:3306
+    at ConnectionManager.connect (/Users/junping.yao/workspace_others/ai-chat/wx-mp-node-express/node_modules/sequelize/src/dialects/mysql/connection-manager.js:116:17)
+    at processTicksAndRejections (node:internal/process/task_queues:96:5)
+    at async ConnectionManager._connect (/Users/junping.yao/workspace_others/ai-chat/wx-mp-node-express/node_modules/sequelize/src/dialects/abstract/connection-manager.js:326:24)
+    at async /Users/junping.yao/workspace_others/ai-chat/wx-mp-node-express/node_modules/sequelize/src/dialects/abstract/connection-manager.js:250:32
+2023-03-24 16:54:17 error: uncaughtException: connect ECONNREFUSED 127.0.0.1:3306
+SequelizeConnectionRefusedError: connect ECONNREFUSED 127.0.0.1:3306
+    at ConnectionManager.connect (/Users/junping.yao/workspace_others/ai-chat/wx-mp-node-express/node_modules/sequelize/src/dialects/mysql/connection-manager.js:116:17)
+    at processTicksAndRejections (node:internal/process/task_queues:96:5)
+    at async ConnectionManager._connect (/Users/junping.yao/workspace_others/ai-chat/wx-mp-node-express/node_modules/sequelize/src/dialects/abstract/connection-manager.js:326:24)
+    at async /Users/junping.yao/workspace_others/ai-chat/wx-mp-node-express/node_modules/sequelize/src/dialects/abstract/connection-manager.js:250:32
+2023-03-24 16:56:03 error: uncaughtException: listen EADDRINUSE: address already in use :::80
+Error: listen EADDRINUSE: address already in use :::80
+    at Server.setupListenHandle [as _listen2] (node:net:1463:16)
+    at listenInCluster (node:net:1511:12)
+    at Server.listen (node:net:1599:7)
+    at Function.listen (/Users/junping.yao/workspace_others/ai-chat/wx-mp-node-express/node_modules/express/lib/application.js:635:24)
+    at App.listen (/Users/junping.yao/workspace_others/ai-chat/wx-mp-node-express/src/app.ts:35:14)
+    at Object.<anonymous> (/Users/junping.yao/workspace_others/ai-chat/wx-mp-node-express/src/server.ts:11:5)
+    at Module._compile (node:internal/modules/cjs/loader:1155:14)
+    at Module.m._compile (/Users/junping.yao/workspace_others/ai-chat/wx-mp-node-express/node_modules/ts-node/src/index.ts:1618:23)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1209:10)
+    at Object.require.extensions.<computed> [as .ts] (/Users/junping.yao/workspace_others/ai-chat/wx-mp-node-express/node_modules/ts-node/src/index.ts:1621:12)
+2023-03-24 16:56:03 error: uncaughtException: connect ECONNREFUSED 127.0.0.1:3306
+SequelizeConnectionRefusedError: connect ECONNREFUSED 127.0.0.1:3306
+    at ConnectionManager.connect (/Users/junping.yao/workspace_others/ai-chat/wx-mp-node-express/node_modules/sequelize/src/dialects/mysql/connection-manager.js:116:17)
+    at processTicksAndRejections (node:internal/process/task_queues:96:5)
+    at async ConnectionManager._connect (/Users/junping.yao/workspace_others/ai-chat/wx-mp-node-express/node_modules/sequelize/src/dialects/abstract/connection-manager.js:326:24)
+    at async /Users/junping.yao/workspace_others/ai-chat/wx-mp-node-express/node_modules/sequelize/src/dialects/abstract/connection-manager.js:250:32
+2023-03-24 16:56:03 error: uncaughtException: connect ECONNREFUSED 127.0.0.1:3306
+SequelizeConnectionRefusedError: connect ECONNREFUSED 127.0.0.1:3306
+    at ConnectionManager.connect (/Users/junping.yao/workspace_others/ai-chat/wx-mp-node-express/node_modules/sequelize/src/dialects/mysql/connection-manager.js:116:17)
+    at processTicksAndRejections (node:internal/process/task_queues:96:5)
+    at async ConnectionManager._connect (/Users/junping.yao/workspace_others/ai-chat/wx-mp-node-express/node_modules/sequelize/src/dialects/abstract/connection-manager.js:326:24)
+    at async /Users/junping.yao/workspace_others/ai-chat/wx-mp-node-express/node_modules/sequelize/src/dialects/abstract/connection-manager.js:250:32
+2023-03-24 17:07:10 error: uncaughtException: listen EADDRINUSE: address already in use :::80
+Error: listen EADDRINUSE: address already in use :::80
+    at Server.setupListenHandle [as _listen2] (node:net:1463:16)
+    at listenInCluster (node:net:1511:12)
+    at Server.listen (node:net:1599:7)
+    at Function.listen (/Users/junping.yao/workspace_others/ai-chat/wx-mp-node-express/node_modules/express/lib/application.js:635:24)
+    at App.listen (/Users/junping.yao/workspace_others/ai-chat/wx-mp-node-express/src/app.ts:34:14)
+    at Object.<anonymous> (/Users/junping.yao/workspace_others/ai-chat/wx-mp-node-express/src/server.ts:11:5)
+    at Module._compile (node:internal/modules/cjs/loader:1155:14)
+    at Module.m._compile (/Users/junping.yao/workspace_others/ai-chat/wx-mp-node-express/node_modules/ts-node/src/index.ts:1618:23)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1209:10)
+    at Object.require.extensions.<computed> [as .ts] (/Users/junping.yao/workspace_others/ai-chat/wx-mp-node-express/node_modules/ts-node/src/index.ts:1621:12)
+2023-03-24 17:07:10 error: uncaughtException: connect ECONNREFUSED 127.0.0.1:3306
+SequelizeConnectionRefusedError: connect ECONNREFUSED 127.0.0.1:3306
+    at ConnectionManager.connect (/Users/junping.yao/workspace_others/ai-chat/wx-mp-node-express/node_modules/sequelize/src/dialects/mysql/connection-manager.js:116:17)
+    at processTicksAndRejections (node:internal/process/task_queues:96:5)
+    at async ConnectionManager._connect (/Users/junping.yao/workspace_others/ai-chat/wx-mp-node-express/node_modules/sequelize/src/dialects/abstract/connection-manager.js:326:24)
+    at async /Users/junping.yao/workspace_others/ai-chat/wx-mp-node-express/node_modules/sequelize/src/dialects/abstract/connection-manager.js:250:32
+2023-03-24 17:07:10 error: uncaughtException: connect ECONNREFUSED 127.0.0.1:3306
+SequelizeConnectionRefusedError: connect ECONNREFUSED 127.0.0.1:3306
+    at ConnectionManager.connect (/Users/junping.yao/workspace_others/ai-chat/wx-mp-node-express/node_modules/sequelize/src/dialects/mysql/connection-manager.js:116:17)
+    at processTicksAndRejections (node:internal/process/task_queues:96:5)
+    at async ConnectionManager._connect (/Users/junping.yao/workspace_others/ai-chat/wx-mp-node-express/node_modules/sequelize/src/dialects/abstract/connection-manager.js:326:24)
+    at async /Users/junping.yao/workspace_others/ai-chat/wx-mp-node-express/node_modules/sequelize/src/dialects/abstract/connection-manager.js:250:32
+2023-03-24 17:14:07 error: uncaughtException: listen EADDRINUSE: address already in use :::80
+Error: listen EADDRINUSE: address already in use :::80
+    at Server.setupListenHandle [as _listen2] (node:net:1463:16)
+    at listenInCluster (node:net:1511:12)
+    at Server.listen (node:net:1599:7)
+    at Function.listen (/Users/junping.yao/workspace_others/ai-chat/wx-mp-node-express/node_modules/express/lib/application.js:635:24)
+    at App.listen (/Users/junping.yao/workspace_others/ai-chat/wx-mp-node-express/src/app.ts:34:14)
+    at Object.<anonymous> (/Users/junping.yao/workspace_others/ai-chat/wx-mp-node-express/src/server.ts:11:5)
+    at Module._compile (node:internal/modules/cjs/loader:1155:14)
+    at Module.m._compile (/Users/junping.yao/workspace_others/ai-chat/wx-mp-node-express/node_modules/ts-node/src/index.ts:1618:23)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1209:10)
+    at Object.require.extensions.<computed> [as .ts] (/Users/junping.yao/workspace_others/ai-chat/wx-mp-node-express/node_modules/ts-node/src/index.ts:1621:12)
+2023-03-24 17:14:07 error: uncaughtException: connect ECONNREFUSED 127.0.0.1:3306
+SequelizeConnectionRefusedError: connect ECONNREFUSED 127.0.0.1:3306
+    at ConnectionManager.connect (/Users/junping.yao/workspace_others/ai-chat/wx-mp-node-express/node_modules/sequelize/src/dialects/mysql/connection-manager.js:116:17)
+    at processTicksAndRejections (node:internal/process/task_queues:96:5)
+    at async ConnectionManager._connect (/Users/junping.yao/workspace_others/ai-chat/wx-mp-node-express/node_modules/sequelize/src/dialects/abstract/connection-manager.js:326:24)
+    at async /Users/junping.yao/workspace_others/ai-chat/wx-mp-node-express/node_modules/sequelize/src/dialects/abstract/connection-manager.js:250:32
+2023-03-24 17:14:07 error: uncaughtException: connect ECONNREFUSED 127.0.0.1:3306
+SequelizeConnectionRefusedError: connect ECONNREFUSED 127.0.0.1:3306
+    at ConnectionManager.connect (/Users/junping.yao/workspace_others/ai-chat/wx-mp-node-express/node_modules/sequelize/src/dialects/mysql/connection-manager.js:116:17)
+    at processTicksAndRejections (node:internal/process/task_queues:96:5)
+    at async ConnectionManager._connect (/Users/junping.yao/workspace_others/ai-chat/wx-mp-node-express/node_modules/sequelize/src/dialects/abstract/connection-manager.js:326:24)
+    at async /Users/junping.yao/workspace_others/ai-chat/wx-mp-node-express/node_modules/sequelize/src/dialects/abstract/connection-manager.js:250:32
+2023-03-24 17:19:56 error: uncaughtException: listen EADDRINUSE: address already in use :::80
+Error: listen EADDRINUSE: address already in use :::80
+    at Server.setupListenHandle [as _listen2] (node:net:1463:16)
+    at listenInCluster (node:net:1511:12)
+    at Server.listen (node:net:1599:7)
+    at Function.listen (/Users/junping.yao/workspace_others/ai-chat/wx-mp-node-express/node_modules/express/lib/application.js:635:24)
+    at App.listen (/Users/junping.yao/workspace_others/ai-chat/wx-mp-node-express/src/app.ts:34:14)
+    at Object.<anonymous> (/Users/junping.yao/workspace_others/ai-chat/wx-mp-node-express/src/server.ts:11:5)
+    at Module._compile (node:internal/modules/cjs/loader:1155:14)
+    at Module.m._compile (/Users/junping.yao/workspace_others/ai-chat/wx-mp-node-express/node_modules/ts-node/src/index.ts:1618:23)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1209:10)
+    at Object.require.extensions.<computed> [as .ts] (/Users/junping.yao/workspace_others/ai-chat/wx-mp-node-express/node_modules/ts-node/src/index.ts:1621:12)
+2023-03-24 17:19:56 error: uncaughtException: connect ECONNREFUSED 127.0.0.1:3306
+SequelizeConnectionRefusedError: connect ECONNREFUSED 127.0.0.1:3306
+    at ConnectionManager.connect (/Users/junping.yao/workspace_others/ai-chat/wx-mp-node-express/node_modules/sequelize/src/dialects/mysql/connection-manager.js:116:17)
+    at processTicksAndRejections (node:internal/process/task_queues:96:5)
+    at async ConnectionManager._connect (/Users/junping.yao/workspace_others/ai-chat/wx-mp-node-express/node_modules/sequelize/src/dialects/abstract/connection-manager.js:326:24)
+    at async /Users/junping.yao/workspace_others/ai-chat/wx-mp-node-express/node_modules/sequelize/src/dialects/abstract/connection-manager.js:250:32
+2023-03-24 17:19:56 error: uncaughtException: connect ECONNREFUSED 127.0.0.1:3306
+SequelizeConnectionRefusedError: connect ECONNREFUSED 127.0.0.1:3306
+    at ConnectionManager.connect (/Users/junping.yao/workspace_others/ai-chat/wx-mp-node-express/node_modules/sequelize/src/dialects/mysql/connection-manager.js:116:17)
+    at processTicksAndRejections (node:internal/process/task_queues:96:5)
+    at async ConnectionManager._connect (/Users/junping.yao/workspace_others/ai-chat/wx-mp-node-express/node_modules/sequelize/src/dialects/abstract/connection-manager.js:326:24)
+    at async /Users/junping.yao/workspace_others/ai-chat/wx-mp-node-express/node_modules/sequelize/src/dialects/abstract/connection-manager.js:250:32
+2023-03-24 17:20:19 error: uncaughtException: listen EADDRINUSE: address already in use :::80
+Error: listen EADDRINUSE: address already in use :::80
+    at Server.setupListenHandle [as _listen2] (node:net:1463:16)
+    at listenInCluster (node:net:1511:12)
+    at Server.listen (node:net:1599:7)
+    at Function.listen (/Users/junping.yao/workspace_others/ai-chat/wx-mp-node-express/node_modules/express/lib/application.js:635:24)
+    at App.listen (/Users/junping.yao/workspace_others/ai-chat/wx-mp-node-express/src/app.ts:34:14)
+    at Object.<anonymous> (/Users/junping.yao/workspace_others/ai-chat/wx-mp-node-express/src/server.ts:11:5)
+    at Module._compile (node:internal/modules/cjs/loader:1155:14)
+    at Module.m._compile (/Users/junping.yao/workspace_others/ai-chat/wx-mp-node-express/node_modules/ts-node/src/index.ts:1618:23)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1209:10)
+    at Object.require.extensions.<computed> [as .ts] (/Users/junping.yao/workspace_others/ai-chat/wx-mp-node-express/node_modules/ts-node/src/index.ts:1621:12)
+2023-03-24 17:20:19 error: uncaughtException: connect ECONNREFUSED 127.0.0.1:3306
+SequelizeConnectionRefusedError: connect ECONNREFUSED 127.0.0.1:3306
+    at ConnectionManager.connect (/Users/junping.yao/workspace_others/ai-chat/wx-mp-node-express/node_modules/sequelize/src/dialects/mysql/connection-manager.js:116:17)
+    at processTicksAndRejections (node:internal/process/task_queues:96:5)
+    at async ConnectionManager._connect (/Users/junping.yao/workspace_others/ai-chat/wx-mp-node-express/node_modules/sequelize/src/dialects/abstract/connection-manager.js:326:24)
+    at async /Users/junping.yao/workspace_others/ai-chat/wx-mp-node-express/node_modules/sequelize/src/dialects/abstract/connection-manager.js:250:32
+2023-03-24 17:20:19 error: uncaughtException: connect ECONNREFUSED 127.0.0.1:3306
+SequelizeConnectionRefusedError: connect ECONNREFUSED 127.0.0.1:3306
+    at ConnectionManager.connect (/Users/junping.yao/workspace_others/ai-chat/wx-mp-node-express/node_modules/sequelize/src/dialects/mysql/connection-manager.js:116:17)
+    at processTicksAndRejections (node:internal/process/task_queues:96:5)
+    at async ConnectionManager._connect (/Users/junping.yao/workspace_others/ai-chat/wx-mp-node-express/node_modules/sequelize/src/dialects/abstract/connection-manager.js:326:24)
+    at async /Users/junping.yao/workspace_others/ai-chat/wx-mp-node-express/node_modules/sequelize/src/dialects/abstract/connection-manager.js:250:32
+2023-03-24 17:20:32 error: uncaughtException: listen EADDRINUSE: address already in use :::80
+Error: listen EADDRINUSE: address already in use :::80
+    at Server.setupListenHandle [as _listen2] (node:net:1463:16)
+    at listenInCluster (node:net:1511:12)
+    at Server.listen (node:net:1599:7)
+    at Function.listen (/Users/junping.yao/workspace_others/ai-chat/wx-mp-node-express/node_modules/express/lib/application.js:635:24)
+    at App.listen (/Users/junping.yao/workspace_others/ai-chat/wx-mp-node-express/src/app.ts:34:14)
+    at Object.<anonymous> (/Users/junping.yao/workspace_others/ai-chat/wx-mp-node-express/src/server.ts:11:5)
+    at Module._compile (node:internal/modules/cjs/loader:1155:14)
+    at Module.m._compile (/Users/junping.yao/workspace_others/ai-chat/wx-mp-node-express/node_modules/ts-node/src/index.ts:1618:23)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1209:10)
+    at Object.require.extensions.<computed> [as .ts] (/Users/junping.yao/workspace_others/ai-chat/wx-mp-node-express/node_modules/ts-node/src/index.ts:1621:12)
+2023-03-24 17:20:32 error: uncaughtException: connect ECONNREFUSED 127.0.0.1:3306
+SequelizeConnectionRefusedError: connect ECONNREFUSED 127.0.0.1:3306
+    at ConnectionManager.connect (/Users/junping.yao/workspace_others/ai-chat/wx-mp-node-express/node_modules/sequelize/src/dialects/mysql/connection-manager.js:116:17)
+    at processTicksAndRejections (node:internal/process/task_queues:96:5)
+    at async ConnectionManager._connect (/Users/junping.yao/workspace_others/ai-chat/wx-mp-node-express/node_modules/sequelize/src/dialects/abstract/connection-manager.js:326:24)
+    at async /Users/junping.yao/workspace_others/ai-chat/wx-mp-node-express/node_modules/sequelize/src/dialects/abstract/connection-manager.js:250:32
+2023-03-24 17:20:32 error: uncaughtException: connect ECONNREFUSED 127.0.0.1:3306
+SequelizeConnectionRefusedError: connect ECONNREFUSED 127.0.0.1:3306
+    at ConnectionManager.connect (/Users/junping.yao/workspace_others/ai-chat/wx-mp-node-express/node_modules/sequelize/src/dialects/mysql/connection-manager.js:116:17)
+    at processTicksAndRejections (node:internal/process/task_queues:96:5)
+    at async ConnectionManager._connect (/Users/junping.yao/workspace_others/ai-chat/wx-mp-node-express/node_modules/sequelize/src/dialects/abstract/connection-manager.js:326:24)
+    at async /Users/junping.yao/workspace_others/ai-chat/wx-mp-node-express/node_modules/sequelize/src/dialects/abstract/connection-manager.js:250:32
+2023-03-24 17:23:43 error: uncaughtException: listen EADDRINUSE: address already in use :::80
+Error: listen EADDRINUSE: address already in use :::80
+    at Server.setupListenHandle [as _listen2] (node:net:1463:16)
+    at listenInCluster (node:net:1511:12)
+    at Server.listen (node:net:1599:7)
+    at Function.listen (/Users/junping.yao/workspace_others/ai-chat/wx-mp-node-express/node_modules/express/lib/application.js:635:24)
+    at App.listen (/Users/junping.yao/workspace_others/ai-chat/wx-mp-node-express/src/app.ts:34:14)
+    at Object.<anonymous> (/Users/junping.yao/workspace_others/ai-chat/wx-mp-node-express/src/server.ts:8:5)
+    at Module._compile (node:internal/modules/cjs/loader:1155:14)
+    at Module.m._compile (/Users/junping.yao/workspace_others/ai-chat/wx-mp-node-express/node_modules/ts-node/src/index.ts:1618:23)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1209:10)
+    at Object.require.extensions.<computed> [as .ts] (/Users/junping.yao/workspace_others/ai-chat/wx-mp-node-express/node_modules/ts-node/src/index.ts:1621:12)
+2023-03-24 17:23:43 error: uncaughtException: connect ECONNREFUSED 127.0.0.1:3306
+SequelizeConnectionRefusedError: connect ECONNREFUSED 127.0.0.1:3306
+    at ConnectionManager.connect (/Users/junping.yao/workspace_others/ai-chat/wx-mp-node-express/node_modules/sequelize/src/dialects/mysql/connection-manager.js:116:17)
+    at processTicksAndRejections (node:internal/process/task_queues:96:5)
+    at async ConnectionManager._connect (/Users/junping.yao/workspace_others/ai-chat/wx-mp-node-express/node_modules/sequelize/src/dialects/abstract/connection-manager.js:326:24)
+    at async /Users/junping.yao/workspace_others/ai-chat/wx-mp-node-express/node_modules/sequelize/src/dialects/abstract/connection-manager.js:250:32
+2023-03-24 17:23:43 error: uncaughtException: connect ECONNREFUSED 127.0.0.1:3306
+SequelizeConnectionRefusedError: connect ECONNREFUSED 127.0.0.1:3306
+    at ConnectionManager.connect (/Users/junping.yao/workspace_others/ai-chat/wx-mp-node-express/node_modules/sequelize/src/dialects/mysql/connection-manager.js:116:17)
+    at processTicksAndRejections (node:internal/process/task_queues:96:5)
+    at async ConnectionManager._connect (/Users/junping.yao/workspace_others/ai-chat/wx-mp-node-express/node_modules/sequelize/src/dialects/abstract/connection-manager.js:326:24)
+    at async /Users/junping.yao/workspace_others/ai-chat/wx-mp-node-express/node_modules/sequelize/src/dialects/abstract/connection-manager.js:250:32
+2023-03-24 17:25:30 error: uncaughtException: listen EADDRINUSE: address already in use :::80
+Error: listen EADDRINUSE: address already in use :::80
+    at Server.setupListenHandle [as _listen2] (node:net:1463:16)
+    at listenInCluster (node:net:1511:12)
+    at Server.listen (node:net:1599:7)
+    at Function.listen (/Users/junping.yao/workspace_others/ai-chat/wx-mp-node-express/node_modules/express/lib/application.js:635:24)
+    at App.listen (/Users/junping.yao/workspace_others/ai-chat/wx-mp-node-express/src/app.ts:34:14)
+    at Object.<anonymous> (/Users/junping.yao/workspace_others/ai-chat/wx-mp-node-express/src/server.ts:8:5)
+    at Module._compile (node:internal/modules/cjs/loader:1155:14)
+    at Module.m._compile (/Users/junping.yao/workspace_others/ai-chat/wx-mp-node-express/node_modules/ts-node/src/index.ts:1618:23)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1209:10)
+    at Object.require.extensions.<computed> [as .ts] (/Users/junping.yao/workspace_others/ai-chat/wx-mp-node-express/node_modules/ts-node/src/index.ts:1621:12)
+2023-03-24 17:25:30 error: uncaughtException: connect ECONNREFUSED 127.0.0.1:3306
+SequelizeConnectionRefusedError: connect ECONNREFUSED 127.0.0.1:3306
+    at ConnectionManager.connect (/Users/junping.yao/workspace_others/ai-chat/wx-mp-node-express/node_modules/sequelize/src/dialects/mysql/connection-manager.js:116:17)
+    at processTicksAndRejections (node:internal/process/task_queues:96:5)
+    at async ConnectionManager._connect (/Users/junping.yao/workspace_others/ai-chat/wx-mp-node-express/node_modules/sequelize/src/dialects/abstract/connection-manager.js:326:24)
+    at async /Users/junping.yao/workspace_others/ai-chat/wx-mp-node-express/node_modules/sequelize/src/dialects/abstract/connection-manager.js:250:32
+2023-03-24 17:25:30 error: uncaughtException: connect ECONNREFUSED 127.0.0.1:3306
+SequelizeConnectionRefusedError: connect ECONNREFUSED 127.0.0.1:3306
+    at ConnectionManager.connect (/Users/junping.yao/workspace_others/ai-chat/wx-mp-node-express/node_modules/sequelize/src/dialects/mysql/connection-manager.js:116:17)
+    at processTicksAndRejections (node:internal/process/task_queues:96:5)
+    at async ConnectionManager._connect (/Users/junping.yao/workspace_others/ai-chat/wx-mp-node-express/node_modules/sequelize/src/dialects/abstract/connection-manager.js:326:24)
+    at async /Users/junping.yao/workspace_others/ai-chat/wx-mp-node-express/node_modules/sequelize/src/dialects/abstract/connection-manager.js:250:32
+2023-03-24 17:25:33 error: uncaughtException: listen EADDRINUSE: address already in use :::80
+Error: listen EADDRINUSE: address already in use :::80
+    at Server.setupListenHandle [as _listen2] (node:net:1463:16)
+    at listenInCluster (node:net:1511:12)
+    at Server.listen (node:net:1599:7)
+    at Function.listen (/Users/junping.yao/workspace_others/ai-chat/wx-mp-node-express/node_modules/express/lib/application.js:635:24)
+    at App.listen (/Users/junping.yao/workspace_others/ai-chat/wx-mp-node-express/src/app.ts:34:14)
+    at Object.<anonymous> (/Users/junping.yao/workspace_others/ai-chat/wx-mp-node-express/src/server.ts:8:5)
+    at Module._compile (node:internal/modules/cjs/loader:1155:14)
+    at Module.m._compile (/Users/junping.yao/workspace_others/ai-chat/wx-mp-node-express/node_modules/ts-node/src/index.ts:1618:23)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1209:10)
+    at Object.require.extensions.<computed> [as .ts] (/Users/junping.yao/workspace_others/ai-chat/wx-mp-node-express/node_modules/ts-node/src/index.ts:1621:12)
+2023-03-24 17:25:33 error: uncaughtException: connect ECONNREFUSED 127.0.0.1:3306
+SequelizeConnectionRefusedError: connect ECONNREFUSED 127.0.0.1:3306
+    at ConnectionManager.connect (/Users/junping.yao/workspace_others/ai-chat/wx-mp-node-express/node_modules/sequelize/src/dialects/mysql/connection-manager.js:116:17)
+    at processTicksAndRejections (node:internal/process/task_queues:96:5)
+    at async ConnectionManager._connect (/Users/junping.yao/workspace_others/ai-chat/wx-mp-node-express/node_modules/sequelize/src/dialects/abstract/connection-manager.js:326:24)
+    at async /Users/junping.yao/workspace_others/ai-chat/wx-mp-node-express/node_modules/sequelize/src/dialects/abstract/connection-manager.js:250:32
+2023-03-24 17:25:33 error: uncaughtException: connect ECONNREFUSED 127.0.0.1:3306
+SequelizeConnectionRefusedError: connect ECONNREFUSED 127.0.0.1:3306
+    at ConnectionManager.connect (/Users/junping.yao/workspace_others/ai-chat/wx-mp-node-express/node_modules/sequelize/src/dialects/mysql/connection-manager.js:116:17)
+    at processTicksAndRejections (node:internal/process/task_queues:96:5)
+    at async ConnectionManager._connect (/Users/junping.yao/workspace_others/ai-chat/wx-mp-node-express/node_modules/sequelize/src/dialects/abstract/connection-manager.js:326:24)
+    at async /Users/junping.yao/workspace_others/ai-chat/wx-mp-node-express/node_modules/sequelize/src/dialects/abstract/connection-manager.js:250:32
+2023-03-24 17:27:09 error: uncaughtException: listen EADDRINUSE: address already in use :::80
+Error: listen EADDRINUSE: address already in use :::80
+    at Server.setupListenHandle [as _listen2] (node:net:1463:16)
+    at listenInCluster (node:net:1511:12)
+    at Server.listen (node:net:1599:7)
+    at Function.listen (/Users/junping.yao/workspace_others/ai-chat/wx-mp-node-express/node_modules/express/lib/application.js:635:24)
+    at App.listen (/Users/junping.yao/workspace_others/ai-chat/wx-mp-node-express/src/app.ts:34:14)
+    at Object.<anonymous> (/Users/junping.yao/workspace_others/ai-chat/wx-mp-node-express/src/server.ts:8:5)
+    at Module._compile (node:internal/modules/cjs/loader:1155:14)
+    at Module.m._compile (/Users/junping.yao/workspace_others/ai-chat/wx-mp-node-express/node_modules/ts-node/src/index.ts:1618:23)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1209:10)
+    at Object.require.extensions.<computed> [as .ts] (/Users/junping.yao/workspace_others/ai-chat/wx-mp-node-express/node_modules/ts-node/src/index.ts:1621:12)
+2023-03-24 17:27:09 error: uncaughtException: connect ECONNREFUSED 127.0.0.1:3306
+SequelizeConnectionRefusedError: connect ECONNREFUSED 127.0.0.1:3306
+    at ConnectionManager.connect (/Users/junping.yao/workspace_others/ai-chat/wx-mp-node-express/node_modules/sequelize/src/dialects/mysql/connection-manager.js:116:17)
+    at processTicksAndRejections (node:internal/process/task_queues:96:5)
+    at async ConnectionManager._connect (/Users/junping.yao/workspace_others/ai-chat/wx-mp-node-express/node_modules/sequelize/src/dialects/abstract/connection-manager.js:326:24)
+    at async /Users/junping.yao/workspace_others/ai-chat/wx-mp-node-express/node_modules/sequelize/src/dialects/abstract/connection-manager.js:250:32
+2023-03-24 17:27:09 error: uncaughtException: connect ECONNREFUSED 127.0.0.1:3306
+SequelizeConnectionRefusedError: connect ECONNREFUSED 127.0.0.1:3306
+    at ConnectionManager.connect (/Users/junping.yao/workspace_others/ai-chat/wx-mp-node-express/node_modules/sequelize/src/dialects/mysql/connection-manager.js:116:17)
+    at processTicksAndRejections (node:internal/process/task_queues:96:5)
+    at async ConnectionManager._connect (/Users/junping.yao/workspace_others/ai-chat/wx-mp-node-express/node_modules/sequelize/src/dialects/abstract/connection-manager.js:326:24)
+    at async /Users/junping.yao/workspace_others/ai-chat/wx-mp-node-express/node_modules/sequelize/src/dialects/abstract/connection-manager.js:250:32
+2023-03-24 17:34:36 error: uncaughtException: listen EADDRINUSE: address already in use :::80
+Error: listen EADDRINUSE: address already in use :::80
+    at Server.setupListenHandle [as _listen2] (node:net:1463:16)
+    at listenInCluster (node:net:1511:12)
+    at Server.listen (node:net:1599:7)
+    at Function.listen (/Users/junping.yao/workspace_others/ai-chat/wx-mp-node-express/node_modules/express/lib/application.js:635:24)
+    at App.listen (/Users/junping.yao/workspace_others/ai-chat/wx-mp-node-express/src/app.ts:34:14)
+    at Object.<anonymous> (/Users/junping.yao/workspace_others/ai-chat/wx-mp-node-express/src/server.ts:8:5)
+    at Module._compile (node:internal/modules/cjs/loader:1155:14)
+    at Module.m._compile (/Users/junping.yao/workspace_others/ai-chat/wx-mp-node-express/node_modules/ts-node/src/index.ts:1618:23)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1209:10)
+    at Object.require.extensions.<computed> [as .ts] (/Users/junping.yao/workspace_others/ai-chat/wx-mp-node-express/node_modules/ts-node/src/index.ts:1621:12)
+2023-03-24 17:34:36 error: uncaughtException: connect ECONNREFUSED 127.0.0.1:3306
+SequelizeConnectionRefusedError: connect ECONNREFUSED 127.0.0.1:3306
+    at ConnectionManager.connect (/Users/junping.yao/workspace_others/ai-chat/wx-mp-node-express/node_modules/sequelize/src/dialects/mysql/connection-manager.js:116:17)
+    at processTicksAndRejections (node:internal/process/task_queues:96:5)
+    at async ConnectionManager._connect (/Users/junping.yao/workspace_others/ai-chat/wx-mp-node-express/node_modules/sequelize/src/dialects/abstract/connection-manager.js:326:24)
+    at async /Users/junping.yao/workspace_others/ai-chat/wx-mp-node-express/node_modules/sequelize/src/dialects/abstract/connection-manager.js:250:32
+2023-03-24 17:34:36 error: uncaughtException: connect ECONNREFUSED 127.0.0.1:3306
+SequelizeConnectionRefusedError: connect ECONNREFUSED 127.0.0.1:3306
+    at ConnectionManager.connect (/Users/junping.yao/workspace_others/ai-chat/wx-mp-node-express/node_modules/sequelize/src/dialects/mysql/connection-manager.js:116:17)
+    at processTicksAndRejections (node:internal/process/task_queues:96:5)
+    at async ConnectionManager._connect (/Users/junping.yao/workspace_others/ai-chat/wx-mp-node-express/node_modules/sequelize/src/dialects/abstract/connection-manager.js:326:24)
+    at async /Users/junping.yao/workspace_others/ai-chat/wx-mp-node-express/node_modules/sequelize/src/dialects/abstract/connection-manager.js:250:32
+2023-03-24 17:34:46 error: uncaughtException: listen EADDRINUSE: address already in use :::80
+Error: listen EADDRINUSE: address already in use :::80
+    at Server.setupListenHandle [as _listen2] (node:net:1463:16)
+    at listenInCluster (node:net:1511:12)
+    at Server.listen (node:net:1599:7)
+    at Function.listen (/Users/junping.yao/workspace_others/ai-chat/wx-mp-node-express/node_modules/express/lib/application.js:635:24)
+    at App.listen (/Users/junping.yao/workspace_others/ai-chat/wx-mp-node-express/src/app.ts:34:14)
+    at Object.<anonymous> (/Users/junping.yao/workspace_others/ai-chat/wx-mp-node-express/src/server.ts:8:5)
+    at Module._compile (node:internal/modules/cjs/loader:1155:14)
+    at Module.m._compile (/Users/junping.yao/workspace_others/ai-chat/wx-mp-node-express/node_modules/ts-node/src/index.ts:1618:23)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1209:10)
+    at Object.require.extensions.<computed> [as .ts] (/Users/junping.yao/workspace_others/ai-chat/wx-mp-node-express/node_modules/ts-node/src/index.ts:1621:12)
+2023-03-24 17:34:46 error: uncaughtException: connect ECONNREFUSED 127.0.0.1:3306
+SequelizeConnectionRefusedError: connect ECONNREFUSED 127.0.0.1:3306
+    at ConnectionManager.connect (/Users/junping.yao/workspace_others/ai-chat/wx-mp-node-express/node_modules/sequelize/src/dialects/mysql/connection-manager.js:116:17)
+    at processTicksAndRejections (node:internal/process/task_queues:96:5)
+    at async ConnectionManager._connect (/Users/junping.yao/workspace_others/ai-chat/wx-mp-node-express/node_modules/sequelize/src/dialects/abstract/connection-manager.js:326:24)
+    at async /Users/junping.yao/workspace_others/ai-chat/wx-mp-node-express/node_modules/sequelize/src/dialects/abstract/connection-manager.js:250:32
+2023-03-24 17:34:46 error: uncaughtException: connect ECONNREFUSED 127.0.0.1:3306
+SequelizeConnectionRefusedError: connect ECONNREFUSED 127.0.0.1:3306
+    at ConnectionManager.connect (/Users/junping.yao/workspace_others/ai-chat/wx-mp-node-express/node_modules/sequelize/src/dialects/mysql/connection-manager.js:116:17)
+    at processTicksAndRejections (node:internal/process/task_queues:96:5)
+    at async ConnectionManager._connect (/Users/junping.yao/workspace_others/ai-chat/wx-mp-node-express/node_modules/sequelize/src/dialects/abstract/connection-manager.js:326:24)
+    at async /Users/junping.yao/workspace_others/ai-chat/wx-mp-node-express/node_modules/sequelize/src/dialects/abstract/connection-manager.js:250:32
+2023-03-24 17:38:40 error: uncaughtException: listen EADDRINUSE: address already in use :::80
+Error: listen EADDRINUSE: address already in use :::80
+    at Server.setupListenHandle [as _listen2] (node:net:1463:16)
+    at listenInCluster (node:net:1511:12)
+    at Server.listen (node:net:1599:7)
+    at Function.listen (/Users/junping.yao/workspace_others/ai-chat/wx-mp-node-express/node_modules/express/lib/application.js:635:24)
+    at App.listen (/Users/junping.yao/workspace_others/ai-chat/wx-mp-node-express/src/app.ts:34:14)
+    at Object.<anonymous> (/Users/junping.yao/workspace_others/ai-chat/wx-mp-node-express/src/server.ts:8:5)
+    at Module._compile (node:internal/modules/cjs/loader:1155:14)
+    at Module.m._compile (/Users/junping.yao/workspace_others/ai-chat/wx-mp-node-express/node_modules/ts-node/src/index.ts:1618:23)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1209:10)
+    at Object.require.extensions.<computed> [as .ts] (/Users/junping.yao/workspace_others/ai-chat/wx-mp-node-express/node_modules/ts-node/src/index.ts:1621:12)
+2023-03-24 17:46:47 error: uncaughtException: listen EADDRINUSE: address already in use :::80
+Error: listen EADDRINUSE: address already in use :::80
+    at Server.setupListenHandle [as _listen2] (node:net:1463:16)
+    at listenInCluster (node:net:1511:12)
+    at Server.listen (node:net:1599:7)
+    at Function.listen (/Users/junping.yao/workspace_others/ai-chat/wx-mp-node-express/node_modules/express/lib/application.js:635:24)
+    at App.listen (/Users/junping.yao/workspace_others/ai-chat/wx-mp-node-express/src/app.ts:34:14)
+    at Object.<anonymous> (/Users/junping.yao/workspace_others/ai-chat/wx-mp-node-express/src/server.ts:8:5)
+    at Module._compile (node:internal/modules/cjs/loader:1155:14)
+    at Module.m._compile (/Users/junping.yao/workspace_others/ai-chat/wx-mp-node-express/node_modules/ts-node/src/index.ts:1618:23)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1209:10)
+    at Object.require.extensions.<computed> [as .ts] (/Users/junping.yao/workspace_others/ai-chat/wx-mp-node-express/node_modules/ts-node/src/index.ts:1621:12)
+2023-03-24 17:48:35 error: uncaughtException: listen EADDRINUSE: address already in use :::80
+Error: listen EADDRINUSE: address already in use :::80
+    at Server.setupListenHandle [as _listen2] (node:net:1463:16)
+    at listenInCluster (node:net:1511:12)
+    at Server.listen (node:net:1599:7)
+    at Function.listen (/Users/junping.yao/workspace_others/ai-chat/wx-mp-node-express/node_modules/express/lib/application.js:635:24)
+    at App.listen (/Users/junping.yao/workspace_others/ai-chat/wx-mp-node-express/src/app.ts:34:14)
+    at Object.<anonymous> (/Users/junping.yao/workspace_others/ai-chat/wx-mp-node-express/src/server.ts:8:5)
+    at Module._compile (node:internal/modules/cjs/loader:1155:14)
+    at Module.m._compile (/Users/junping.yao/workspace_others/ai-chat/wx-mp-node-express/node_modules/ts-node/src/index.ts:1618:23)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1209:10)
+    at Object.require.extensions.<computed> [as .ts] (/Users/junping.yao/workspace_others/ai-chat/wx-mp-node-express/node_modules/ts-node/src/index.ts:1621:12)
+2023-03-24 18:43:22 error: uncaughtException: listen EADDRINUSE: address already in use :::80
+Error: listen EADDRINUSE: address already in use :::80
+    at Server.setupListenHandle [as _listen2] (node:net:1463:16)
+    at listenInCluster (node:net:1511:12)
+    at Server.listen (node:net:1599:7)
+    at Function.listen (/Users/junping.yao/workspace_others/ai-chat/wx-mp-node-express/node_modules/express/lib/application.js:635:24)
+    at App.listen (/Users/junping.yao/workspace_others/ai-chat/wx-mp-node-express/src/app.ts:34:14)
+    at Object.<anonymous> (/Users/junping.yao/workspace_others/ai-chat/wx-mp-node-express/src/server.ts:8:5)
+    at Module._compile (node:internal/modules/cjs/loader:1155:14)
+    at Module.m._compile (/Users/junping.yao/workspace_others/ai-chat/wx-mp-node-express/node_modules/ts-node/src/index.ts:1618:23)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1209:10)
+    at Object.require.extensions.<computed> [as .ts] (/Users/junping.yao/workspace_others/ai-chat/wx-mp-node-express/node_modules/ts-node/src/index.ts:1621:12)
+2023-03-24 18:47:23 error: uncaughtException: listen EADDRINUSE: address already in use :::80
+Error: listen EADDRINUSE: address already in use :::80
+    at Server.setupListenHandle [as _listen2] (node:net:1463:16)
+    at listenInCluster (node:net:1511:12)
+    at Server.listen (node:net:1599:7)
+    at Function.listen (/Users/junping.yao/workspace_others/ai-chat/wx-mp-node-express/node_modules/express/lib/application.js:635:24)
+    at App.listen (/Users/junping.yao/workspace_others/ai-chat/wx-mp-node-express/src/app.ts:34:14)
+    at Object.<anonymous> (/Users/junping.yao/workspace_others/ai-chat/wx-mp-node-express/src/server.ts:8:5)
+    at Module._compile (node:internal/modules/cjs/loader:1155:14)
+    at Module.m._compile (/Users/junping.yao/workspace_others/ai-chat/wx-mp-node-express/node_modules/ts-node/src/index.ts:1618:23)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1209:10)
+    at Object.require.extensions.<computed> [as .ts] (/Users/junping.yao/workspace_others/ai-chat/wx-mp-node-express/node_modules/ts-node/src/index.ts:1621:12)
+2023-03-24 18:47:53 error: uncaughtException: listen EADDRINUSE: address already in use :::80
+Error: listen EADDRINUSE: address already in use :::80
+    at Server.setupListenHandle [as _listen2] (node:net:1463:16)
+    at listenInCluster (node:net:1511:12)
+    at Server.listen (node:net:1599:7)
+    at Function.listen (/Users/junping.yao/workspace_others/ai-chat/wx-mp-node-express/node_modules/express/lib/application.js:635:24)
+    at App.listen (/Users/junping.yao/workspace_others/ai-chat/wx-mp-node-express/src/app.ts:34:14)
+    at Object.<anonymous> (/Users/junping.yao/workspace_others/ai-chat/wx-mp-node-express/src/server.ts:8:5)
+    at Module._compile (node:internal/modules/cjs/loader:1155:14)
+    at Module.m._compile (/Users/junping.yao/workspace_others/ai-chat/wx-mp-node-express/node_modules/ts-node/src/index.ts:1618:23)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1209:10)
+    at Object.require.extensions.<computed> [as .ts] (/Users/junping.yao/workspace_others/ai-chat/wx-mp-node-express/node_modules/ts-node/src/index.ts:1621:12)
+2023-03-24 18:48:09 error: uncaughtException: listen EADDRINUSE: address already in use :::80
+Error: listen EADDRINUSE: address already in use :::80
+    at Server.setupListenHandle [as _listen2] (node:net:1463:16)
+    at listenInCluster (node:net:1511:12)
+    at Server.listen (node:net:1599:7)
+    at Function.listen (/Users/junping.yao/workspace_others/ai-chat/wx-mp-node-express/node_modules/express/lib/application.js:635:24)
+    at App.listen (/Users/junping.yao/workspace_others/ai-chat/wx-mp-node-express/src/app.ts:34:14)
+    at Object.<anonymous> (/Users/junping.yao/workspace_others/ai-chat/wx-mp-node-express/src/server.ts:8:5)
+    at Module._compile (node:internal/modules/cjs/loader:1155:14)
+    at Module.m._compile (/Users/junping.yao/workspace_others/ai-chat/wx-mp-node-express/node_modules/ts-node/src/index.ts:1618:23)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1209:10)
+    at Object.require.extensions.<computed> [as .ts] (/Users/junping.yao/workspace_others/ai-chat/wx-mp-node-express/node_modules/ts-node/src/index.ts:1621:12)
+2023-03-24 18:50:59 error: uncaughtException: listen EADDRINUSE: address already in use :::80
+Error: listen EADDRINUSE: address already in use :::80
+    at Server.setupListenHandle [as _listen2] (node:net:1463:16)
+    at listenInCluster (node:net:1511:12)
+    at Server.listen (node:net:1599:7)
+    at Function.listen (/Users/junping.yao/workspace_others/ai-chat/wx-mp-node-express/node_modules/express/lib/application.js:635:24)
+    at App.listen (/Users/junping.yao/workspace_others/ai-chat/wx-mp-node-express/src/app.ts:34:14)
+    at Object.<anonymous> (/Users/junping.yao/workspace_others/ai-chat/wx-mp-node-express/src/server.ts:8:5)
+    at Module._compile (node:internal/modules/cjs/loader:1155:14)
+    at Module.m._compile (/Users/junping.yao/workspace_others/ai-chat/wx-mp-node-express/node_modules/ts-node/src/index.ts:1618:23)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1209:10)
+    at Object.require.extensions.<computed> [as .ts] (/Users/junping.yao/workspace_others/ai-chat/wx-mp-node-express/node_modules/ts-node/src/index.ts:1621:12)
+2023-03-24 18:51:24 error: uncaughtException: listen EADDRINUSE: address already in use :::80
+Error: listen EADDRINUSE: address already in use :::80
+    at Server.setupListenHandle [as _listen2] (node:net:1463:16)
+    at listenInCluster (node:net:1511:12)
+    at Server.listen (node:net:1599:7)
+    at Function.listen (/Users/junping.yao/workspace_others/ai-chat/wx-mp-node-express/node_modules/express/lib/application.js:635:24)
+    at App.listen (/Users/junping.yao/workspace_others/ai-chat/wx-mp-node-express/src/app.ts:34:14)
+    at Object.<anonymous> (/Users/junping.yao/workspace_others/ai-chat/wx-mp-node-express/src/server.ts:8:5)
+    at Module._compile (node:internal/modules/cjs/loader:1155:14)
+    at Module.m._compile (/Users/junping.yao/workspace_others/ai-chat/wx-mp-node-express/node_modules/ts-node/src/index.ts:1618:23)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1209:10)
+    at Object.require.extensions.<computed> [as .ts] (/Users/junping.yao/workspace_others/ai-chat/wx-mp-node-express/node_modules/ts-node/src/index.ts:1621:12)
+2023-03-24 18:51:47 error: uncaughtException: listen EADDRINUSE: address already in use :::80
+Error: listen EADDRINUSE: address already in use :::80
+    at Server.setupListenHandle [as _listen2] (node:net:1463:16)
+    at listenInCluster (node:net:1511:12)
+    at Server.listen (node:net:1599:7)
+    at Function.listen (/Users/junping.yao/workspace_others/ai-chat/wx-mp-node-express/node_modules/express/lib/application.js:635:24)
+    at App.listen (/Users/junping.yao/workspace_others/ai-chat/wx-mp-node-express/src/app.ts:34:14)
+    at Object.<anonymous> (/Users/junping.yao/workspace_others/ai-chat/wx-mp-node-express/src/server.ts:8:5)
+    at Module._compile (node:internal/modules/cjs/loader:1155:14)
+    at Module.m._compile (/Users/junping.yao/workspace_others/ai-chat/wx-mp-node-express/node_modules/ts-node/src/index.ts:1618:23)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1209:10)
+    at Object.require.extensions.<computed> [as .ts] (/Users/junping.yao/workspace_others/ai-chat/wx-mp-node-express/node_modules/ts-node/src/index.ts:1621:12)
+2023-03-24 18:52:00 error: uncaughtException: listen EADDRINUSE: address already in use :::80
+Error: listen EADDRINUSE: address already in use :::80
+    at Server.setupListenHandle [as _listen2] (node:net:1463:16)
+    at listenInCluster (node:net:1511:12)
+    at Server.listen (node:net:1599:7)
+    at Function.listen (/Users/junping.yao/workspace_others/ai-chat/wx-mp-node-express/node_modules/express/lib/application.js:635:24)
+    at App.listen (/Users/junping.yao/workspace_others/ai-chat/wx-mp-node-express/src/app.ts:34:14)
+    at Object.<anonymous> (/Users/junping.yao/workspace_others/ai-chat/wx-mp-node-express/src/server.ts:8:5)
+    at Module._compile (node:internal/modules/cjs/loader:1155:14)
+    at Module.m._compile (/Users/junping.yao/workspace_others/ai-chat/wx-mp-node-express/node_modules/ts-node/src/index.ts:1618:23)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1209:10)
+    at Object.require.extensions.<computed> [as .ts] (/Users/junping.yao/workspace_others/ai-chat/wx-mp-node-express/node_modules/ts-node/src/index.ts:1621:12)
+2023-03-24 18:52:31 error: uncaughtException: listen EADDRINUSE: address already in use :::80
+Error: listen EADDRINUSE: address already in use :::80
+    at Server.setupListenHandle [as _listen2] (node:net:1463:16)
+    at listenInCluster (node:net:1511:12)
+    at Server.listen (node:net:1599:7)
+    at Function.listen (/Users/junping.yao/workspace_others/ai-chat/wx-mp-node-express/node_modules/express/lib/application.js:635:24)
+    at App.listen (/Users/junping.yao/workspace_others/ai-chat/wx-mp-node-express/src/app.ts:34:14)
+    at Object.<anonymous> (/Users/junping.yao/workspace_others/ai-chat/wx-mp-node-express/src/server.ts:8:5)
+    at Module._compile (node:internal/modules/cjs/loader:1155:14)
+    at Module.m._compile (/Users/junping.yao/workspace_others/ai-chat/wx-mp-node-express/node_modules/ts-node/src/index.ts:1618:23)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1209:10)
+    at Object.require.extensions.<computed> [as .ts] (/Users/junping.yao/workspace_others/ai-chat/wx-mp-node-express/node_modules/ts-node/src/index.ts:1621:12)
+2023-03-24 18:54:54 error: uncaughtException: listen EADDRINUSE: address already in use :::80
+Error: listen EADDRINUSE: address already in use :::80
+    at Server.setupListenHandle [as _listen2] (node:net:1463:16)
+    at listenInCluster (node:net:1511:12)
+    at Server.listen (node:net:1599:7)
+    at Function.listen (/Users/junping.yao/workspace_others/ai-chat/wx-mp-node-express/node_modules/express/lib/application.js:635:24)
+    at App.listen (/Users/junping.yao/workspace_others/ai-chat/wx-mp-node-express/src/app.ts:34:14)
+    at Object.<anonymous> (/Users/junping.yao/workspace_others/ai-chat/wx-mp-node-express/src/server.ts:8:5)
+    at Module._compile (node:internal/modules/cjs/loader:1155:14)
+    at Module.m._compile (/Users/junping.yao/workspace_others/ai-chat/wx-mp-node-express/node_modules/ts-node/src/index.ts:1618:23)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1209:10)
+    at Object.require.extensions.<computed> [as .ts] (/Users/junping.yao/workspace_others/ai-chat/wx-mp-node-express/node_modules/ts-node/src/index.ts:1621:12)
+2023-03-24 18:55:11 error: uncaughtException: listen EADDRINUSE: address already in use :::80
+Error: listen EADDRINUSE: address already in use :::80
+    at Server.setupListenHandle [as _listen2] (node:net:1463:16)
+    at listenInCluster (node:net:1511:12)
+    at Server.listen (node:net:1599:7)
+    at Function.listen (/Users/junping.yao/workspace_others/ai-chat/wx-mp-node-express/node_modules/express/lib/application.js:635:24)
+    at App.listen (/Users/junping.yao/workspace_others/ai-chat/wx-mp-node-express/src/app.ts:34:14)
+    at Object.<anonymous> (/Users/junping.yao/workspace_others/ai-chat/wx-mp-node-express/src/server.ts:8:5)
+    at Module._compile (node:internal/modules/cjs/loader:1155:14)
+    at Module.m._compile (/Users/junping.yao/workspace_others/ai-chat/wx-mp-node-express/node_modules/ts-node/src/index.ts:1618:23)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1209:10)
+    at Object.require.extensions.<computed> [as .ts] (/Users/junping.yao/workspace_others/ai-chat/wx-mp-node-express/node_modules/ts-node/src/index.ts:1621:12)
+2023-03-24 18:56:07 error: uncaughtException: listen EADDRINUSE: address already in use :::80
+Error: listen EADDRINUSE: address already in use :::80
+    at Server.setupListenHandle [as _listen2] (node:net:1463:16)
+    at listenInCluster (node:net:1511:12)
+    at Server.listen (node:net:1599:7)
+    at Function.listen (/Users/junping.yao/workspace_others/ai-chat/wx-mp-node-express/node_modules/express/lib/application.js:635:24)
+    at App.listen (/Users/junping.yao/workspace_others/ai-chat/wx-mp-node-express/src/app.ts:34:14)
+    at Object.<anonymous> (/Users/junping.yao/workspace_others/ai-chat/wx-mp-node-express/src/server.ts:8:5)
+    at Module._compile (node:internal/modules/cjs/loader:1155:14)
+    at Module.m._compile (/Users/junping.yao/workspace_others/ai-chat/wx-mp-node-express/node_modules/ts-node/src/index.ts:1618:23)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1209:10)
+    at Object.require.extensions.<computed> [as .ts] (/Users/junping.yao/workspace_others/ai-chat/wx-mp-node-express/node_modules/ts-node/src/index.ts:1621:12)
+2023-03-24 18:57:42 error: uncaughtException: listen EADDRINUSE: address already in use :::80
+Error: listen EADDRINUSE: address already in use :::80
+    at Server.setupListenHandle [as _listen2] (node:net:1463:16)
+    at listenInCluster (node:net:1511:12)
+    at Server.listen (node:net:1599:7)
+    at Function.listen (/Users/junping.yao/workspace_others/ai-chat/wx-mp-node-express/node_modules/express/lib/application.js:635:24)
+    at App.listen (/Users/junping.yao/workspace_others/ai-chat/wx-mp-node-express/src/app.ts:34:14)
+    at Object.<anonymous> (/Users/junping.yao/workspace_others/ai-chat/wx-mp-node-express/src/server.ts:8:5)
+    at Module._compile (node:internal/modules/cjs/loader:1155:14)
+    at Module.m._compile (/Users/junping.yao/workspace_others/ai-chat/wx-mp-node-express/node_modules/ts-node/src/index.ts:1618:23)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1209:10)
+    at Object.require.extensions.<computed> [as .ts] (/Users/junping.yao/workspace_others/ai-chat/wx-mp-node-express/node_modules/ts-node/src/index.ts:1621:12)
+2023-03-24 19:14:59 error: [GET] /users >> StatusCode:: 500, Message:: Cannot read properties of undefined (reading 'findAll')

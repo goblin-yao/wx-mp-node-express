@@ -1,0 +1,209 @@
+2023-03-26 00:06:11 info: =================================
+2023-03-26 00:06:11 info: ======= ENV: development =======
+2023-03-26 00:06:11 info: 🚀 App listening on the port 80
+2023-03-26 00:06:11 info: =================================
+2023-03-26 00:06:12 info: 38ms Executed (default): SELECT 1+1 AS result
+2023-03-26 00:06:12 info: 40ms Executed (default): SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'BASE TABLE' AND TABLE_NAME = 'chat_users' AND TABLE_SCHEMA = 'wx_mp_chat'
+2023-03-26 00:06:12 info: 37ms Executed (default): SHOW INDEX FROM `chat_users`
+2023-03-26 00:06:12 info: 35ms Executed (default): SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'BASE TABLE' AND TABLE_NAME = 'chat_messages' AND TABLE_SCHEMA = 'wx_mp_chat'
+2023-03-26 00:06:12 info: 41ms Executed (default): SHOW INDEX FROM `chat_messages`
+2023-03-26 00:06:12 info: 38ms Executed (default): SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'BASE TABLE' AND TABLE_NAME = 'chat_users_limits' AND TABLE_SCHEMA = 'wx_mp_chat'
+2023-03-26 00:06:12 info: 39ms Executed (default): SHOW INDEX FROM `chat_users_limits`
+2023-03-26 00:06:12 info: 35ms Executed (default): SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'BASE TABLE' AND TABLE_NAME = 'chat_users_share_histories' AND TABLE_SCHEMA = 'wx_mp_chat'
+2023-03-26 00:06:12 info: 39ms Executed (default): SHOW INDEX FROM `chat_users_share_histories`
+2023-03-26 00:18:54 info: =================================
+2023-03-26 00:18:54 info: ======= ENV: development =======
+2023-03-26 00:18:54 info: 🚀 App listening on the port 80
+2023-03-26 00:18:54 info: =================================
+2023-03-26 00:18:54 info: 35ms Executed (default): SELECT 1+1 AS result
+2023-03-26 00:18:54 info: 36ms Executed (default): SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'BASE TABLE' AND TABLE_NAME = 'chat_users' AND TABLE_SCHEMA = 'wx_mp_chat'
+2023-03-26 00:18:54 info: 43ms Executed (default): SHOW INDEX FROM `chat_users`
+2023-03-26 00:18:54 info: 34ms Executed (default): SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'BASE TABLE' AND TABLE_NAME = 'chat_messages' AND TABLE_SCHEMA = 'wx_mp_chat'
+2023-03-26 00:18:54 info: 34ms Executed (default): SHOW INDEX FROM `chat_messages`
+2023-03-26 00:18:54 info: 43ms Executed (default): SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'BASE TABLE' AND TABLE_NAME = 'chat_users_limits' AND TABLE_SCHEMA = 'wx_mp_chat'
+2023-03-26 00:18:54 info: 37ms Executed (default): SHOW INDEX FROM `chat_users_limits`
+2023-03-26 00:18:54 info: 45ms Executed (default): SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'BASE TABLE' AND TABLE_NAME = 'chat_users_share_histories' AND TABLE_SCHEMA = 'wx_mp_chat'
+2023-03-26 00:18:54 info: 43ms Executed (default): SHOW INDEX FROM `chat_users_share_histories`
+2023-03-26 00:19:55 info: =================================
+2023-03-26 00:19:55 info: ======= ENV: development =======
+2023-03-26 00:19:55 info: 🚀 App listening on the port 80
+2023-03-26 00:19:55 info: =================================
+2023-03-26 00:19:55 info: 33ms Executed (default): SELECT 1+1 AS result
+2023-03-26 00:19:55 info: 41ms Executed (default): SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'BASE TABLE' AND TABLE_NAME = 'chat_users' AND TABLE_SCHEMA = 'wx_mp_chat'
+2023-03-26 00:19:55 info: 36ms Executed (default): SHOW INDEX FROM `chat_users`
+2023-03-26 00:19:55 info: 35ms Executed (default): SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'BASE TABLE' AND TABLE_NAME = 'chat_messages' AND TABLE_SCHEMA = 'wx_mp_chat'
+2023-03-26 00:19:55 info: 34ms Executed (default): SHOW INDEX FROM `chat_messages`
+2023-03-26 00:19:55 info: 39ms Executed (default): SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'BASE TABLE' AND TABLE_NAME = 'chat_users_limits' AND TABLE_SCHEMA = 'wx_mp_chat'
+2023-03-26 00:19:55 info: 40ms Executed (default): SHOW INDEX FROM `chat_users_limits`
+2023-03-26 00:19:55 info: 39ms Executed (default): SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'BASE TABLE' AND TABLE_NAME = 'chat_users_share_histories' AND TABLE_SCHEMA = 'wx_mp_chat'
+2023-03-26 00:19:56 info: 35ms Executed (default): SHOW INDEX FROM `chat_users_share_histories`
+2023-03-26 00:20:03 info: =================================
+2023-03-26 00:20:03 info: ======= ENV: development =======
+2023-03-26 00:20:03 info: 🚀 App listening on the port 80
+2023-03-26 00:20:03 info: =================================
+2023-03-26 00:20:03 info: 40ms Executed (default): SELECT 1+1 AS result
+2023-03-26 00:20:03 info: 41ms Executed (default): SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'BASE TABLE' AND TABLE_NAME = 'chat_users' AND TABLE_SCHEMA = 'wx_mp_chat'
+2023-03-26 00:20:04 info: 38ms Executed (default): SHOW INDEX FROM `chat_users`
+2023-03-26 00:20:04 info: 34ms Executed (default): SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'BASE TABLE' AND TABLE_NAME = 'chat_messages' AND TABLE_SCHEMA = 'wx_mp_chat'
+2023-03-26 00:20:04 info: 42ms Executed (default): SHOW INDEX FROM `chat_messages`
+2023-03-26 00:20:04 info: 35ms Executed (default): SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'BASE TABLE' AND TABLE_NAME = 'chat_users_limits' AND TABLE_SCHEMA = 'wx_mp_chat'
+2023-03-26 00:20:04 info: 36ms Executed (default): SHOW INDEX FROM `chat_users_limits`
+2023-03-26 00:20:04 info: 35ms Executed (default): SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'BASE TABLE' AND TABLE_NAME = 'chat_users_share_histories' AND TABLE_SCHEMA = 'wx_mp_chat'
+2023-03-26 00:20:04 info: 35ms Executed (default): SHOW INDEX FROM `chat_users_share_histories`
+2023-03-26 00:20:09 info: =================================
+2023-03-26 00:20:09 info: ======= ENV: development =======
+2023-03-26 00:20:09 info: 🚀 App listening on the port 80
+2023-03-26 00:20:09 info: =================================
+2023-03-26 00:20:10 info: 43ms Executed (default): SELECT 1+1 AS result
+2023-03-26 00:20:10 info: 43ms Executed (default): SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'BASE TABLE' AND TABLE_NAME = 'chat_users' AND TABLE_SCHEMA = 'wx_mp_chat'
+2023-03-26 00:20:10 info: 37ms Executed (default): SHOW INDEX FROM `chat_users`
+2023-03-26 00:20:10 info: 36ms Executed (default): SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'BASE TABLE' AND TABLE_NAME = 'chat_messages' AND TABLE_SCHEMA = 'wx_mp_chat'
+2023-03-26 00:20:10 info: 35ms Executed (default): SHOW INDEX FROM `chat_messages`
+2023-03-26 00:20:10 info: 35ms Executed (default): SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'BASE TABLE' AND TABLE_NAME = 'chat_users_limits' AND TABLE_SCHEMA = 'wx_mp_chat'
+2023-03-26 00:20:10 info: 46ms Executed (default): SHOW INDEX FROM `chat_users_limits`
+2023-03-26 00:20:10 info: 35ms Executed (default): SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'BASE TABLE' AND TABLE_NAME = 'chat_users_share_histories' AND TABLE_SCHEMA = 'wx_mp_chat'
+2023-03-26 00:20:10 info: 36ms Executed (default): SHOW INDEX FROM `chat_users_share_histories`
+2023-03-26 00:24:30 info: =================================
+2023-03-26 00:24:30 info: ======= ENV: development =======
+2023-03-26 00:24:30 info: 🚀 App listening on the port 80
+2023-03-26 00:24:30 info: =================================
+2023-03-26 00:24:31 info: 36ms Executed (default): SELECT 1+1 AS result
+2023-03-26 00:24:31 info: 36ms Executed (default): SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'BASE TABLE' AND TABLE_NAME = 'chat_users' AND TABLE_SCHEMA = 'wx_mp_chat'
+2023-03-26 00:24:31 info: 36ms Executed (default): SHOW INDEX FROM `chat_users`
+2023-03-26 00:24:31 info: 36ms Executed (default): SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'BASE TABLE' AND TABLE_NAME = 'chat_messages' AND TABLE_SCHEMA = 'wx_mp_chat'
+2023-03-26 00:24:31 info: 40ms Executed (default): SHOW INDEX FROM `chat_messages`
+2023-03-26 00:24:31 info: 37ms Executed (default): SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'BASE TABLE' AND TABLE_NAME = 'chat_users_limits' AND TABLE_SCHEMA = 'wx_mp_chat'
+2023-03-26 00:24:31 info: 41ms Executed (default): SHOW INDEX FROM `chat_users_limits`
+2023-03-26 00:24:31 info: 38ms Executed (default): SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'BASE TABLE' AND TABLE_NAME = 'chat_users_share_histories' AND TABLE_SCHEMA = 'wx_mp_chat'
+2023-03-26 00:24:31 info: 39ms Executed (default): SHOW INDEX FROM `chat_users_share_histories`
+2023-03-26 00:25:40 info: =================================
+2023-03-26 00:25:40 info: ======= ENV: development =======
+2023-03-26 00:25:40 info: 🚀 App listening on the port 80
+2023-03-26 00:25:40 info: =================================
+2023-03-26 00:25:41 info: 35ms Executed (default): SELECT 1+1 AS result
+2023-03-26 00:25:41 info: 37ms Executed (default): SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'BASE TABLE' AND TABLE_NAME = 'chat_users' AND TABLE_SCHEMA = 'wx_mp_chat'
+2023-03-26 00:25:41 info: 38ms Executed (default): SHOW INDEX FROM `chat_users`
+2023-03-26 00:25:41 info: 34ms Executed (default): SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'BASE TABLE' AND TABLE_NAME = 'chat_messages' AND TABLE_SCHEMA = 'wx_mp_chat'
+2023-03-26 00:25:41 info: 44ms Executed (default): SHOW INDEX FROM `chat_messages`
+2023-03-26 00:25:41 info: 39ms Executed (default): SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'BASE TABLE' AND TABLE_NAME = 'chat_users_limits' AND TABLE_SCHEMA = 'wx_mp_chat'
+2023-03-26 00:25:41 info: 44ms Executed (default): SHOW INDEX FROM `chat_users_limits`
+2023-03-26 00:25:41 info: 42ms Executed (default): SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'BASE TABLE' AND TABLE_NAME = 'chat_users_share_histories' AND TABLE_SCHEMA = 'wx_mp_chat'
+2023-03-26 00:25:41 info: 39ms Executed (default): SHOW INDEX FROM `chat_users_share_histories`
+2023-03-26 00:26:06 info: =================================
+2023-03-26 00:26:06 info: ======= ENV: development =======
+2023-03-26 00:26:06 info: 🚀 App listening on the port 80
+2023-03-26 00:26:06 info: =================================
+2023-03-26 00:26:06 info: 44ms Executed (default): SELECT 1+1 AS result
+2023-03-26 00:26:06 info: 45ms Executed (default): SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'BASE TABLE' AND TABLE_NAME = 'chat_users' AND TABLE_SCHEMA = 'wx_mp_chat'
+2023-03-26 00:26:06 info: 36ms Executed (default): SHOW INDEX FROM `chat_users`
+2023-03-26 00:26:06 info: 34ms Executed (default): SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'BASE TABLE' AND TABLE_NAME = 'chat_messages' AND TABLE_SCHEMA = 'wx_mp_chat'
+2023-03-26 00:26:06 info: 45ms Executed (default): SHOW INDEX FROM `chat_messages`
+2023-03-26 00:26:06 info: 35ms Executed (default): SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'BASE TABLE' AND TABLE_NAME = 'chat_users_limits' AND TABLE_SCHEMA = 'wx_mp_chat'
+2023-03-26 00:26:07 info: 44ms Executed (default): SHOW INDEX FROM `chat_users_limits`
+2023-03-26 00:26:07 info: 38ms Executed (default): SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'BASE TABLE' AND TABLE_NAME = 'chat_users_share_histories' AND TABLE_SCHEMA = 'wx_mp_chat'
+2023-03-26 00:26:07 info: 38ms Executed (default): SHOW INDEX FROM `chat_users_share_histories`
+2023-03-26 00:26:15 info: =================================
+2023-03-26 00:26:15 info: ======= ENV: development =======
+2023-03-26 00:26:15 info: 🚀 App listening on the port 80
+2023-03-26 00:26:15 info: =================================
+2023-03-26 00:26:15 info: 36ms Executed (default): SELECT 1+1 AS result
+2023-03-26 00:26:15 info: 40ms Executed (default): SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'BASE TABLE' AND TABLE_NAME = 'chat_users' AND TABLE_SCHEMA = 'wx_mp_chat'
+2023-03-26 00:26:15 info: 41ms Executed (default): SHOW INDEX FROM `chat_users`
+2023-03-26 00:26:15 info: 33ms Executed (default): SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'BASE TABLE' AND TABLE_NAME = 'chat_messages' AND TABLE_SCHEMA = 'wx_mp_chat'
+2023-03-26 00:26:16 info: 39ms Executed (default): SHOW INDEX FROM `chat_messages`
+2023-03-26 00:26:16 info: 39ms Executed (default): SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'BASE TABLE' AND TABLE_NAME = 'chat_users_limits' AND TABLE_SCHEMA = 'wx_mp_chat'
+2023-03-26 00:26:16 info: 39ms Executed (default): SHOW INDEX FROM `chat_users_limits`
+2023-03-26 00:26:16 info: 39ms Executed (default): SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'BASE TABLE' AND TABLE_NAME = 'chat_users_share_histories' AND TABLE_SCHEMA = 'wx_mp_chat'
+2023-03-26 00:26:16 info: 39ms Executed (default): SHOW INDEX FROM `chat_users_share_histories`
+2023-03-26 00:26:48 info: =================================
+2023-03-26 00:26:48 info: ======= ENV: development =======
+2023-03-26 00:26:48 info: 🚀 App listening on the port 80
+2023-03-26 00:26:48 info: =================================
+2023-03-26 00:26:48 info: 32ms Executed (default): SELECT 1+1 AS result
+2023-03-26 00:26:48 info: 33ms Executed (default): SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'BASE TABLE' AND TABLE_NAME = 'chat_users' AND TABLE_SCHEMA = 'wx_mp_chat'
+2023-03-26 00:26:48 info: 34ms Executed (default): SHOW INDEX FROM `chat_users`
+2023-03-26 00:26:48 info: 32ms Executed (default): SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'BASE TABLE' AND TABLE_NAME = 'chat_messages' AND TABLE_SCHEMA = 'wx_mp_chat'
+2023-03-26 00:26:48 info: 38ms Executed (default): SHOW INDEX FROM `chat_messages`
+2023-03-26 00:26:49 info: 38ms Executed (default): SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'BASE TABLE' AND TABLE_NAME = 'chat_users_limits' AND TABLE_SCHEMA = 'wx_mp_chat'
+2023-03-26 00:26:49 info: 39ms Executed (default): SHOW INDEX FROM `chat_users_limits`
+2023-03-26 00:26:49 info: 32ms Executed (default): SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'BASE TABLE' AND TABLE_NAME = 'chat_users_share_histories' AND TABLE_SCHEMA = 'wx_mp_chat'
+2023-03-26 00:26:49 info: 39ms Executed (default): SHOW INDEX FROM `chat_users_share_histories`
+2023-03-26 00:26:51 info: =================================
+2023-03-26 00:26:51 info: ======= ENV: development =======
+2023-03-26 00:26:51 info: 🚀 App listening on the port 80
+2023-03-26 00:26:51 info: =================================
+2023-03-26 00:26:51 info: 37ms Executed (default): SELECT 1+1 AS result
+2023-03-26 00:26:51 info: 41ms Executed (default): SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'BASE TABLE' AND TABLE_NAME = 'chat_users' AND TABLE_SCHEMA = 'wx_mp_chat'
+2023-03-26 00:26:52 info: 45ms Executed (default): SHOW INDEX FROM `chat_users`
+2023-03-26 00:26:52 info: 38ms Executed (default): SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'BASE TABLE' AND TABLE_NAME = 'chat_messages' AND TABLE_SCHEMA = 'wx_mp_chat'
+2023-03-26 00:26:52 info: 41ms Executed (default): SHOW INDEX FROM `chat_messages`
+2023-03-26 00:26:52 info: 42ms Executed (default): SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'BASE TABLE' AND TABLE_NAME = 'chat_users_limits' AND TABLE_SCHEMA = 'wx_mp_chat'
+2023-03-26 00:26:52 info: 43ms Executed (default): SHOW INDEX FROM `chat_users_limits`
+2023-03-26 00:26:52 info: 43ms Executed (default): SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'BASE TABLE' AND TABLE_NAME = 'chat_users_share_histories' AND TABLE_SCHEMA = 'wx_mp_chat'
+2023-03-26 00:26:52 info: 40ms Executed (default): SHOW INDEX FROM `chat_users_share_histories`
+2023-03-26 00:27:37 info: =================================
+2023-03-26 00:27:37 info: ======= ENV: development =======
+2023-03-26 00:27:37 info: 🚀 App listening on the port 80
+2023-03-26 00:27:37 info: =================================
+2023-03-26 00:27:38 info: 37ms Executed (default): SELECT 1+1 AS result
+2023-03-26 00:27:38 info: 37ms Executed (default): SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'BASE TABLE' AND TABLE_NAME = 'chat_users' AND TABLE_SCHEMA = 'wx_mp_chat'
+2023-03-26 00:27:38 info: 35ms Executed (default): SHOW INDEX FROM `chat_users`
+2023-03-26 00:27:38 info: 34ms Executed (default): SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'BASE TABLE' AND TABLE_NAME = 'chat_messages' AND TABLE_SCHEMA = 'wx_mp_chat'
+2023-03-26 00:27:38 info: 43ms Executed (default): SHOW INDEX FROM `chat_messages`
+2023-03-26 00:27:38 info: 43ms Executed (default): SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'BASE TABLE' AND TABLE_NAME = 'chat_users_limits' AND TABLE_SCHEMA = 'wx_mp_chat'
+2023-03-26 00:27:38 info: 42ms Executed (default): SHOW INDEX FROM `chat_users_limits`
+2023-03-26 00:27:38 info: 41ms Executed (default): SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'BASE TABLE' AND TABLE_NAME = 'chat_users_share_histories' AND TABLE_SCHEMA = 'wx_mp_chat'
+2023-03-26 00:27:38 info: 44ms Executed (default): SHOW INDEX FROM `chat_users_share_histories`
+2023-03-26 00:28:32 info: =================================
+2023-03-26 00:28:32 info: ======= ENV: development =======
+2023-03-26 00:28:32 info: 🚀 App listening on the port 80
+2023-03-26 00:28:32 info: =================================
+2023-03-26 00:28:33 info: 36ms Executed (default): SELECT 1+1 AS result
+2023-03-26 00:28:33 info: 38ms Executed (default): SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'BASE TABLE' AND TABLE_NAME = 'chat_users' AND TABLE_SCHEMA = 'wx_mp_chat'
+2023-03-26 00:28:33 info: 37ms Executed (default): SHOW INDEX FROM `chat_users`
+2023-03-26 00:28:33 info: 35ms Executed (default): SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'BASE TABLE' AND TABLE_NAME = 'chat_messages' AND TABLE_SCHEMA = 'wx_mp_chat'
+2023-03-26 00:28:33 info: 35ms Executed (default): SHOW INDEX FROM `chat_messages`
+2023-03-26 00:28:33 info: 35ms Executed (default): SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'BASE TABLE' AND TABLE_NAME = 'chat_users_limits' AND TABLE_SCHEMA = 'wx_mp_chat'
+2023-03-26 00:28:33 info: 36ms Executed (default): SHOW INDEX FROM `chat_users_limits`
+2023-03-26 00:28:33 info: 34ms Executed (default): SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'BASE TABLE' AND TABLE_NAME = 'chat_users_share_histories' AND TABLE_SCHEMA = 'wx_mp_chat'
+2023-03-26 00:28:33 info: 42ms Executed (default): SHOW INDEX FROM `chat_users_share_histories`
+2023-03-26 00:28:38 info: =================================
+2023-03-26 00:28:38 info: ======= ENV: development =======
+2023-03-26 00:28:38 info: 🚀 App listening on the port 80
+2023-03-26 00:28:38 info: =================================
+2023-03-26 00:28:39 info: 40ms Executed (default): SELECT 1+1 AS result
+2023-03-26 00:28:39 info: 40ms Executed (default): SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'BASE TABLE' AND TABLE_NAME = 'chat_users' AND TABLE_SCHEMA = 'wx_mp_chat'
+2023-03-26 00:28:39 info: 36ms Executed (default): SHOW INDEX FROM `chat_users`
+2023-03-26 00:28:39 info: 35ms Executed (default): SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'BASE TABLE' AND TABLE_NAME = 'chat_messages' AND TABLE_SCHEMA = 'wx_mp_chat'
+2023-03-26 00:28:39 info: 35ms Executed (default): SHOW INDEX FROM `chat_messages`
+2023-03-26 00:28:39 info: 44ms Executed (default): SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'BASE TABLE' AND TABLE_NAME = 'chat_users_limits' AND TABLE_SCHEMA = 'wx_mp_chat'
+2023-03-26 00:28:39 info: 44ms Executed (default): SHOW INDEX FROM `chat_users_limits`
+2023-03-26 00:28:39 info: 38ms Executed (default): SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'BASE TABLE' AND TABLE_NAME = 'chat_users_share_histories' AND TABLE_SCHEMA = 'wx_mp_chat'
+2023-03-26 00:28:39 info: 44ms Executed (default): SHOW INDEX FROM `chat_users_share_histories`
+2023-03-26 00:29:55 info: =================================
+2023-03-26 00:29:55 info: ======= ENV: development =======
+2023-03-26 00:29:55 info: 🚀 App listening on the port 80
+2023-03-26 00:29:55 info: =================================
+2023-03-26 00:29:55 info: 33ms Executed (default): SELECT 1+1 AS result
+2023-03-26 00:29:55 info: 33ms Executed (default): SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'BASE TABLE' AND TABLE_NAME = 'chat_users' AND TABLE_SCHEMA = 'wx_mp_chat'
+2023-03-26 00:29:55 info: 36ms Executed (default): SHOW INDEX FROM `chat_users`
+2023-03-26 00:29:55 info: 33ms Executed (default): SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'BASE TABLE' AND TABLE_NAME = 'chat_messages' AND TABLE_SCHEMA = 'wx_mp_chat'
+2023-03-26 00:29:55 info: 38ms Executed (default): SHOW INDEX FROM `chat_messages`
+2023-03-26 00:29:55 info: 33ms Executed (default): SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'BASE TABLE' AND TABLE_NAME = 'chat_users_limits' AND TABLE_SCHEMA = 'wx_mp_chat'
+2023-03-26 00:29:55 info: 38ms Executed (default): SHOW INDEX FROM `chat_users_limits`
+2023-03-26 00:29:56 info: 38ms Executed (default): SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'BASE TABLE' AND TABLE_NAME = 'chat_users_share_histories' AND TABLE_SCHEMA = 'wx_mp_chat'
+2023-03-26 00:29:56 info: 36ms Executed (default): SHOW INDEX FROM `chat_users_share_histories`
+2023-03-26 00:30:24 info: =================================
+2023-03-26 00:30:24 info: ======= ENV: development =======
+2023-03-26 00:30:24 info: 🚀 App listening on the port 80
+2023-03-26 00:30:24 info: =================================
+2023-03-26 00:30:25 info: 38ms Executed (default): SELECT 1+1 AS result
+2023-03-26 00:30:25 info: 40ms Executed (default): SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'BASE TABLE' AND TABLE_NAME = 'chat_users' AND TABLE_SCHEMA = 'wx_mp_chat'
+2023-03-26 00:30:25 info: 37ms Executed (default): SHOW INDEX FROM `chat_users`
+2023-03-26 00:30:25 info: 35ms Executed (default): SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'BASE TABLE' AND TABLE_NAME = 'chat_messages' AND TABLE_SCHEMA = 'wx_mp_chat'
+2023-03-26 00:30:25 info: 44ms Executed (default): SHOW INDEX FROM `chat_messages`
+2023-03-26 00:30:25 info: 34ms Executed (default): SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'BASE TABLE' AND TABLE_NAME = 'chat_users_limits' AND TABLE_SCHEMA = 'wx_mp_chat'
+2023-03-26 00:30:25 info: 43ms Executed (default): SHOW INDEX FROM `chat_users_limits`
+2023-03-26 00:30:25 info: 43ms Executed (default): SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'BASE TABLE' AND TABLE_NAME = 'chat_users_share_histories' AND TABLE_SCHEMA = 'wx_mp_chat'
+2023-03-26 00:30:25 info: 43ms Executed (default): SHOW INDEX FROM `chat_users_share_histories`
+2023-03-26 00:30:49 info: 41ms Executed (default): SELECT 1+1 AS result
