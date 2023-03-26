@@ -4,15 +4,25 @@ import ChatUserService from '@services/chatuser.service';
 import ChatUserLimitService from '@/services/chatuserlimit.service';
 import ChatUserShareHistoriesService from '@/services/chatusershare.service';
 import ChatMessageService from '@/services/chatmessage.service';
+import ChatUserAdvertiseHistoriesService from '@/services/chatuseradvertisehistory.service';
 import { WXSubscribeSend, WXCustomSendMessage, WXMsgChecker } from '@/services/wxopenapi.service';
 import { CONSTANTS } from '@/config';
-const { RESPONSE_CODE, LIMIT_NUM_FROM_SHARE_PERDAY, MAX_HISTORY_RECORD, MAX_HISTORY_SAVE, MAX_LIMIT_PERDAY, TIME_FOR_NEW_USER } = CONSTANTS;
+const {
+  RESPONSE_CODE,
+  LIMIT_NUM_FROM_SHARE_PERDAY,
+  MAX_HISTORY_RECORD,
+  MAX_HISTORY_SAVE,
+  MAX_LIMIT_PERDAY,
+  TIME_FOR_NEW_USER,
+  LIMIT_NUM_FROM_ADVERTISE_PERDAY,
+} = CONSTANTS;
 
 class MiniProgramController {
   public _userService = new ChatUserService();
   public _userLimitService = new ChatUserLimitService();
   public _userShareHistoriesService = new ChatUserShareHistoriesService();
   public _messageService = new ChatMessageService();
+  public _userAdvertiseHistoriesService = new ChatUserAdvertiseHistoriesService();
 
   private addLimitNumFromShare = async (openid: string, share_from_openid: string) => {
     // 判断今天总记录数是否大于指定次数
@@ -63,7 +73,7 @@ class MiniProgramController {
     try {
       let hasUser = await this._userService.findUser(openid);
       if (hasUser) {
-        res.send({
+        res.status(RESPONSE_CODE.SUCCESS).json({
           code: RESPONSE_CODE.ERROR,
           data: hasUser,
         });
@@ -75,13 +85,13 @@ class MiniProgramController {
           avatarUrl: avatarUrl,
           nickName: nickName,
         });
-        res.send({
+        res.status(RESPONSE_CODE.SUCCESS).json({
           code: RESPONSE_CODE.SUCCESS,
           data: result,
         });
       }
     } catch (error) {
-      res.send({
+      res.status(RESPONSE_CODE.SUCCESS).json({
         code: RESPONSE_CODE.ERROR,
       });
     }
@@ -94,7 +104,7 @@ class MiniProgramController {
     try {
       let hasUser = await this._userService.findUser(openid);
       if (hasUser) {
-        res.send({
+        res.status(RESPONSE_CODE.SUCCESS).json({
           code: RESPONSE_CODE.SUCCESS,
           data: hasUser,
         });
@@ -103,7 +113,7 @@ class MiniProgramController {
           openid,
           unionid,
         });
-        res.send({
+        res.status(RESPONSE_CODE.SUCCESS).json({
           code: RESPONSE_CODE.SUCCESS,
           data: result,
         });
@@ -111,7 +121,7 @@ class MiniProgramController {
     } catch (error) {
       console.log('errro', error);
       // 未登录时需要传openid给小程序，这样方便后面的操作身份
-      res.send({
+      res.status(RESPONSE_CODE.SUCCESS).json({
         code: RESPONSE_CODE.ERROR,
         data: { openid },
       });
@@ -147,7 +157,7 @@ class MiniProgramController {
             parentMessageId,
             messageId,
           });
-          res.send({
+          res.status(RESPONSE_CODE.SUCCESS).json({
             code: RESPONSE_CODE.SUCCESS,
             data: result,
           });
@@ -164,7 +174,7 @@ class MiniProgramController {
             messageId,
             attachment: JSON.stringify(data),
           });
-          res.send({
+          res.status(RESPONSE_CODE.SUCCESS).json({
             code: RESPONSE_CODE.SUCCESS,
           });
           break;
@@ -173,7 +183,7 @@ class MiniProgramController {
       }
     } catch (error) {
       console.log('eerrr=>', error);
-      res.send({
+      res.status(RESPONSE_CODE.SUCCESS).json({
         code: RESPONSE_CODE.ERROR,
       });
     }
@@ -190,7 +200,7 @@ class MiniProgramController {
         ],
         limit: MAX_HISTORY_RECORD,
       });
-      res.send({
+      res.status(RESPONSE_CODE.SUCCESS).json({
         code: RESPONSE_CODE.SUCCESS,
         data: { count, rows },
       });
@@ -207,7 +217,7 @@ class MiniProgramController {
         });
       }
     } catch (error) {
-      res.send({
+      res.status(RESPONSE_CODE.SUCCESS).json({
         code: RESPONSE_CODE.ERROR,
         data: { count: 0, rows: [] },
       });
@@ -226,9 +236,9 @@ class MiniProgramController {
       ) {
         await userLimit.update({ chat_left_nums: MAX_LIMIT_PERDAY - 1 });
         await userLimit.save();
-        res.send({
+        res.status(RESPONSE_CODE.SUCCESS).json({
           code: RESPONSE_CODE.SUCCESS,
-          data: { nums: MAX_LIMIT_PERDAY - 1 },
+          data: { chat_left_nums: MAX_LIMIT_PERDAY - 1 },
         }); // 最新的剩余次数
         return;
       }
@@ -237,9 +247,9 @@ class MiniProgramController {
 
       if (leftTimes == 0) {
         //说明次数到了，不做处理
-        res.send({
+        res.status(RESPONSE_CODE.SUCCESS).json({
           code: RESPONSE_CODE.SUCCESS,
-          data: { nums: leftTimes },
+          data: { chat_left_nums: leftTimes },
         }); // 最新的剩余次数0次
         return;
       } else {
@@ -248,9 +258,9 @@ class MiniProgramController {
 
       await userLimit.update({ chat_left_nums: leftTimes });
       await userLimit.save();
-      res.send({
+      res.status(RESPONSE_CODE.SUCCESS).json({
         code: RESPONSE_CODE.SUCCESS,
-        data: { nums: leftTimes },
+        data: { chat_left_nums: leftTimes },
       }); // 最新的剩余次数次
       return;
     } catch (error) {
@@ -262,21 +272,15 @@ class MiniProgramController {
         });
       }
       // 出现异常就返回新的
-      res.send({
+      res.status(RESPONSE_CODE.SUCCESS).json({
         code: RESPONSE_CODE.ERROR,
-        data: { nums: MAX_LIMIT_PERDAY - 1 },
+        data: { chat_left_nums: MAX_LIMIT_PERDAY - 1 },
       });
       return;
     }
   };
   public limitGet = async (req: Request, res: Response, next: NextFunction) => {
     const openid = req.headers['x-wx-openid'] as string;
-    const c = { nums: 123 };
-    res.send({
-      code: RESPONSE_CODE.SUCCESS,
-      data: c,
-    }); // 最新的剩余次数
-    return; // test
 
     let userLimit = null;
     try {
@@ -288,50 +292,98 @@ class MiniProgramController {
       ) {
         await userLimit.update({ chat_left_nums: MAX_LIMIT_PERDAY });
         await userLimit.save();
-        res.send({
+        res.status(RESPONSE_CODE.SUCCESS).json({
           code: RESPONSE_CODE.SUCCESS,
-          data: { nums: MAX_LIMIT_PERDAY },
+          data: { chat_left_nums: MAX_LIMIT_PERDAY },
         }); // 最新的剩余次数
         return;
       }
-      res.send({
+      res.status(RESPONSE_CODE.SUCCESS).json({
         code: RESPONSE_CODE.SUCCESS,
-        data: { nums: userLimit.chat_left_nums },
+        data: { chat_left_nums: userLimit.chat_left_nums },
       });
       return;
     } catch (error) {
+      console.log('111', userLimit);
       //没有记录，创建最新的
       if (!userLimit) {
         await this._userLimitService.serviceInstance.create({
           openid,
           chat_left_nums: TIME_FOR_NEW_USER,
         });
+        res.status(RESPONSE_CODE.SUCCESS).json({
+          code: RESPONSE_CODE.USER.NewUser,
+          data: { chat_left_nums: TIME_FOR_NEW_USER },
+        });
+      } else {
+        // 出现异常就返回新的
+        res.status(RESPONSE_CODE.SUCCESS).json({
+          code: RESPONSE_CODE.ERROR,
+          data: { chat_left_nums: MAX_LIMIT_PERDAY },
+        });
       }
-      // 出现异常就返回新的
-      res.send({
-        code: RESPONSE_CODE.ERROR,
-        data: { nums: MAX_LIMIT_PERDAY },
-      });
       return;
     }
   };
 
-  // 广告增加次数
+  // 广告增加次数，  //看广告 3次/每个，每日最多12次
+  // LIMIT_NUM_FROM_ADVERTISE_PERDAY: {
+  //   MAX_NUM_PERVIEW: 3,
+  //   MAX_TIMES_PERDAY: 12,
+  // },
   public addLimitFromAdvertise = async (req: Request, res: Response, next: NextFunction) => {
-    throw new Error('Method not implemented.');
+    const openid = req.headers['x-wx-openid'] as string;
+    // 判断今天总记录数是否大于指定次数
+    const recordToday = await this._userAdvertiseHistoriesService.serviceInstance.count({
+      where: {
+        openid,
+        updatedAt: {
+          [Op.gt]: new Date(new Date().toLocaleDateString()),
+        },
+      },
+    });
+    // 增加次数
+    let [userLimit] = await this._userLimitService.serviceInstance.findOrCreate({
+      where: { openid },
+    });
+    console.log('recordToday advertise=>', recordToday);
+    // 小于今天次数
+    if (recordToday < LIMIT_NUM_FROM_ADVERTISE_PERDAY.MAX_TIMES_PERDAY) {
+      // 增加次数记录
+      const record = await this._userAdvertiseHistoriesService.serviceInstance.create({
+        openid,
+      });
+      console.log('advertise: [record]', record.toJSON());
+
+      if (userLimit) {
+        //最近更新时间小于今天凌晨0点 且当前次数小于最大次数, 说明需要更新了,
+        await userLimit.update({
+          chat_left_nums: userLimit.chat_left_nums + LIMIT_NUM_FROM_ADVERTISE_PERDAY.MAX_NUM_PERVIEW,
+        });
+        await userLimit.save();
+      }
+    }
+
+    res.status(RESPONSE_CODE.SUCCESS).json({
+      code: RESPONSE_CODE.SUCCESS,
+      data: {
+        chat_left_nums: userLimit.chat_left_nums,
+        reachTodaysLimit: recordToday + 1 >= LIMIT_NUM_FROM_ADVERTISE_PERDAY.MAX_TIMES_PERDAY, //今天到底
+      },
+    });
   };
 
   checkText = async (req: Request, res: Response, next: NextFunction) => {
     const openid = req.headers['x-wx-openid'] as string;
     const { content } = req.body;
     const result = await WXMsgChecker(content, { openid });
-    res.send(result);
+    res.status(RESPONSE_CODE.SUCCESS).json(result);
   };
 
   subscribeSend = async (req: Request, res: Response, next: NextFunction) => {
     const openid = req.headers['x-wx-openid'] as string;
     const result = await WXSubscribeSend({ toOpenId: openid });
-    res.send(result);
+    res.status(RESPONSE_CODE.SUCCESS).json(result);
   };
 }
 

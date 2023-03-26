@@ -1,7 +1,11 @@
 import { NextFunction, Request, Response } from 'express';
 import openAIService from '@services/openai.service';
+import { CONSTANTS } from '@config';
 import * as types from '../chatgptlib/types';
 type ChatResponse = { error?: any } & types.ChatMessage;
+
+const { RESPONSE_CODE } = CONSTANTS;
+
 class ProxyAPIController {
   public aiService = new openAIService();
   public chat = async (req: Request, res: Response, next: NextFunction) => {
@@ -16,7 +20,7 @@ class ProxyAPIController {
       response.error = error;
     }
     console.log('post request time=>', Number(new Date()) - statTime);
-    res.send(response);
+    res.status(RESPONSE_CODE.SUCCESS).json(response);
   };
 
   public getModels = async (req: Request, res: Response, next: NextFunction) => {
@@ -26,7 +30,7 @@ class ProxyAPIController {
     } catch (error) {
       response.error = error;
     }
-    res.send(response);
+    res.status(RESPONSE_CODE.SUCCESS).json(response);
   };
 }
 

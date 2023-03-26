@@ -20,7 +20,7 @@ export const LOG_FORMAT = 'dev';
 export const LOG_DIR = '../logs';
 
 export const CONSTANTS = {
-  RESPONSE_CODE: { SUCCESS: 200, ERROR: -1 },
+  RESPONSE_CODE: { SUCCESS: 200, ERROR: -1, USER: { NewUser: 101 } },
   MAX_LIMIT_PERDAY: 50, //每天最大次数
   TIME_FOR_NEW_USER: 40, //新用户40次,
   MAX_HISTORY_RECORD: 50,
