@@ -9,9 +9,6 @@ import { CONSTANTS } from '@/config';
 const { RESPONSE_CODE, LIMIT_NUM_FROM_SHARE_PERDAY, MAX_HISTORY_RECORD, MAX_HISTORY_SAVE, MAX_LIMIT_PERDAY, TIME_FOR_NEW_USER } = CONSTANTS;
 
 class MiniProgramController {
-  public addLimitFromAdvertise(arg0: `${string}/limit/addfromadvertise`, addLimitFromAdvertise: any) {
-    throw new Error('Method not implemented.');
-  }
   public _userService = new ChatUserService();
   public _userLimitService = new ChatUserLimitService();
   public _userShareHistoriesService = new ChatUserShareHistoriesService();
@@ -272,7 +269,7 @@ class MiniProgramController {
       return;
     }
   };
-  limitGet = async (req: Request, res: Response, next: NextFunction) => {
+  public limitGet = async (req: Request, res: Response, next: NextFunction) => {
     const openid = req.headers['x-wx-openid'] as string;
 
     let userLimit = null;
@@ -314,6 +311,11 @@ class MiniProgramController {
       });
       return;
     }
+  };
+
+  // 广告增加次数
+  public addLimitFromAdvertise = async (req: Request, res: Response, next: NextFunction) => {
+    throw new Error('Method not implemented.');
   };
 
   checkText = async (req: Request, res: Response, next: NextFunction) => {

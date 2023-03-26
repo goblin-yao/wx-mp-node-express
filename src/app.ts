@@ -1,8 +1,5 @@
-import compression from 'compression';
-import cookieParser from 'cookie-parser';
 import cors from 'cors';
 import express from 'express';
-import hpp from 'hpp';
 import morgan from 'morgan';
 import swaggerJSDoc from 'swagger-jsdoc';
 import swaggerUi from 'swagger-ui-express';
@@ -51,9 +48,6 @@ class App {
     this.app.use(cors());
     this.app.use(express.json());
     this.app.use(express.urlencoded({ extended: false }));
-    this.app.use(hpp());
-    this.app.use(compression());
-    this.app.use(cookieParser());
   }
 
   private initializeRoutes(routes: Routes[]) {
