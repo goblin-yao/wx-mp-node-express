@@ -271,6 +271,7 @@ class MiniProgramController {
     let userLimit = null;
     try {
       userLimit = await this._userLimitService.serviceInstance.findOne({ where: { openid } });
+      console.log('userLimit=>>', userLimit);
       //最近更新时间小于今天凌晨0点 且当前次数小于最大次数, 说明需要更新了,
       if (
         new Date(userLimit.updatedAt).getTime() < new Date(new Date().toLocaleDateString()).getTime() &&
@@ -283,11 +284,13 @@ class MiniProgramController {
           chat_left_nums: MAX_LIMIT_PERDAY,
         }); // 最新的剩余次数
       }
+      console.log('userLimit1=>>', userLimit.toString());
       return res.send({
         code: RESPONSE_CODE.SUCCESS,
         chat_left_nums: userLimit.chat_left_nums,
       });
     } catch (error) {
+      console.log('userLimit2=>>', error);
       //没有记录，创建最新的
       if (!userLimit) {
         await this._userLimitService.serviceInstance.create({
