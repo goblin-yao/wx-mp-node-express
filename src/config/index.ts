@@ -4,7 +4,13 @@ if (process.env.NODE_ENV === 'development') {
   config({ path: `.env.development.local` });
 }
 
+/**
+ * 这些配置在微信云托管
+ */
 export const { OPENAI_API_KEY, CHATGPT_MODEL_GPT, CHATGPT_MODEL, MYSQL_USERNAME, MYSQL_PASSWORD, MYSQL_ADDRESS } = process.env;
+/**
+ * 这些配置在本地
+ */
 export const PORT = 80;
 export const NODE_ENV = process.env.NODE_ENV || 'production';
 export const LOG_FORMAT = 'dev';
