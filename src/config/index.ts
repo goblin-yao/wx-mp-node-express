@@ -2,7 +2,10 @@ import { config } from 'dotenv';
 // live环境配置在微信云托管
 if (process.env.NODE_ENV === 'development') {
   config({ path: `.env.development.local` });
-}
+} 
+// else {
+//   config({ path: `.env.production.local` });
+// }
 
 /**
  * 这些配置在微信云托管

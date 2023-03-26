@@ -33,7 +33,8 @@ class GZHController {
         this._userLimitService.addUserLimitFromGZH(FromUserName);
       }
       //增加使用次数
-      return res.send('success');
+      res.send('success');
+      return;
       // 不做聊天
       const msgResult = await WXMsgChecker(Content, {
         openid: FromUserName,

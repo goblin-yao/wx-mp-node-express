@@ -226,30 +226,33 @@ class MiniProgramController {
       ) {
         await userLimit.update({ chat_left_nums: MAX_LIMIT_PERDAY - 1 });
         await userLimit.save();
-        return res.send({
+        res.send({
           code: RESPONSE_CODE.SUCCESS,
           chat_left_nums: MAX_LIMIT_PERDAY - 1,
         }); // 最新的剩余次数
+        return;
       }
 
       let leftTimes = userLimit.chat_left_nums;
 
       if (leftTimes == 0) {
         //说明次数到了，不做处理
-        return res.send({
+        res.send({
           code: RESPONSE_CODE.SUCCESS,
           chat_left_nums: leftTimes,
         }); // 最新的剩余次数0次
+        return;
       } else {
         leftTimes--;
       }
 
       await userLimit.update({ chat_left_nums: leftTimes });
       await userLimit.save();
-      return res.send({
+      res.send({
         code: RESPONSE_CODE.SUCCESS,
         chat_left_nums: leftTimes,
       }); // 最新的剩余次数次
+      return;
     } catch (error) {
       //没有记录，创建最新的
       if (!userLimit) {
@@ -259,10 +262,11 @@ class MiniProgramController {
         });
       }
       // 出现异常就返回新的
-      return res.send({
+      res.send({
         code: RESPONSE_CODE.ERROR,
         chat_left_nums: MAX_LIMIT_PERDAY - 1,
       });
+      return;
     }
   };
   limitGet = async (req: Request, res: Response, next: NextFunction) => {
@@ -279,16 +283,18 @@ class MiniProgramController {
       ) {
         await userLimit.update({ chat_left_nums: MAX_LIMIT_PERDAY });
         await userLimit.save();
-        return res.send({
+        res.send({
           code: RESPONSE_CODE.SUCCESS,
           chat_left_nums: MAX_LIMIT_PERDAY,
         }); // 最新的剩余次数
+        return;
       }
       console.log('userLimit1=>>', userLimit.toString());
-      return res.send({
+      res.send({
         code: RESPONSE_CODE.SUCCESS,
         chat_left_nums: userLimit.chat_left_nums,
       });
+      return;
     } catch (error) {
       console.log('userLimit2=>>', error);
       //没有记录，创建最新的
@@ -299,10 +305,11 @@ class MiniProgramController {
         });
       }
       // 出现异常就返回新的
-      return res.send({
+      res.send({
         code: RESPONSE_CODE.ERROR,
         chat_left_nums: MAX_LIMIT_PERDAY,
       });
+      return;
     }
   };
 
