@@ -214,6 +214,7 @@
     <p><button id="userAuth">userAuth</button></p>
     <p><button id="userRegister">userRegister</button></p>
     <p><button id="getLimit">getLimit</button></p>
+    <p><button id="addLimitFromAdvertise">addLimitFromAdvertise</button></p>
     <p><button id="addMessage">addMessage</button></p>
     <p><button id="getMessageHistory">getMessageHistory</button></p>
     <p><button id="messageChecker">messageChecker</button></p>
@@ -229,6 +230,22 @@
     crossorigin="anonymous"
   ></script>
   <script>
+    addLimitFromAdvertise.onclick = function () {
+      fetch('/limit/addfromadvertise', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'x-wx-openid': _openid.value,
+        },
+      })
+        .then(response => response.json())
+        .then(data => {
+          console.log('success=>', data);
+        })
+        .catch(data => {
+          console.log('error=>', data);
+        });
+    };
     proxySubmit.onclick = function () {
       fetch('/proxyapi/chat', {
         method: 'POST',

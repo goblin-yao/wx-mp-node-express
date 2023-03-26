@@ -32,7 +32,7 @@ const DB = {
   ChatMessage: ChatMessageModel(sequelizeInstance),
   ChatUserLimit: ChatUserLimitModel(sequelizeInstance),
   ChatUserShareHistory: ChatUserShareHistoryModel(sequelizeInstance),
-  ChatUserAdvertiseHistoryModel: ChatUserShareHistoryModel(sequelizeInstance),
+  ChatUserAdvertiseHistoryModel: ChatUserAdvertiseHistoryModel(sequelizeInstance),
   sequelizeInstance, // connection instance (RAW queries)
   Sequelize, // library
 };

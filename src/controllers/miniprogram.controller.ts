@@ -271,6 +271,12 @@ class MiniProgramController {
   };
   public limitGet = async (req: Request, res: Response, next: NextFunction) => {
     const openid = req.headers['x-wx-openid'] as string;
+    const c = { nums: 123 };
+    res.send({
+      code: RESPONSE_CODE.SUCCESS,
+      data: c,
+    }); // 最新的剩余次数
+    return; // test
 
     let userLimit = null;
     try {
