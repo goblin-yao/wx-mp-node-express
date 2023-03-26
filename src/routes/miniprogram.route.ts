@@ -18,6 +18,7 @@ class MiniProgramAPIRoute implements Routes {
     this.router.post(`${this.path}/chatmessage/history`, this.controller.getChatMessages);
     this.router.post(`${this.path}/limit/reduce`, this.controller.limitReduce);
     this.router.post(`${this.path}/limit/get`, this.controller.limitGet);
+    this.router.post(`${this.path}/limit/addfromadvertise`, this.controller.addLimitFromAdvertise);
     this.router.post(`${this.path}/checker/text`, this.controller.checkText);
     this.router.post(`${this.path}/subscribe/test`, this.controller.subscribeSend);
 

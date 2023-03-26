@@ -9,6 +9,9 @@ import { CONSTANTS } from '@/config';
 const { RESPONSE_CODE, LIMIT_NUM_FROM_SHARE_PERDAY, MAX_HISTORY_RECORD, MAX_HISTORY_SAVE, MAX_LIMIT_PERDAY, TIME_FOR_NEW_USER } = CONSTANTS;
 
 class MiniProgramController {
+  public addLimitFromAdvertise(arg0: `${string}/limit/addfromadvertise`, addLimitFromAdvertise: any) {
+    throw new Error('Method not implemented.');
+  }
   public _userService = new ChatUserService();
   public _userLimitService = new ChatUserLimitService();
   public _userShareHistoriesService = new ChatUserShareHistoriesService();
@@ -228,7 +231,7 @@ class MiniProgramController {
         await userLimit.save();
         res.send({
           code: RESPONSE_CODE.SUCCESS,
-          chat_left_nums: MAX_LIMIT_PERDAY - 1,
+          data: { chat_left_nums: MAX_LIMIT_PERDAY - 1 },
         }); // 最新的剩余次数
         return;
       }
@@ -239,7 +242,7 @@ class MiniProgramController {
         //说明次数到了，不做处理
         res.send({
           code: RESPONSE_CODE.SUCCESS,
-          chat_left_nums: leftTimes,
+          data: { chat_left_nums: leftTimes },
         }); // 最新的剩余次数0次
         return;
       } else {
@@ -250,7 +253,7 @@ class MiniProgramController {
       await userLimit.save();
       res.send({
         code: RESPONSE_CODE.SUCCESS,
-        chat_left_nums: leftTimes,
+        data: { chat_left_nums: leftTimes },
       }); // 最新的剩余次数次
       return;
     } catch (error) {
@@ -264,7 +267,7 @@ class MiniProgramController {
       // 出现异常就返回新的
       res.send({
         code: RESPONSE_CODE.ERROR,
-        chat_left_nums: MAX_LIMIT_PERDAY - 1,
+        data: { chat_left_nums: MAX_LIMIT_PERDAY - 1 },
       });
       return;
     }
@@ -285,14 +288,14 @@ class MiniProgramController {
         await userLimit.save();
         res.send({
           code: RESPONSE_CODE.SUCCESS,
-          chat_left_nums: MAX_LIMIT_PERDAY,
+          data: { chat_left_nums: MAX_LIMIT_PERDAY },
         }); // 最新的剩余次数
         return;
       }
       console.log('userLimit1=>>', userLimit.toString());
       res.send({
         code: RESPONSE_CODE.SUCCESS,
-        chat_left_nums: userLimit.chat_left_nums,
+        data: { chat_left_nums: userLimit.chat_left_nums },
       });
       return;
     } catch (error) {
@@ -307,7 +310,7 @@ class MiniProgramController {
       // 出现异常就返回新的
       res.send({
         code: RESPONSE_CODE.ERROR,
-        chat_left_nums: MAX_LIMIT_PERDAY,
+        data: { chat_left_nums: MAX_LIMIT_PERDAY },
       });
       return;
     }
