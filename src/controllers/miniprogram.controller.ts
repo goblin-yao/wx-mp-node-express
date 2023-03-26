@@ -228,7 +228,7 @@ class MiniProgramController {
         await userLimit.save();
         res.send({
           code: RESPONSE_CODE.SUCCESS,
-          data: { chat_left_nums: MAX_LIMIT_PERDAY - 1 },
+          data: { nums: MAX_LIMIT_PERDAY - 1 },
         }); // 最新的剩余次数
         return;
       }
@@ -239,7 +239,7 @@ class MiniProgramController {
         //说明次数到了，不做处理
         res.send({
           code: RESPONSE_CODE.SUCCESS,
-          data: { chat_left_nums: leftTimes },
+          data: { nums: leftTimes },
         }); // 最新的剩余次数0次
         return;
       } else {
@@ -250,7 +250,7 @@ class MiniProgramController {
       await userLimit.save();
       res.send({
         code: RESPONSE_CODE.SUCCESS,
-        data: { chat_left_nums: leftTimes },
+        data: { nums: leftTimes },
       }); // 最新的剩余次数次
       return;
     } catch (error) {
@@ -264,7 +264,7 @@ class MiniProgramController {
       // 出现异常就返回新的
       res.send({
         code: RESPONSE_CODE.ERROR,
-        data: { chat_left_nums: MAX_LIMIT_PERDAY - 1 },
+        data: { nums: MAX_LIMIT_PERDAY - 1 },
       });
       return;
     }
@@ -275,7 +275,6 @@ class MiniProgramController {
     let userLimit = null;
     try {
       userLimit = await this._userLimitService.serviceInstance.findOne({ where: { openid } });
-      console.log('userLimit=>>', userLimit);
       //最近更新时间小于今天凌晨0点 且当前次数小于最大次数, 说明需要更新了,
       if (
         new Date(userLimit.updatedAt).getTime() < new Date(new Date().toLocaleDateString()).getTime() &&
@@ -285,18 +284,16 @@ class MiniProgramController {
         await userLimit.save();
         res.send({
           code: RESPONSE_CODE.SUCCESS,
-          data: { chat_left_nums: MAX_LIMIT_PERDAY },
+          data: { nums: MAX_LIMIT_PERDAY },
         }); // 最新的剩余次数
         return;
       }
-      console.log('userLimit1=>>', userLimit.toString());
       res.send({
         code: RESPONSE_CODE.SUCCESS,
-        data: { chat_left_nums: userLimit.chat_left_nums },
+        data: { nums: userLimit.chat_left_nums },
       });
       return;
     } catch (error) {
-      console.log('userLimit2=>>', error);
       //没有记录，创建最新的
       if (!userLimit) {
         await this._userLimitService.serviceInstance.create({
@@ -307,7 +304,7 @@ class MiniProgramController {
       // 出现异常就返回新的
       res.send({
         code: RESPONSE_CODE.ERROR,
-        data: { chat_left_nums: MAX_LIMIT_PERDAY },
+        data: { nums: MAX_LIMIT_PERDAY },
       });
       return;
     }
