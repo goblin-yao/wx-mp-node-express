@@ -11,10 +11,10 @@ class ChatUserLimitService {
     });
     //每天只能增加一次
     if (userLimit) {
-      if (new Date(userLimit.last_add_from_gzh).getTime() < new Date(new Date().toLocaleDateString()).getTime()) {
+      if (new Date(userLimit.lastAddFromGzh).getTime() < new Date(new Date().toLocaleDateString()).getTime()) {
         //最近更新时间小于今天凌晨0点 且当前次数小于最大次数, 说明需要更新了,
         await userLimit.update({
-          chat_left_nums: userLimit.chat_left_nums + LIMIT_NUM_FROM_GZH,
+          chatLeftNums: userLimit.chatLeftNums + LIMIT_NUM_FROM_GZH,
         });
         await userLimit.save();
       }

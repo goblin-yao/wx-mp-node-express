@@ -40,14 +40,14 @@ class MiniProgramController {
       const [record, isCreated] = await this._userShareHistoriesService.serviceInstance.findOrCreate({
         where: {
           openid: share_from_openid,
-          by_openid: openid,
+          byOpenid: openid,
         },
       });
       console.log('[record, isCreated]', record.toJSON(), isCreated);
       //是新创建的 或者 不是新创建的 判断更新时间小于今天，增加10次
       if (isCreated || (!isCreated && new Date(record.updatedAt).getTime() < new Date(new Date().toLocaleDateString()).getTime())) {
         if (!isCreated) {
-          await record.update({ share_flag: String(new Date().getTime()) });
+          await record.update({ shareFlag: String(new Date().getTime()) });
           await record.save();
         }
 
@@ -58,7 +58,7 @@ class MiniProgramController {
         if (userLimit) {
           //最近更新时间小于今天凌晨0点 且当前次数小于最大次数, 说明需要更新了,
           await userLimit.update({
-            chat_left_nums: userLimit.chat_left_nums + LIMIT_NUM_FROM_SHARE_PERDAY.MAX_NUM_PERSHARE,
+            chatLeftNums: userLimit.chatLeftNums + LIMIT_NUM_FROM_SHARE_PERDAY.MAX_NUM_PERSHARE,
           });
           await userLimit.save();
         }
@@ -232,35 +232,35 @@ class MiniProgramController {
       //最近更新时间小于今天凌晨0点 且当前次数小于最大次数, 说明需要更新了,
       if (
         new Date(userLimit.updatedAt).getTime() < new Date(new Date().toLocaleDateString()).getTime() &&
-        userLimit.chat_left_nums < MAX_LIMIT_PERDAY
+        userLimit.chatLeftNums < MAX_LIMIT_PERDAY
       ) {
-        await userLimit.update({ chat_left_nums: MAX_LIMIT_PERDAY - 1 });
+        await userLimit.update({ chatLeftNums: MAX_LIMIT_PERDAY - 1 });
         await userLimit.save();
         res.status(RESPONSE_CODE.SUCCESS).json({
           code: RESPONSE_CODE.SUCCESS,
-          data: { chat_left_nums: MAX_LIMIT_PERDAY - 1 },
+          data: { chatLeftNums: MAX_LIMIT_PERDAY - 1 },
         }); // 最新的剩余次数
         return;
       }
 
-      let leftTimes = userLimit.chat_left_nums;
+      let leftTimes = userLimit.chatLeftNums;
 
       if (leftTimes == 0) {
         //说明次数到了，不做处理
         res.status(RESPONSE_CODE.SUCCESS).json({
           code: RESPONSE_CODE.SUCCESS,
-          data: { chat_left_nums: leftTimes },
+          data: { chatLeftNums: leftTimes },
         }); // 最新的剩余次数0次
         return;
       } else {
         leftTimes--;
       }
 
-      await userLimit.update({ chat_left_nums: leftTimes });
+      await userLimit.update({ chatLeftNums: leftTimes });
       await userLimit.save();
       res.status(RESPONSE_CODE.SUCCESS).json({
         code: RESPONSE_CODE.SUCCESS,
-        data: { chat_left_nums: leftTimes },
+        data: { chatLeftNums: leftTimes },
       }); // 最新的剩余次数次
       return;
     } catch (error) {
@@ -268,13 +268,13 @@ class MiniProgramController {
       if (!userLimit) {
         await this._userLimitService.serviceInstance.create({
           openid,
-          chat_left_nums: MAX_LIMIT_PERDAY - 1,
+          chatLeftNums: MAX_LIMIT_PERDAY - 1,
         });
       }
       // 出现异常就返回新的
       res.status(RESPONSE_CODE.SUCCESS).json({
         code: RESPONSE_CODE.ERROR,
-        data: { chat_left_nums: MAX_LIMIT_PERDAY - 1 },
+        data: { chatLeftNums: MAX_LIMIT_PERDAY - 1 },
       });
       return;
     }
@@ -288,19 +288,19 @@ class MiniProgramController {
       //最近更新时间小于今天凌晨0点 且当前次数小于最大次数, 说明需要更新了,
       if (
         new Date(userLimit.updatedAt).getTime() < new Date(new Date().toLocaleDateString()).getTime() &&
-        userLimit.chat_left_nums < MAX_LIMIT_PERDAY
+        userLimit.chatLeftNums < MAX_LIMIT_PERDAY
       ) {
-        await userLimit.update({ chat_left_nums: MAX_LIMIT_PERDAY });
+        await userLimit.update({ chatLeftNums: MAX_LIMIT_PERDAY });
         await userLimit.save();
         res.status(RESPONSE_CODE.SUCCESS).json({
           code: RESPONSE_CODE.SUCCESS,
-          data: { chat_left_nums: MAX_LIMIT_PERDAY },
+          data: { chatLeftNums: MAX_LIMIT_PERDAY },
         }); // 最新的剩余次数
         return;
       }
       res.status(RESPONSE_CODE.SUCCESS).json({
         code: RESPONSE_CODE.SUCCESS,
-        data: { chat_left_nums: userLimit.chat_left_nums },
+        data: { chatLeftNums: userLimit.chatLeftNums },
       });
       return;
     } catch (error) {
@@ -309,17 +309,17 @@ class MiniProgramController {
       if (!userLimit) {
         await this._userLimitService.serviceInstance.create({
           openid,
-          chat_left_nums: TIME_FOR_NEW_USER,
+          chatLeftNums: TIME_FOR_NEW_USER,
         });
         res.status(RESPONSE_CODE.SUCCESS).json({
           code: RESPONSE_CODE.USER.NewUser,
-          data: { chat_left_nums: TIME_FOR_NEW_USER },
+          data: { chatLeftNums: TIME_FOR_NEW_USER },
         });
       } else {
         // 出现异常就返回新的
         res.status(RESPONSE_CODE.SUCCESS).json({
           code: RESPONSE_CODE.ERROR,
-          data: { chat_left_nums: MAX_LIMIT_PERDAY },
+          data: { chatLeftNums: MAX_LIMIT_PERDAY },
         });
       }
       return;
@@ -358,7 +358,7 @@ class MiniProgramController {
       if (userLimit) {
         //最近更新时间小于今天凌晨0点 且当前次数小于最大次数, 说明需要更新了,
         await userLimit.update({
-          chat_left_nums: userLimit.chat_left_nums + LIMIT_NUM_FROM_ADVERTISE_PERDAY.MAX_NUM_PERVIEW,
+          chatLeftNums: userLimit.chatLeftNums + LIMIT_NUM_FROM_ADVERTISE_PERDAY.MAX_NUM_PERVIEW,
         });
         await userLimit.save();
       }
@@ -367,7 +367,7 @@ class MiniProgramController {
     res.status(RESPONSE_CODE.SUCCESS).json({
       code: RESPONSE_CODE.SUCCESS,
       data: {
-        chat_left_nums: userLimit.chat_left_nums,
+        chatLeftNums: userLimit.chatLeftNums,
         reachTodaysLimit: recordToday + 1 >= LIMIT_NUM_FROM_ADVERTISE_PERDAY.MAX_TIMES_PERDAY, //今天到底
       },
     });

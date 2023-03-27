@@ -23,7 +23,7 @@ class ChatUserService {
     const result = await this.serviceInstance.create({
       openid: userData.openid,
       unionid: userData.unionid || '',
-      gzh_openid: userData.gzh_openid || '',
+      gzhOpenid: userData.gzhOpenid || '',
       avatarUrl: userData.avatarUrl || '1',
       nickName: userData.nickName || '2',
     });

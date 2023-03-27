@@ -1,13 +1,13 @@
 import { Sequelize, DataTypes, Model, Optional } from 'sequelize';
 import { ChatUserLimit } from '@/interfaces/chatuserlimit.interface';
 
-export type UserCreationAttributes = Optional<ChatUserLimit, 'chat_left_nums' | 'last_add_from_gzh'>;
+export type UserCreationAttributes = Optional<ChatUserLimit, 'chatLeftNums' | 'lastAddFromGzh'>;
 
 export class ChatUserLimitModel extends Model<ChatUserLimit, UserCreationAttributes> implements ChatUserLimit {
   public readonly id!: number;
   public openid: string;
-  public chat_left_nums: number;
-  public last_add_from_gzh: Date; //最近一次从公众号上获取
+  public chatLeftNums: number;
+  public lastAddFromGzh: Date; //最近一次从公众号上获取
 
   public readonly createdAt!: Date;
   public readonly updatedAt!: Date;
@@ -25,11 +25,11 @@ export default function (sequelize: Sequelize): typeof ChatUserLimitModel {
         type: DataTypes.STRING(64),
         allowNull: false,
       },
-      chat_left_nums: {
+      chatLeftNums: {
         type: DataTypes.INTEGER,
         allowNull: true,
       },
-      last_add_from_gzh: {
+      lastAddFromGzh: {
         type: DataTypes.DATE,
         allowNull: true,
       },

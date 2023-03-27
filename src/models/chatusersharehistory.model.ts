@@ -1,13 +1,13 @@
 import { Sequelize, DataTypes, Model, Optional } from 'sequelize';
 import { ChatUserShareHistory } from '@/interfaces/chatusersharehistory.interface';
 
-export type UserCreationAttributes = Optional<ChatUserShareHistory, 'share_flag'>;
+export type UserCreationAttributes = Optional<ChatUserShareHistory, 'shareFlag'>;
 
 export class ChatUserShareHistoryModel extends Model<ChatUserShareHistory, UserCreationAttributes> implements ChatUserShareHistory {
   public readonly id!: number;
   public openid: string;
-  public by_openid: string;
-  public share_flag: string;
+  public byOpenid: string;
+  public shareFlag: string;
 
   public readonly createdAt!: Date;
   public readonly updatedAt!: Date;
@@ -25,11 +25,11 @@ export default function (sequelize: Sequelize): typeof ChatUserShareHistoryModel
         type: DataTypes.STRING(64),
         allowNull: false,
       },
-      by_openid: {
+      byOpenid: {
         type: DataTypes.STRING(64),
         allowNull: false,
       },
-      share_flag: {
+      shareFlag: {
         type: DataTypes.STRING,
         allowNull: true,
       },

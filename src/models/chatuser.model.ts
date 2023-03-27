@@ -1,13 +1,13 @@
 import { Sequelize, DataTypes, Model, Optional } from 'sequelize';
 import { ChatUser } from '@/interfaces/chatuser.interface';
 
-export type UserCreationAttributes = Optional<ChatUser, 'unionid' | 'gzh_openid' | 'avatarUrl' | 'nickName'>;
+export type UserCreationAttributes = Optional<ChatUser, 'unionid' | 'gzhOpenid' | 'avatarUrl' | 'nickName'>;
 
 export class ChatUserModel extends Model<ChatUser, UserCreationAttributes> implements ChatUser {
   public readonly id!: number;
   public openid: string;
   public unionid: string;
-  public gzh_openid: string;
+  public gzhOpenid: string;
   public avatarUrl: string;
   public nickName: string;
 
@@ -33,7 +33,7 @@ export default function (sequelize: Sequelize): typeof ChatUserModel {
       },
       // 公众号的openid，打通 unionid，后期全部通过unionid标记身份
       // head头的信息参考项目中的 _temp/request_head.md
-      gzh_openid: {
+      gzhOpenid: {
         type: DataTypes.STRING(64),
         allowNull: true,
       },
