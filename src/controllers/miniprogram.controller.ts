@@ -7,6 +7,7 @@ import ChatMessageService from '@/services/chatmessage.service';
 import ChatUserAdvertiseHistoriesService from '@/services/chatuseradvertisehistory.service';
 import { WXSubscribeSend, WXCustomSendMessage, WXMsgChecker } from '@/services/wxopenapi.service';
 import { CONSTANTS } from '@/config';
+import { ChatUserLimitModel } from '@/models/chatuserlimit.model';
 const {
   RESPONSE_CODE,
   LIMIT_NUM_FROM_SHARE_PERDAY,
@@ -58,7 +59,7 @@ class MiniProgramController {
         if (userLimit) {
           //最近更新时间小于今天凌晨0点 且当前次数小于最大次数, 说明需要更新了,
           await userLimit.update({
-            chatLeftNums: userLimit.chatLeftNums + LIMIT_NUM_FROM_SHARE_PERDAY.MAX_NUM_PERSHARE,
+            chatLeftNums: userLimit.get('chatLeftNums') + LIMIT_NUM_FROM_SHARE_PERDAY.MAX_NUM_PERSHARE,
           });
           await userLimit.save();
         }
@@ -226,13 +227,13 @@ class MiniProgramController {
   public limitReduce = async (req: Request, res: Response, next: NextFunction) => {
     const openid = req.headers['x-wx-openid'] as string;
 
-    let userLimit = null;
+    let userLimit: ChatUserLimitModel = null;
     try {
       userLimit = await this._userLimitService.serviceInstance.findOne({ where: { openid } });
       //最近更新时间小于今天凌晨0点 且当前次数小于最大次数, 说明需要更新了,
       if (
         new Date(userLimit.updatedAt).getTime() < new Date(new Date().toLocaleDateString()).getTime() &&
-        userLimit.chatLeftNums < MAX_LIMIT_PERDAY
+        userLimit.get('chatLeftNums') < MAX_LIMIT_PERDAY
       ) {
         await userLimit.update({ chatLeftNums: MAX_LIMIT_PERDAY - 1 });
         await userLimit.save();
@@ -243,7 +244,7 @@ class MiniProgramController {
         return;
       }
 
-      let leftTimes = userLimit.chatLeftNums;
+      let leftTimes = userLimit.get('chatLeftNums');
 
       if (leftTimes == 0) {
         //说明次数到了，不做处理
@@ -288,7 +289,7 @@ class MiniProgramController {
       //最近更新时间小于今天凌晨0点 且当前次数小于最大次数, 说明需要更新了,
       if (
         new Date(userLimit.updatedAt).getTime() < new Date(new Date().toLocaleDateString()).getTime() &&
-        userLimit.chatLeftNums < MAX_LIMIT_PERDAY
+        userLimit.get('chatLeftNums') < MAX_LIMIT_PERDAY
       ) {
         await userLimit.update({ chatLeftNums: MAX_LIMIT_PERDAY });
         await userLimit.save();
@@ -300,7 +301,7 @@ class MiniProgramController {
       }
       res.status(RESPONSE_CODE.SUCCESS).json({
         code: RESPONSE_CODE.SUCCESS,
-        data: { chatLeftNums: userLimit.chatLeftNums },
+        data: { chatLeftNums: userLimit.get('chatLeftNums') },
       });
       return;
     } catch (error) {
@@ -358,7 +359,7 @@ class MiniProgramController {
       if (userLimit) {
         //最近更新时间小于今天凌晨0点 且当前次数小于最大次数, 说明需要更新了,
         await userLimit.update({
-          chatLeftNums: userLimit.chatLeftNums + LIMIT_NUM_FROM_ADVERTISE_PERDAY.MAX_NUM_PERVIEW,
+          chatLeftNums: userLimit.get('chatLeftNums') + LIMIT_NUM_FROM_ADVERTISE_PERDAY.MAX_NUM_PERVIEW,
         });
         await userLimit.save();
       }
@@ -367,9 +368,7 @@ class MiniProgramController {
     res.status(RESPONSE_CODE.SUCCESS).json({
       code: RESPONSE_CODE.SUCCESS,
       data: {
-        chatLeftNums: userLimit.getDataValue('chatLeftNums'),
-        chatLeftNums_1: 1,
-        chatLeftNums_2: userLimit.chatLeftNums,
+        chatLeftNums: userLimit.get('chatLeftNums'),
         reachTodaysLimit: recordToday + 1 >= LIMIT_NUM_FROM_ADVERTISE_PERDAY.MAX_TIMES_PERDAY, //是否达到了今天的限制
       },
     });
