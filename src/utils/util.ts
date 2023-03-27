@@ -17,3 +17,12 @@ export const isEmpty = (value: string | number | object): boolean => {
     return false;
   }
 };
+
+/**
+ * 获取当前时间3个月后的时间
+ */
+export const getTimeStampOfMonthLater = (monthNums: number) => {
+  let currentDate = new Date(); // 获取当前时间
+  currentDate.setMonth(currentDate.getMonth() + monthNums); // 设置当前时间的月份+monthNums
+  return currentDate.getTime() - new Date().getTime();
+};

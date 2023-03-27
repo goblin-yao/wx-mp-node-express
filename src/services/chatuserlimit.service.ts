@@ -21,6 +21,19 @@ class ChatUserLimitService {
     }
     return userLimit;
   }
+
+  public async addUserLimit(openid: string, nums: number): Promise<ChatUserLimit> {
+    let [userLimit] = await this.serviceInstance.findOrCreate({
+      where: { openid },
+    });
+    //最近更新时间小于今天凌晨0点 且当前次数小于最大次数, 说明需要更新了,
+    await userLimit.update({
+      chatLeftNums: userLimit.chatLeftNums + nums,
+    });
+    await userLimit.save();
+
+    return userLimit;
+  }
 }
 
 export default ChatUserLimitService;

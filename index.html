@@ -218,6 +218,16 @@
     <p><button id="addMessage">addMessage</button></p>
     <p><button id="getMessageHistory">getMessageHistory</button></p>
     <p><button id="messageChecker">messageChecker</button></p>
+    <select id="typeSelect">
+      <option value="11">会员1天</option>
+      <option value="12">会员1个月</option>
+      <option value="13">会员3个月</option>
+      <option value="21">10次</option>
+      <option value="22">35次</option>
+      <option value="23">60次</option>
+      <option value="24">85次</option>
+    </select>
+    <p><button id="memberShip">memberShip</button></p>
 
     <p><button id="getModels">getModels</button></p>
     <p><button id="proxySubmit">proxySubmit</button></p>
@@ -230,6 +240,23 @@
     crossorigin="anonymous"
   ></script>
   <script>
+    memberShip.onclick = function () {
+      fetch('/gzh/buy', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'x-wx-openid': _openid.value,
+        },
+        body: JSON.stringify({ type: typeSelect.value }),
+      })
+        .then(response => response.json())
+        .then(data => {
+          console.log('success=>', data);
+        })
+        .catch(data => {
+          console.log('error=>', data);
+        });
+    };
     addLimitFromAdvertise.onclick = function () {
       fetch('/miniprogram/limit/addfromadvertise', {
         method: 'POST',
