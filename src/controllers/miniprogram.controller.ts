@@ -367,7 +367,9 @@ class MiniProgramController {
     res.status(RESPONSE_CODE.SUCCESS).json({
       code: RESPONSE_CODE.SUCCESS,
       data: {
-        chatLeftNums: userLimit.chatLeftNums,
+        nums: 1,
+        chat_f: 2,
+        chatLeftNums: 2, //,userLimit.chatLeftNums,
         reachTodaysLimit: recordToday + 1 >= LIMIT_NUM_FROM_ADVERTISE_PERDAY.MAX_TIMES_PERDAY, //今天到底
       },
     });
