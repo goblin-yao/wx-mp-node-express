@@ -8,10 +8,7 @@
       mce_href="https://static-index-4gtuqm3bfa95c963-1304825656.tcloudbaseapp.com/official-website/favicon.svg"
       type="image/x-icon"
     />
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"
-    />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <link
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
       rel="stylesheet"
@@ -21,9 +18,8 @@
     <title>chatgpt demo</title>
     <style>
       body {
-        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Droid Sans",
-          "Helvetica Neue", "PingFang SC", "Hiragino Sans GB",
-          "Droid Sans Fallback", "Microsoft YaHei", sans-serif;
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Droid Sans', 'Helvetica Neue', 'PingFang SC', 'Hiragino Sans GB',
+          'Droid Sans Fallback', 'Microsoft YaHei', sans-serif;
       }
 
       .title-logo {
@@ -148,7 +144,7 @@
 
       .hr::after {
         position: absolute;
-        content: "";
+        content: '';
         top: 10px;
         left: 60px;
         width: 200px;
@@ -212,15 +208,26 @@
   </head>
 
   <body>
-    <p>openid: <input id="_openid" value="o9Onv5BcWuj8o8-78-N1S-HTur7k" /></p>
+    <p>openid: <input id="_openid" value="otNgX0bmHWg7YaZm-55B1cze2Gg0" /></p>
     <p>question: <input id="question" value="1+1=?" /></p>
     <p><button id="submit">Submit</button></p>
     <p><button id="userAuth">userAuth</button></p>
     <p><button id="userRegister">userRegister</button></p>
     <p><button id="getLimit">getLimit</button></p>
+    <p><button id="addLimitFromAdvertise">addLimitFromAdvertise</button></p>
     <p><button id="addMessage">addMessage</button></p>
     <p><button id="getMessageHistory">getMessageHistory</button></p>
     <p><button id="messageChecker">messageChecker</button></p>
+    <select id="typeSelect">
+      <option value="11">会员1天</option>
+      <option value="12">会员1个月</option>
+      <option value="13">会员3个月</option>
+      <option value="21">10次</option>
+      <option value="22">35次</option>
+      <option value="23">60次</option>
+      <option value="24">85次</option>
+    </select>
+    <p><button id="memberShip">memberShip</button></p>
 
     <p><button id="getModels">getModels</button></p>
     <p><button id="proxySubmit">proxySubmit</button></p>
@@ -233,138 +240,171 @@
     crossorigin="anonymous"
   ></script>
   <script>
-    proxySubmit.onclick = function () {
-      fetch("/proxyapi/chat", {
-        method: "POST",
+    memberShip.onclick = function () {
+      fetch('/gzh/buy', {
+        method: 'POST',
         headers: {
-          "Content-Type": "application/json",
-          "x-wx-openid": _openid.value,
+          'Content-Type': 'application/json',
+          'x-wx-openid': _openid.value,
+        },
+        body: JSON.stringify({ type: typeSelect.value }),
+      })
+        .then(response => response.json())
+        .then(data => {
+          console.log('success=>', data);
+        })
+        .catch(data => {
+          console.log('error=>', data);
+        });
+    };
+    addLimitFromAdvertise.onclick = function () {
+      fetch('/miniprogram/limit/addfromadvertise', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'x-wx-openid': _openid.value,
+        },
+      })
+        .then(response => response.json())
+        .then(data => {
+          console.log('success=>', data);
+        })
+        .catch(data => {
+          console.log('error=>', data);
+        });
+    };
+    proxySubmit.onclick = function () {
+      fetch('/proxyapi/chat', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'x-wx-openid': _openid.value,
         },
         body: JSON.stringify({ question: question.value }),
       })
-        .then((response) => response.json())
-        .then((data) => {
-          console.log("success=>", data);
+        .then(response => response.json())
+        .then(data => {
+          console.log('success=>', data);
           result_textare.value = data.text;
         })
-        .catch((data) => {
-          console.log("error=>", data);
+        .catch(data => {
+          console.log('error=>', data);
         });
     };
     submit.onclick = function () {
-      fetch("/openai/chat", {
-        method: "POST",
+      fetch('/openai/chat', {
+        method: 'POST',
         headers: {
-          "Content-Type": "application/json",
-          "x-wx-openid": _openid.value,
+          'Content-Type': 'application/json',
+          'x-wx-openid': _openid.value,
         },
         body: JSON.stringify({ question: question.value }),
       })
-        .then((response) => response.json())
-        .then((data) => {
-          console.log("success=>", data);
+        .then(response => response.json())
+        .then(data => {
+          console.log('success=>', data);
           result_textare.value = data.text;
         })
-        .catch((data) => {
-          console.log("error=>", data);
+        .catch(data => {
+          console.log('error=>', data);
         });
     };
     getModels.onclick = function () {
-      fetch("/openai/getModels", {
-        method: "GET",
+      fetch('/proxyapi/getmodels', {
+        method: 'GET',
         headers: {
-          "x-wx-openid": _openid.value,
-          "Content-Type": "application/json",
+          'x-wx-openid': _openid.value,
+          'Content-Type': 'application/json',
         },
       })
-        .then((response) => response.json())
-        .then((data) => {
+        .then(response => response.json())
+        .then(data => {
           result_textare.value = JSON.stringify(data);
-          console.log("success models=>", data);
+          console.log('success models=>', data);
         })
-        .catch((data) => {
-          console.log("error=>", data);
+        .catch(data => {
+          console.log('error=>', data);
         });
     };
     userAuth.onclick = function () {
-      fetch("/miniprogram/user/auth", {
-        method: "POST",
+      fetch('/miniprogram/user/auth', {
+        method: 'POST',
         body: JSON.stringify({
-          share_from_openid: "o9Onv5G8VI6McHnrSTY6lCpWcKSI",
+          share_from_openid: 'o9Onv5G8VI6McHnrSTY6lCpWcKSI',
         }),
         headers: {
-          "x-wx-openid": _openid.value,
-          "Content-Type": "application/json",
+          'x-wx-openid': _openid.value,
+          'Content-Type': 'application/json',
         },
       })
-        .then((response) => response.json())
-        .then((data) => {
-          console.log("miniprogram/user/auth", data);
+        .then(response => response.json())
+        .then(data => {
+          console.log('miniprogram/user/auth', data);
         })
-        .catch((data) => {
-          console.log("error=>", data);
+        .catch(data => {
+          console.log('error=>', data);
         });
     };
     userRegister.onclick = function () {
-      fetch("/miniprogram/user/register", {
-        method: "POST",
+      fetch('/miniprogram/user/register', {
+        method: 'POST',
         headers: {
-          "x-wx-openid": _openid.value,
-          "Content-Type": "application/json",
+          'x-wx-openid': _openid.value,
+          'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ avatarUrl: "1", nickName: "2" }),
+        body: JSON.stringify({ avatarUrl: '1', nickName: '2' }),
       })
-        .then((response) => response.json())
-        .then((data) => {
-          console.log("miniprogram/user/register", data);
+        .then(response => response.json())
+        .then(data => {
+          console.log('miniprogram/user/register', data);
         })
-        .catch((data) => {
-          console.log("error=>", data);
+        .catch(data => {
+          console.log('error=>', data);
         });
     };
     getLimit.onclick = function () {
-      fetch("/miniprogram/limit/get", {
-        method: "POST",
+      fetch('/miniprogram/limit/get', {
+        method: 'POST',
         headers: {
-          "x-wx-openid": _openid.value,
-          "Content-Type": "application/json",
+          'x-wx-openid': _openid.value,
+          'Content-Type': 'application/json',
         },
       })
-        .then((response) => response.json())
-        .then((data) => {
-          console.log("getChatLimit=>", data);
+        .then(response => response.json())
+        .then(data => {
+          console.log('getChatLimit=>', data);
         })
-        .catch((data) => {
-          console.log("error=>", data);
+        .catch(data => {
+          console.log('error=>', data);
         });
     };
     addMessage.onclick = function () {
-      fetch("/miniprogram/chatmessage/add", {
-        method: "POST",
+      fetch('/miniprogram/chatmessage/add', {
+        method: 'POST',
         headers: {
-          "x-wx-openid": _openid.value,
-          "Content-Type": "application/json",
+          'x-wx-openid': _openid.value,
+          'Content-Type': 'application/json',
         },
         body: JSON.stringify({
           msgType: 2,
           statusCode: 200,
           data: {
-            role: "assistant",
-            id: "cmpl-6rqDnyaV9SuNE3EGhTABe65szd3xn",
-            parentMessageId: "950f5092-6f49-41c4-bea5-2d242a60234d",
-            conversationId: "b92326b3-d53d-4dba-bb9d-89ad33bf6683",
-            text: "Thank you for your question. As President of the People's Republic of China, I am committed to building a strong and prosperous China that is respected by the world. I believe that the key to achieving this goal is to create an environment that is conducive to innovation and creativity. We must also work hard to improve our social welfare system and provide better education and healthcare for our people. I appreciate your interest in China and look forward to continuing to discuss important issues with you.",
+            role: 'assistant',
+            id: 'cmpl-6rqDnyaV9SuNE3EGhTABe65szd3xn',
+            parentMessageId: '950f5092-6f49-41c4-bea5-2d242a60234d',
+            conversationId: 'b92326b3-d53d-4dba-bb9d-89ad33bf6683',
+            text: '11',
             detail: {
-              id: "cmpl-6rqDnyaV9SuNE3EGhTABe65szd3xn",
-              object: "text_completion",
+              id: 'cmpl-6rqDnyaV9SuNE3EGhTABe65szd3xn',
+              object: 'text_completion',
               created: 1678290143,
-              model: "text-curie-001",
+              model: 'text-curie-001',
               choices: [
                 {
-                  text: "Thank you for your question. As President of the People's Republic of China, I am committed to building a strong and prosperous China that is respected by the world. I believe that the key to achieving this goal is to create an environment that is conducive to innovation and creativity. We must also work hard to improve our social welfare system and provide better education and healthcare for our people. I appreciate your interest in China and look forward to continuing to discuss important issues with you.",
+                  text: '22',
                   index: 0,
                   logprobs: null,
-                  finish_reason: "stop",
+                  finish_reason: 'stop',
                 },
               ],
               usage: {
@@ -376,46 +416,46 @@
           },
         }),
       })
-        .then((response) => response.json())
-        .then((data) => {
-          console.log("/miniprogram/chatmessage/add", data);
+        .then(response => response.json())
+        .then(data => {
+          console.log('/miniprogram/chatmessage/add', data);
         })
-        .catch((data) => {
-          console.log("error=>", data);
+        .catch(data => {
+          console.log('error=>', data);
         });
     };
     getMessageHistory.onclick = function () {
-      fetch("/miniprogram/chatmessage/history", {
-        method: "POST",
+      fetch('/miniprogram/chatmessage/history', {
+        method: 'POST',
         headers: {
-          "x-wx-openid": _openid.value,
-          "Content-Type": "application/json",
+          'x-wx-openid': _openid.value,
+          'Content-Type': 'application/json',
         },
         body: JSON.stringify({ msgType: 1, data: { text: question.value } }),
       })
-        .then((response) => response.json())
-        .then((data) => {
-          console.log("/miniprogram/chatmessage/add", data);
+        .then(response => response.json())
+        .then(data => {
+          console.log('/miniprogram/chatmessage/add', data);
         })
-        .catch((data) => {
-          console.log("error=>", data);
+        .catch(data => {
+          console.log('error=>', data);
         });
     };
     messageChecker.onclick = function () {
-      fetch("/miniprogram/checker/text", {
-        method: "POST",
+      fetch('/miniprogram/checker/text', {
+        method: 'POST',
         headers: {
-          "x-wx-openid": _openid.value,
-          "Content-Type": "application/json",
+          'x-wx-openid': _openid.value,
+          'Content-Type': 'application/json',
         },
         body: JSON.stringify({ content: question.value }),
       })
-        .then((response) => response.json())
-        .then((data) => {
-          console.log("/miniprogram/checker/text", data);
+        .then(response => response.json())
+        .then(data => {
+          console.log('/miniprogram/checker/text', data);
         })
-        .catch((data) => {
-          console.log("error=>", data);
+        .catch(data => {
+          console.log('error=>', data);
         });
     };
   </script>

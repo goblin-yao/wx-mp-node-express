@@ -6,6 +6,9 @@
 # production
 
 /build
+/dist
+/logs
+/src/logs
 
 # misc
 .DS_Store
@@ -21,8 +24,6 @@ yarn-error.log*
 
 # IDE
 .idea
-_temp/
-readme_temp.md
 _temp/
 Dockerfile.development
 docker-compose.yml
