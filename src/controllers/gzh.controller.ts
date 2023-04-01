@@ -16,9 +16,8 @@ class GZHController {
   public messageHandler = async (req: Request, res: Response, next: NextFunction) => {
     // 从 header 中取appid，如果 from-appid 不存在，则不是资源复用场景，可以直接传空字符串，使用环境所属账号发起云调用
     const appid = req.headers['x-wx-from-appid'] || '';
-    const unionid = req.headers['x-wx-unionid'] as string;
-    // unionid=>
-    // 推送接收的账号 {
+    const unionid = req.headers['x-wx-from-unionid'] as string;
+    // body: {
     // appid: '',
     // body: {
     // ToUserName: 'gh_31cb7255c884',
@@ -29,11 +28,17 @@ class GZHController {
     // MsgId: 24030743352527428
     // }
     // }
+    // headers:
+    // 'x-wx-source': 'other',
+    // 'x-wx-service': 'express-pqiq',
+    // 'x-wx-env': 'prod-3gurr7jtde026102',
+    // 'x-wx-region': 'ap-shanghai',
+    // 'x-wx-from-unionid': 'ob-vI5p5P9MOmSr4tIc1fH5yetCQ',
+    // 'x-wx-appid': 'wx8bd01c9a583478cf',
+    // 'x-wx-from-appid': 'wx41374d9ae1f0b6d4',
+    // 'x-wx-from-openid': 'oOY7b56-yJerlctP0flOf-JewU8U',
+    // 'content-type': 'application/json'
     const { ToUserName, FromUserName, MsgType, Content, CreateTime } = req.body;
-    console.log('推送接收的账号', {
-      body: req.body,
-      headers: req.headers,
-    });
     if (MsgType === 'text') {
       if (Content.replace(/\s/g, '') === '增加使用次数') {
         // 小程序、公众号可用
@@ -94,7 +99,7 @@ class GZHController {
   public buy = async (req: Request, res: Response, next: NextFunction) => {
     const appid = req.headers['x-wx-from-appid'] || '';
     const openid = req.headers['x-wx-openid'] as string;
-    const unionid = req.headers['x-wx-unionid'] as string;
+    const unionid = req.headers['x-wx-from-unionid'] as string;
     const { type } = req.body;
     // <select id="typeSelect">
     //   <option value="11">会员1天</option>
