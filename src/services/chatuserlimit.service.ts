@@ -11,10 +11,10 @@ class ChatUserLimitService {
     console.log('addUserLimitFromGZH,gzhOpenid', unionid, gzhOpenid);
     unionid = 'ob-vI5p5P9MOmSr4tIc1fH5yetCQ';
     const res = await this._userServiceInstance.findOne({ where: { unionid } });
-    console.log('res=>', res.toJSON());
+    console.log(`res=>>${res.openid}|'cc`, res.toJSON());
     if (res) {
       let userLimit = await this.serviceInstance.findOne({
-        where: { openid: res.openid },
+        where: { openid: res.getDataValue('openid') },
       });
       console.log('userLimit=>', userLimit.toJSON());
       //每天只能增加一次
@@ -23,6 +23,7 @@ class ChatUserLimitService {
           //最近更新时间小于今天凌晨0点 且当前次数小于最大次数, 说明需要更新了,
           await userLimit.update({
             chatLeftNums: userLimit.chatLeftNums + LIMIT_NUM_FROM_GZH,
+            lastAddFromGzh: new Date(),
           });
           await userLimit.save();
         }
