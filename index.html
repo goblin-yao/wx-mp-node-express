@@ -218,6 +218,7 @@
     <p><button id="addMessage">addMessage</button></p>
     <p><button id="getMessageHistory">getMessageHistory</button></p>
     <p><button id="messageChecker">messageChecker</button></p>
+    <p><button id="gzhMessage">gzhMessage</button></p>
     <select id="typeSelect">
       <option value="11">会员1天</option>
       <option value="12">会员1个月</option>
@@ -240,6 +241,30 @@
     crossorigin="anonymous"
   ></script>
   <script>
+    gzhMessage.onclick = function () {
+      fetch('/gzh/message', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'x-wx-openid': _openid.value,
+        },
+        body: JSON.stringify({
+          ToUserName: 'gh_31cb7255c884',
+          FromUserName: 'oWl8_5slEAh0Ow7hR_-4pedtFB_Q',
+          CreateTime: 1678528047,
+          MsgType: 'text',
+          Content: '增加使用次数',
+          MsgId: 24030743352527428,
+        }),
+      })
+        .then(response => response.json())
+        .then(data => {
+          console.log('success=>', data);
+        })
+        .catch(data => {
+          console.log('error=>', data);
+        });
+    };
     memberShip.onclick = function () {
       fetch('/gzh/buy', {
         method: 'POST',

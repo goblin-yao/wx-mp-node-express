@@ -8,12 +8,15 @@ class ChatUserLimitService {
   public _userServiceInstance = DB.ChatUser;
 
   public async addUserLimitFromGZH(unionid: string, gzhOpenid?: string): Promise<{ result: boolean; addLimit: number }> {
-    console.log('addUserLimitFromGZH,gzhOpenid', gzhOpenid);
+    console.log('addUserLimitFromGZH,gzhOpenid', unionid, gzhOpenid);
+    unionid = 'ob-vI5p5P9MOmSr4tIc1fH5yetCQ';
     const res = await this._userServiceInstance.findOne({ where: { unionid } });
+    console.log('res=>', res.toJSON());
     if (res) {
       let userLimit = await this.serviceInstance.findOne({
         where: { openid: res.openid },
       });
+      console.log('userLimit=>', userLimit.toJSON());
       //每天只能增加一次
       if (userLimit) {
         if (new Date(userLimit.lastAddFromGzh).getTime() < new Date(new Date().toLocaleDateString()).getTime()) {
