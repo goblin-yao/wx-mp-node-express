@@ -16,6 +16,7 @@ class GZHController {
   public messageHandler = async (req: Request, res: Response, next: NextFunction) => {
     // 从 header 中取appid，如果 from-appid 不存在，则不是资源复用场景，可以直接传空字符串，使用环境所属账号发起云调用
     const appid = req.headers['x-wx-from-appid'] || '';
+    const unionid = req.headers['x-wx-unionid'] as string;
     // unionid=>
     // 推送接收的账号 {
     // appid: '',
@@ -35,7 +36,7 @@ class GZHController {
     });
     if (MsgType === 'text') {
       if (Content.replace(/\s/g, '') === '增加使用次数') {
-        this._userLimitService.addUserLimitFromGZH(FromUserName);
+        this._userLimitService.addUserLimitFromGZH(unionid, FromUserName);
       }
       //增加使用次数
       res.send('success');
