@@ -1,20 +1,16 @@
-import { encode as gptEncode } from "gpt-3-encoder";
-import Keyv from "keyv";
-import pTimeout from "p-timeout";
-import { v4 as uuidv4 } from "uuid";
+import { encode as gptEncode } from 'gpt-3-encoder';
+import Keyv from 'keyv';
+import pTimeout from 'p-timeout';
+import { v4 as uuidv4 } from 'uuid';
 
-import * as types from "./types";
-import axios from "axios";
+import * as types from './types';
+import axios from 'axios';
 // const https = require("https");
-const request = require("request");
+const request = require('request');
 
-import QuickLRU from "quick-lru";
+import QuickLRU from 'quick-lru';
 
-import {
-  CHATGPT_MODEL_GPT,
-  USER_LABEL_DEFAULT,
-  ASSISTANT_LABEL_DEFAULT,
-} from "./config";
+import { CHATGPT_MODEL_GPT, USER_LABEL_DEFAULT, ASSISTANT_LABEL_DEFAULT } from '@config';
 
 export class ChatGPTAPITURBOStream {
   protected _apiKey: string;
@@ -22,7 +18,7 @@ export class ChatGPTAPITURBOStream {
   protected _apiReverseProxyUrl: string;
   protected _debug: boolean;
 
-  protected _completionParams: Omit<types.openai.CompletionParams, "prompt">;
+  protected _completionParams: Omit<types.openai.CompletionParams, 'prompt'>;
   protected _maxModelTokens: number;
   protected _maxResponseTokens: number;
   protected _userLabel: string;
@@ -82,7 +78,7 @@ export class ChatGPTAPITURBOStream {
   }) {
     const {
       apiKey,
-      apiBaseUrl = "https://api.openai.com",
+      apiBaseUrl = 'https://api.openai.com',
       apiReverseProxyUrl,
       debug = false,
       messageStore,
@@ -109,14 +105,14 @@ export class ChatGPTAPITURBOStream {
     };
 
     if (this._isChatGPTModel) {
-      this._endToken = "<|im_end|>";
-      this._sepToken = "<|im_sep|>";
+      this._endToken = '<|im_end|>';
+      this._sepToken = '<|im_sep|>';
 
       if (!this._completionParams.stop) {
         this._completionParams.stop = [this._endToken, this._sepToken];
       }
     } else {
-      this._endToken = "<|endoftext|>";
+      this._endToken = '<|endoftext|>';
       this._sepToken = this._endToken;
 
       if (!this._completionParams.stop) {
@@ -141,7 +137,7 @@ export class ChatGPTAPITURBOStream {
     }
 
     if (!this._apiKey) {
-      throw new Error("ChatGPT invalid apiKey");
+      throw new Error('ChatGPT invalid apiKey');
     }
   }
 
@@ -169,18 +165,8 @@ export class ChatGPTAPITURBOStream {
    *
    * @returns The response from ChatGPT
    */
-  async sendMessage(
-    text: string,
-    opts: types.SendMessageOptions = {}
-  ): Promise<types.ChatMessage> {
-    const {
-      conversationId = uuidv4(),
-      parentMessageId,
-      messageId = uuidv4(),
-      timeoutMs,
-      onProgress,
-      stream = onProgress ? true : false,
-    } = opts;
+  async sendMessage(text: string, opts: types.SendMessageOptions = {}): Promise<types.ChatMessage> {
+    const { conversationId = uuidv4(), parentMessageId, messageId = uuidv4(), timeoutMs, onProgress, stream = onProgress ? true : false } = opts;
 
     let { abortSignal } = opts;
 
@@ -191,7 +177,7 @@ export class ChatGPTAPITURBOStream {
     }
 
     const message: types.ChatMessage = {
-      role: "user",
+      role: 'user',
       id: messageId,
       parentMessageId,
       conversationId,
@@ -201,145 +187,134 @@ export class ChatGPTAPITURBOStream {
 
     const { maxTokens } = await this._buildPrompt(text, opts);
     const result: types.ChatMessage = {
-      role: "assistant",
+      role: 'assistant',
       id: uuidv4(),
       parentMessageId: messageId,
       conversationId,
-      text: "",
+      text: '',
     };
 
-    const responseP = new Promise<types.ChatMessage>(
-      async (resolve, reject) => {
-        const url = `${
-          this._apiReverseProxyUrl || this._apiBaseUrl
-        }/v1/chat/completions`;
+    const responseP = new Promise<types.ChatMessage>(async (resolve, reject) => {
+      const url = `${this._apiReverseProxyUrl || this._apiBaseUrl}/v1/chat/completions`;
 
-        const body = {
-          max_tokens: maxTokens,
-          ...this._completionParams,
-          messages: [
-            {
-              role: "system",
-              content: `你是${this._assistantLabel}.使用简洁，拟人化的方式回答问题`,
-            },
-            { role: "user", content: text },
-          ],
-          stream,
-        };
-        console.log("/v1/chat/completions body=>>", JSON.stringify(body));
-
-        // Set up the request options
-        const options = {
-          url,
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${this._apiKey}`,
+      const body = {
+        max_tokens: maxTokens,
+        ...this._completionParams,
+        messages: [
+          {
+            role: 'system',
+            content: `你是${this._assistantLabel}.使用简洁，拟人化的方式回答问题`,
           },
-          json: body,
-        };
+          { role: 'user', content: text },
+        ],
+        stream,
+      };
+      console.log('/v1/chat/completions body=>>', JSON.stringify(body));
 
-        // Make the request to the ChatGPT API
-        const reqStream = request(options);
+      // Set up the request options
+      const options = {
+        url,
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${this._apiKey}`,
+        },
+        json: body,
+      };
 
-        // Handle the response stream
-        reqStream.on("data", (chunk) => {
-          try {
-            let chunkData = new TextDecoder().decode(chunk);
-            chunkData = chunkData
-              .substr("`data: ".length - 1)
-              .replace(/\\n/g, "\\n");
-            if (chunkData === "[DONE]") {
-              result.text = result.text.trim();
-              return resolve(result);
-            }
+      // Make the request to the ChatGPT API
+      const reqStream = request(options);
 
-            console.log("response from chunk1=>", chunkData);
-            const response: types.openai.CompletionResponse =
-              JSON.parse(chunkData);
-
-            // console.log("response from chunk2=>", response);
-            if (response.id) {
-              result.id = response.id;
-            }
-
-            if (response?.choices?.length) {
-              result.text += response?.choices[0]?.delta?.content || "";
-              result.detail = response;
-
-              onProgress?.(result);
-            }
-          } catch (err) {
-            console.warn(
-              "ChatGPT stream event unexpected error",
-              new TextDecoder().decode(chunk),
-              err
-            );
-            return reject(err);
-          }
-        });
-
-        reqStream.on("end", () => {
-          console.log("No more data");
-        });
-
-        reqStream.on("error", (err) => {
-          console.error(`Error receiving data: ${err}`);
-        });
-
+      // Handle the response stream
+      reqStream.on('data', chunk => {
         try {
-          // const response = axios
-          //   .post(url, body, {
-          //     timeout: 60000,
-          //     headers: {
-          //       Authorization: `Bearer ${this._apiKey}`,
-          //     },
-          //   })
-          //   .then((_res) => {
-          //     console.log("data recevied", new Date().getTime(), _res.data);
-          //   });
+          let chunkData = new TextDecoder().decode(chunk);
+          chunkData = chunkData.substr('`data: '.length - 1).replace(/\\n/g, '\\n');
+          if (chunkData === '[DONE]') {
+            result.text = result.text.trim();
+            return resolve(result);
+          }
 
-          // if (200 != response.status) {
-          //   const msg = `ChatGPT error ${
-          //     response.status || response.statusText
-          //   }`;
-          //   const error = new types.ChatGPTError(msg);
-          //   error.statusCode = response.status;
-          //   error.statusText = response.statusText;
-          //   return reject(error);
-          // }
+          console.log('response from chunk1=>', chunkData);
+          const response: types.openai.CompletionResponse = JSON.parse(chunkData);
 
-          // if (response?.data?.id) {
-          //   result.id = response.data.id;
-          // }
-          // console.log("response?.data gpt?=>", response?.data);
-          // if (response?.data?.choices?.length) {
-          //   result.text = response.data.choices[0].message.content.trim();
-          // } else {
-          //   const res = response.data as any;
-          //   return reject(
-          //     new Error(
-          //       `ChatGPT error: ${
-          //         res?.detail?.message || res?.detail || "unknown"
-          //       }`
-          //     )
-          //   );
-          // }
+          // console.log("response from chunk2=>", response);
+          if (response.id) {
+            result.id = response.id;
+          }
 
-          // result.detail = { model: response?.data?.model || "" };
+          if (response?.choices?.length) {
+            result.text += response?.choices[0]?.delta?.content || '';
+            result.detail = response;
 
-          // console.log("==>result>", result);
-
-          return resolve(result);
-        } catch (error) {
-          console.log("error gpt=>", error);
-          return reject({
-            statusCode: error?.response?.status || -1002,
-            data: error?.response?.data || "服务内部错误",
-          });
+            onProgress?.(result);
+          }
+        } catch (err) {
+          console.warn('ChatGPT stream event unexpected error', new TextDecoder().decode(chunk), err);
+          return reject(err);
         }
+      });
+
+      reqStream.on('end', () => {
+        console.log('No more data');
+      });
+
+      reqStream.on('error', err => {
+        console.error(`Error receiving data: ${err}`);
+      });
+
+      try {
+        // const response = axios
+        //   .post(url, body, {
+        //     timeout: 60000,
+        //     headers: {
+        //       Authorization: `Bearer ${this._apiKey}`,
+        //     },
+        //   })
+        //   .then((_res) => {
+        //     console.log("data recevied", new Date().getTime(), _res.data);
+        //   });
+
+        // if (200 != response.status) {
+        //   const msg = `ChatGPT error ${
+        //     response.status || response.statusText
+        //   }`;
+        //   const error = new types.ChatGPTError(msg);
+        //   error.statusCode = response.status;
+        //   error.statusText = response.statusText;
+        //   return reject(error);
+        // }
+
+        // if (response?.data?.id) {
+        //   result.id = response.data.id;
+        // }
+        // console.log("response?.data gpt?=>", response?.data);
+        // if (response?.data?.choices?.length) {
+        //   result.text = response.data.choices[0].message.content.trim();
+        // } else {
+        //   const res = response.data as any;
+        //   return reject(
+        //     new Error(
+        //       `ChatGPT error: ${
+        //         res?.detail?.message || res?.detail || "unknown"
+        //       }`
+        //     )
+        //   );
+        // }
+
+        // result.detail = { model: response?.data?.model || "" };
+
+        // console.log("==>result>", result);
+
+        return resolve(result);
+      } catch (error) {
+        console.log('error gpt=>', error);
+        return reject({
+          statusCode: error?.response?.status || -1002,
+          data: error?.response?.data || '服务内部错误',
+        });
       }
-    ).then((message) => {
+    }).then(message => {
       return this._upsertMessage(message).then(() => message);
     });
 
@@ -352,11 +327,7 @@ export class ChatGPTAPITURBOStream {
         };
       }
 
-      return pTimeout(
-        responseP,
-        timeoutMs,
-        "ChatGPT timed out waiting for response"
-      );
+      return pTimeout(responseP, timeoutMs, 'ChatGPT timed out waiting for response');
     } else {
       return responseP;
     }
@@ -393,10 +364,7 @@ export class ChatGPTAPITURBOStream {
     this._apiKey = apiKey;
   }
 
-  protected async _buildPrompt(
-    message: string,
-    opts: types.SendMessageOptions
-  ) {
+  protected async _buildPrompt(message: string, opts: types.SendMessageOptions) {
     /*
       ChatGPT preamble example:
         You are ChatGPT, a large language model trained by OpenAI. You answer as concisely as possible for each response (e.g. don’t be verbose). It is very important that you answer as concisely as possible, so please remember this. If you are generating a list, do not have too many items. Keep the number of items short.
@@ -415,7 +383,7 @@ export class ChatGPTAPITURBOStream {
     const maxNumTokens = this._maxModelTokens - this._maxResponseTokens;
     let { parentMessageId } = opts;
     let nextPromptBody = `${this._userLabel}:\n\n${message}${this._endToken}`;
-    let promptBody = "";
+    let promptBody = '';
     let prompt: string;
     let numTokens: number;
 
@@ -445,9 +413,8 @@ export class ChatGPTAPITURBOStream {
         break;
       }
 
-      const parentMessageRole = parentMessage.role || "user";
-      const parentMessageRoleDesc =
-        parentMessageRole === "user" ? this._userLabel : this._assistantLabel;
+      const parentMessageRole = parentMessage.role || 'user';
+      const parentMessageRoleDesc = parentMessageRole === 'user' ? this._userLabel : this._assistantLabel;
 
       // TODO: differentiate between assistant and user messages
       const parentMessageString = `${parentMessageRoleDesc}:\n\n${parentMessage.text}${this._endToken}\n\n`;
@@ -457,10 +424,7 @@ export class ChatGPTAPITURBOStream {
 
     // Use up to 4096 tokens (prompt + response), but try to leave 1000 tokens
     // for the response.
-    const maxTokens = Math.max(
-      1,
-      Math.min(this._maxModelTokens - numTokens, this._maxResponseTokens)
-    );
+    const maxTokens = Math.max(1, Math.min(this._maxModelTokens - numTokens, this._maxResponseTokens));
     return { prompt, maxTokens };
   }
 
@@ -468,8 +432,8 @@ export class ChatGPTAPITURBOStream {
     if (this._isChatGPTModel) {
       // With this model, "<|im_end|>" is 1 token, but tokenizers aren't aware of it yet.
       // Replace it with "<|endoftext|>" (which it does know about) so that the tokenizer can count it as 1 token.
-      text = text.replace(/<\|im_end\|>/g, "<|endoftext|>");
-      text = text.replace(/<\|im_sep\|>/g, "<|endoftext|>");
+      text = text.replace(/<\|im_end\|>/g, '<|endoftext|>');
+      text = text.replace(/<\|im_sep\|>/g, '<|endoftext|>');
     }
 
     return gptEncode(text).length;
@@ -477,23 +441,19 @@ export class ChatGPTAPITURBOStream {
 
   protected get _isChatGPTModel() {
     return (
-      this._completionParams.model.startsWith("text-chat") ||
-      this._completionParams.model.startsWith("text-davinci-002-render") ||
-      this._completionParams.model.startsWith("gpt-")
+      this._completionParams.model.startsWith('text-chat') ||
+      this._completionParams.model.startsWith('text-davinci-002-render') ||
+      this._completionParams.model.startsWith('gpt-')
     );
   }
 
-  protected async _defaultGetMessageById(
-    id: string
-  ): Promise<types.ChatMessage> {
+  protected async _defaultGetMessageById(id: string): Promise<types.ChatMessage> {
     const res = await this._messageStore.get(id);
-    console.log("getMessageById", id, res);
+    console.log('getMessageById', id, res);
     return res;
   }
 
-  protected async _defaultUpsertMessage(
-    message: types.ChatMessage
-  ): Promise<void> {
+  protected async _defaultUpsertMessage(message: types.ChatMessage): Promise<void> {
     // console.log("==>upsertMessage>", message.id, message);
     await this._messageStore.set(message.id, message);
   }

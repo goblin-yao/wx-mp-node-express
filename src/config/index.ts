@@ -7,10 +7,20 @@ if (process.env.NODE_ENV === 'development') {
 //   config({ path: `.env.production.local` });
 // }
 
+export const USER_LABEL_DEFAULT = 'User';
+export const ASSISTANT_LABEL_DEFAULT = 'ChatGPT';
+
 /**
  * 这些配置在微信云托管
  */
-export const { OPENAI_API_KEY, CHATGPT_MODEL_GPT, CHATGPT_MODEL, MYSQL_USERNAME, MYSQL_PASSWORD, MYSQL_ADDRESS } = process.env;
+export const {
+  OPENAI_API_KEY,
+  CHATGPT_MODEL_GPT = 'gpt-3.5-turbo',
+  CHATGPT_MODEL = 'text-davinci-003',
+  MYSQL_USERNAME,
+  MYSQL_PASSWORD,
+  MYSQL_ADDRESS,
+} = process.env;
 /**
  * 这些配置在本地
  */

@@ -18,17 +18,14 @@ https://github.com/ljlm0402/typescript-express-starter
 ## Dockerfile最佳实践
 请参考[如何提高项目构建效率](https://developers.weixin.qq.com/miniprogram/dev/wxcloudrun/src/scene/build/speed.html)
 
-## 项目结构说明
+## 需要在云托管配置的请求
 
 ```
-.
-├── Dockerfile
-├── README.md
-├── container.config.json
-├── db.js
-├── index.js
-├── index.html
-├── package.json
+/wxa/msg_sec_check
+
+/cgi-bin/message/custom/send
+
+/cgi-bin/message/subscribe/send
 ```
 
 - `index.js`：项目入口，实现主要的读写 API

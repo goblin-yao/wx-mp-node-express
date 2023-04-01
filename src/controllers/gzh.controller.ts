@@ -95,6 +95,7 @@ class GZHController {
       _limitResult = null;
 
     try {
+      //添加操作日志-todo
       switch (Number(type)) {
         case 11:
           _memberShipResult = await this._memberShipService.addMemberShip(openid, 24 * 3600 * 1000);

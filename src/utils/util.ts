@@ -1,3 +1,13 @@
+import { OPENAI_API_KEY } from '@config';
+/**
+ * 获取一个随机key
+ * @returns
+ */
+export const getAPIKEY = () => {
+  const keyArray = OPENAI_API_KEY.replace(/\s/g, '').split(';');
+  return keyArray[Math.floor(Math.random() * keyArray.length)];
+};
+
 /**
  * @method isEmpty
  * @param {String | Number | Object} value
