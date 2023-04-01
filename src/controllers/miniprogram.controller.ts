@@ -100,6 +100,7 @@ class MiniProgramController {
 
   public userAuth = async (req: Request, res: Response, next: NextFunction) => {
     const openid = req.headers['x-wx-openid'] as string;
+    const appid = req.headers['x-wx-appid'] as string;
     const unionid = req.headers['x-wx-unionid'] as string;
     const { share_from_openid } = req.body;
     try {
@@ -113,6 +114,7 @@ class MiniProgramController {
         const result = await this._userService.createUser({
           openid,
           unionid,
+          appid,
         });
         res.status(RESPONSE_CODE.SUCCESS).json({
           code: RESPONSE_CODE.SUCCESS,

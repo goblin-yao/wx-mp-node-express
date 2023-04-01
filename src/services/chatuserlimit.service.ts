@@ -10,7 +10,6 @@ class ChatUserLimitService {
 
   public async addUserLimitFromGZH(unionid: string): Promise<{ result: boolean; addLimit: number }> {
     console.log('addUserLimitFromGZH=>unionid', unionid);
-    // unionid = 'ob-vI5p5P9MOmSr4tIc1fH5yetCQ';
     try {
       // 根据unionid找到小程序的openid，然后给小程序增加次数
       const res = await this._userServiceInstance.findOne({ where: { unionid } });
@@ -19,20 +18,23 @@ class ChatUserLimitService {
         let userLimit = await this.serviceInstance.findOne({
           where: {
             openid: res.getDataValue('openid'),
-            lastAddFromGzh: {
-              [Op.lt]: new Date(new Date().toLocaleDateString()),
-            },
           },
         });
         //每天只能增加一次
         if (userLimit) {
-          await userLimit.update({
-            chatLeftNums: userLimit.getDataValue('chatLeftNums') + LIMIT_NUM_FROM_GZH,
-            lastAddFromGzh: new Date(),
-          });
-          await userLimit.save();
-          console.log('userLimit add=>', userLimit.toJSON());
-          return { result: true, addLimit: LIMIT_NUM_FROM_GZH };
+          //没有或者小于当天0点时间戳，说明当天没更新过，增加次数
+          if (
+            !userLimit.getDataValue('lastAddFromGzh') ||
+            new Date(userLimit.getDataValue('lastAddFromGzh')).getTime() < new Date(new Date().toLocaleDateString()).getTime()
+          ) {
+            await userLimit.update({
+              chatLeftNums: userLimit.getDataValue('chatLeftNums') + LIMIT_NUM_FROM_GZH,
+              lastAddFromGzh: new Date(),
+            });
+            await userLimit.save();
+            console.log('userLimit add=>', userLimit.toJSON());
+            return { result: true, addLimit: LIMIT_NUM_FROM_GZH };
+          }
         }
       }
     } catch (error) {

@@ -10,6 +10,7 @@ export class ChatUserModel extends Model<ChatUser, UserCreationAttributes> imple
   public gzhOpenid: string;
   public avatarUrl: string;
   public nickName: string;
+  public appid: string;
 
   public readonly createdAt!: Date;
   public readonly updatedAt!: Date;
@@ -44,6 +45,10 @@ export default function (sequelize: Sequelize): typeof ChatUserModel {
       nickName: {
         type: DataTypes.STRING(32),
         allowNull: true,
+      },
+      appid: {
+        type: DataTypes.STRING(64),
+        allowNull: false,
       },
     },
     {
