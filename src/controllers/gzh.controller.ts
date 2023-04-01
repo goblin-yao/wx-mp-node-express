@@ -36,7 +36,21 @@ class GZHController {
     });
     if (MsgType === 'text') {
       if (Content.replace(/\s/g, '') === '增加使用次数') {
-        this._userLimitService.addUserLimitFromGZH(unionid, FromUserName);
+        // 小程序、公众号可用
+        try {
+          const temp = await this._userLimitService.addUserLimitFromGZH(unionid, FromUserName);
+          let _reslut = await WXCustomSendMessage(
+            {
+              touser: FromUserName,
+              msgtype: 'text',
+              text: {
+                content: temp.result ? `使用次数增加${temp.addLimit}` : `今天已经增加过了`,
+              },
+            },
+            appid,
+          );
+          console.log('_reslut', _reslut);
+        } catch (error) {}
       }
       //增加使用次数
       res.send('success');

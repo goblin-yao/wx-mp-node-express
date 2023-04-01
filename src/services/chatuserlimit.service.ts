@@ -7,7 +7,8 @@ class ChatUserLimitService {
   public serviceInstance = DB.ChatUserLimit;
   public _userServiceInstance = DB.ChatUser;
 
-  public async addUserLimitFromGZH(unionid: string, gzhOpenid: string): Promise<ChatUserLimit> {
+  public async addUserLimitFromGZH(unionid: string, gzhOpenid?: string): Promise<{ result: boolean; addLimit: number }> {
+    console.log('addUserLimitFromGZH,gzhOpenid', gzhOpenid);
     const res = await this._userServiceInstance.findOne({ where: { unionid } });
     if (res) {
       let userLimit = await this.serviceInstance.findOne({
@@ -23,8 +24,9 @@ class ChatUserLimitService {
           await userLimit.save();
         }
       }
-      return userLimit;
+      return { result: true, addLimit: LIMIT_NUM_FROM_GZH };
     }
+    return { result: false, addLimit: 0 };
   }
 
   public async addUserLimit(openid: string, nums: number): Promise<ChatUserLimit> {
