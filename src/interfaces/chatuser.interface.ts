@@ -5,5 +5,4 @@ export interface ChatUser {
   gzhOpenid: string;
   avatarUrl: string;
   nickName: string;
-  appid: string;
 }

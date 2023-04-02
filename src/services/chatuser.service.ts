@@ -26,7 +26,6 @@ class ChatUserService {
       gzhOpenid: userData.gzhOpenid || '',
       avatarUrl: userData.avatarUrl || '1',
       nickName: userData.nickName || '2',
-      appid: userData.appid,
     });
     return result;
   }
