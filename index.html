@@ -219,6 +219,7 @@
     <p><button id="getMessageHistory">getMessageHistory</button></p>
     <p><button id="messageChecker">messageChecker</button></p>
     <p><button id="gzhMessage">gzhMessage</button></p>
+    <p><button id="addlimitFromGZH">addlimitFromGZH</button></p>
     <select id="typeSelect">
       <option value="11">会员1天</option>
       <option value="12">会员1个月</option>
@@ -241,6 +242,22 @@
     crossorigin="anonymous"
   ></script>
   <script>
+    addlimitFromGZH.onclick = function () {
+      fetch('/gzh/dakalimit', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ unionid: 'ob-vI5p5P9MOmSr4tIc1fH5yetCQ' }),
+      })
+        .then(response => response.json())
+        .then(data => {
+          console.log('success=>', data);
+        })
+        .catch(data => {
+          console.log('error=>', data);
+        });
+    };
     gzhMessage.onclick = function () {
       fetch('/gzh/message', {
         method: 'POST',

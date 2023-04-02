@@ -47,6 +47,8 @@ export const CONSTANTS = {
     MAX_NUM_PERVIEW: 3,
     MAX_TIMES_PERDAY: 12,
   },
+  GZH_DAKA_TEXTS: ['增加使用次数', '打卡'],
+  GZH_DAKA_1_TEXTS: ['增加使用次数1', '打卡1'],
   // Azure云服务的代理地址
   // "http://localhost:80/proxy" 本地开发
   OPENAI_PROXY_URL: 'https://wxchatnodeexpressazure.azurewebsites.net/proxy',

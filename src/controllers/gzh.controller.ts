@@ -1,4 +1,5 @@
 import { NextFunction, Request, Response } from 'express';
+import axios from 'axios';
 import { Op } from 'sequelize';
 import ChatUserService from '@services/chatuser.service';
 import ChatUserLimitService from '@/services/chatuserlimit.service';
@@ -7,7 +8,7 @@ import { WXCustomSendMessage, WXMsgChecker } from '@/services/wxopenapi.service'
 import openAIService from '@services/openai.service';
 import { CONSTANTS } from '@/config';
 import { getTimeStampOfMonthLater } from '@/utils/util';
-const { RESPONSE_CODE, LIMIT_NUM_FROM_SHARE_PERDAY, MAX_HISTORY_RECORD, MAX_HISTORY_SAVE, MAX_LIMIT_PERDAY, TIME_FOR_NEW_USER } = CONSTANTS;
+const { RESPONSE_CODE, GZH_DAKA_TEXTS, GZH_DAKA_1_TEXTS } = CONSTANTS;
 
 class GZHController {
   public aiService = new openAIService();
@@ -40,10 +41,26 @@ class GZHController {
     // 'content-type': 'application/json'
     const { ToUserName, FromUserName, MsgType, Content, CreateTime } = req.body;
     if (MsgType === 'text') {
-      if (Content.replace(/\s/g, '') === '增加使用次数') {
-        // 小程序、公众号可用
-        try {
-          const temp = await this._userLimitService.addUserLimitFromGZH(unionid, FromUserName);
+      try {
+        const _content = Content.replace(/\s/g, '');
+        if ([...GZH_DAKA_TEXTS, ...GZH_DAKA_1_TEXTS].includes(_content)) {
+          // 小程序、公众号可用
+          let temp = { result: false, addLimit: 0 };
+          if (GZH_DAKA_TEXTS.includes(_content)) {
+            temp = await this._userLimitService.addUserLimitFromGZH(unionid);
+          }
+          if (GZH_DAKA_1_TEXTS.includes(_content)) {
+            let _temp1 = await axios.post(
+              'https://express-bnkr-40873-8-1317602977.sh.run.tcloudbase.com/gzh/dakalimit',
+              { unionid },
+              {
+                headers: { 'Content-Type': 'application/json' },
+                timeout: 10000,
+              },
+            );
+            temp = _temp1.data;
+          }
+
           let _reslut = await WXCustomSendMessage(
             {
               touser: FromUserName,
@@ -55,8 +72,21 @@ class GZHController {
             appid,
           );
           console.log('_reslut', _reslut);
-        } catch (error) {}
+        }
+      } catch (error) {
+        let _reslut = await WXCustomSendMessage(
+          {
+            touser: FromUserName,
+            msgtype: 'text',
+            text: {
+              content: `添加次数失败，请联系管理员`,
+            },
+          },
+          appid,
+        );
+        console.log('error', error);
       }
+
       //增加使用次数
       res.send('success');
       return;
@@ -76,20 +106,6 @@ class GZHController {
           replyMsg = '服务器超时';
         }
       }
-      // 小程序、公众号可用
-      try {
-        let _reslut = await WXCustomSendMessage(
-          {
-            touser: FromUserName,
-            msgtype: 'text',
-            text: {
-              content: replyMsg,
-            },
-          },
-          appid,
-        );
-        console.log('_reslut', _reslut);
-      } catch (error) {}
       res.status(RESPONSE_CODE.SUCCESS).send('success');
     } else {
       res.status(RESPONSE_CODE.SUCCESS).send('success');
@@ -154,6 +170,16 @@ class GZHController {
     } catch (error) {
       res.status(RESPONSE_CODE.ERROR).send({ code: RESPONSE_CODE.ERROR });
     }
+  };
+
+  /**
+   * 增加每天打卡次数，主要用来给语音小程序使用，增加每天打卡次数
+   * 公众号接口调用语音小程序的外部接口增加次数
+   */
+  public dakalimit = async (req: Request, res: Response, next: NextFunction) => {
+    const { unionid } = req.body;
+    const result = await this._userLimitService.addUserLimitFromGZH(unionid);
+    res.status(RESPONSE_CODE.SUCCESS).send({ data: result });
   };
 }
 
