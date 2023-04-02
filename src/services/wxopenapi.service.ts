@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { CONSTANTS } from '@config';
+import { CONSTANTS, SUBSCRIBE_TEMPLATE_ID } from '@config';
 
 const { RESPONSE_CODE, LIMIT_NUM_FROM_SHARE_PERDAY } = CONSTANTS;
 
@@ -61,7 +61,7 @@ export async function WXSubscribeSend(option) {
       url,
       {
         touser: option.toOpenId,
-        template_id: 'gDR3LuQ-JEOtfmT_ug40QcT6uk4kFPTHMuAVXyD3GqQ',
+        template_id: SUBSCRIBE_TEMPLATE_ID,
         page: '/pages/index/index',
         miniprogram_state: 'trial', //跳转小程序类型：developer为开发版；trial为体验版；formal为正式版；默认为正式版
         lang: 'zh_CN',

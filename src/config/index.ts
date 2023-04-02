@@ -20,6 +20,7 @@ export const {
   MYSQL_USERNAME,
   MYSQL_PASSWORD,
   MYSQL_ADDRESS,
+  SUBSCRIBE_TEMPLATE_ID,
 } = process.env;
 /**
  * 这些配置在本地
