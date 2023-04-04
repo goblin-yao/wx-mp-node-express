@@ -1,11 +1,27 @@
-import { OPENAI_API_KEY } from '@config';
+import { OPENAI_API_KEY, CONSTANTS } from '@config';
+
+/**
+ * 获取一个随机PROXYURL
+ * @returns
+ */
+export function getRandomElementFromArray<T>(keyArray: Array<T>): T {
+  return keyArray[Math.floor(Math.random() * keyArray.length)];
+}
 /**
  * 获取一个随机key
  * @returns
  */
 export const getAPIKEY = () => {
   const keyArray = OPENAI_API_KEY.replace(/\s/g, '').split(';');
-  return keyArray[Math.floor(Math.random() * keyArray.length)];
+  return getRandomElementFromArray(keyArray);
+};
+
+/**
+ * 获取一个随机PROXYURL
+ * @returns
+ */
+export const getPROXYURL = () => {
+  return getRandomElementFromArray(CONSTANTS.OPENAI_PROXY_URL);
 };
 
 /**

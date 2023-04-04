@@ -3,4 +3,5 @@ export interface ChatUserShareHistory {
   openid: string;
   byOpenid: string;
   shareFlag: string;
+  updatedAt: Date;
 }

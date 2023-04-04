@@ -17,18 +17,18 @@ class ChatUserLimitService {
       if (res) {
         let userLimit = await this.serviceInstance.findOne({
           where: {
-            openid: res.getDataValue('openid'),
+            openid: res.get('openid'),
           },
         });
         //每天只能增加一次
         if (userLimit) {
           //没有或者小于当天0点时间戳，说明当天没更新过，增加次数
           if (
-            !userLimit.getDataValue('lastAddFromGzh') ||
-            new Date(userLimit.getDataValue('lastAddFromGzh')).getTime() < new Date(new Date().toLocaleDateString()).getTime()
+            !userLimit.get('lastAddFromGzh') ||
+            new Date(userLimit.get('lastAddFromGzh')).getTime() < new Date(new Date().toLocaleDateString()).getTime()
           ) {
             await userLimit.update({
-              chatLeftNums: userLimit.getDataValue('chatLeftNums') + LIMIT_NUM_FROM_GZH,
+              chatLeftNums: userLimit.get('chatLeftNums') + LIMIT_NUM_FROM_GZH,
               lastAddFromGzh: new Date(),
             });
             await userLimit.save();
@@ -50,7 +50,7 @@ class ChatUserLimitService {
     });
     //最近更新时间小于今天凌晨0点 且当前次数小于最大次数, 说明需要更新了,
     await userLimit.update({
-      chatLeftNums: userLimit.getDataValue('chatLeftNums') + nums,
+      chatLeftNums: userLimit.get('chatLeftNums') + nums,
     });
     await userLimit.save();
 

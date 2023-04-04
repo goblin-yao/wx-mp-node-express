@@ -1,22 +1,24 @@
-import { CONSTANTS } from '@config';
 import { ChatGPTAPI, ChatGPTAPITURBO } from '@/chatgptlib';
-import { getAPIKEY } from '@/utils/util';
+import { getAPIKEY, getPROXYURL, getRandomElementFromArray } from '@/utils/util';
 import * as types from '../chatgptlib/types';
+
+const chatGPTapi = new ChatGPTAPI({
+  apiKey: getAPIKEY(),
+  apiReverseProxyUrl: getPROXYURL(),
+});
+
+const chatGPTTurboapi = new ChatGPTAPITURBO({
+  apiKey: getAPIKEY(),
+  apiReverseProxyUrl: getPROXYURL(),
+});
 
 class OpenAIService {
   constructor() {}
   private getChatGPTAPI() {
-    const _tempKey = getAPIKEY(); //随机取一个key
-    const chatGPTapi = new ChatGPTAPI({
-      apiKey: _tempKey,
-      apiReverseProxyUrl: CONSTANTS.OPENAI_PROXY_URL,
-    });
-
-    const chatGPTTurboapi = new ChatGPTAPITURBO({
-      apiKey: _tempKey,
-      apiReverseProxyUrl: CONSTANTS.OPENAI_PROXY_URL,
-    });
-    return Math.random() > 0.5 ? chatGPTTurboapi : chatGPTapi;
+    let APIInstance = getRandomElementFromArray([chatGPTTurboapi, chatGPTapi]);
+    APIInstance.apiKey = getAPIKEY();
+    APIInstance.apiReverseProxyUrl = getPROXYURL();
+    return APIInstance;
   }
   public async chatToAI(question: string): Promise<types.ChatMessage> {
     return await this.getChatGPTAPI().sendMessage(question);

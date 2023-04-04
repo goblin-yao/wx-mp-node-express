@@ -46,7 +46,7 @@ class MiniProgramController {
       });
       console.log('[record, isCreated]', record.toJSON(), isCreated);
       //是新创建的 或者 不是新创建的 判断更新时间小于今天，增加10次
-      if (isCreated || (!isCreated && new Date(record.updatedAt).getTime() < new Date(new Date().toLocaleDateString()).getTime())) {
+      if (isCreated || (!isCreated && new Date(record.get('updatedAt')).getTime() < new Date(new Date().toLocaleDateString()).getTime())) {
         if (!isCreated) {
           await record.update({ shareFlag: String(new Date().getTime()) });
           await record.save();
@@ -232,7 +232,7 @@ class MiniProgramController {
       userLimit = await this._userLimitService.serviceInstance.findOne({ where: { openid } });
       //最近更新时间小于今天凌晨0点 且当前次数小于最大次数, 说明需要更新了,
       if (
-        new Date(userLimit.updatedAt).getTime() < new Date(new Date().toLocaleDateString()).getTime() &&
+        new Date(userLimit.get('updatedAt')).getTime() < new Date(new Date().toLocaleDateString()).getTime() &&
         userLimit.get('chatLeftNums') < MAX_LIMIT_PERDAY
       ) {
         await userLimit.update({ chatLeftNums: MAX_LIMIT_PERDAY - 1 });
@@ -286,10 +286,10 @@ class MiniProgramController {
     let userLimit = null;
     try {
       userLimit = await this._userLimitService.serviceInstance.findOne({ where: { openid } });
-      console.log('test=>>userLimit', userLimit.chatLeftNums, userLimit.updatedAt);
+      console.log('test=>>userLimit', userLimit.get("chatLeftNums"), userLimit.get("updatedAt"));
       //最近更新时间小于今天凌晨0点 且当前次数小于最大次数, 说明需要更新了,
       if (
-        new Date(userLimit.updatedAt).getTime() < new Date(new Date().toLocaleDateString()).getTime() &&
+        new Date(userLimit.get("updatedAt")).getTime() < new Date(new Date().toLocaleDateString()).getTime() &&
         userLimit.get('chatLeftNums') < MAX_LIMIT_PERDAY
       ) {
         await userLimit.update({ chatLeftNums: MAX_LIMIT_PERDAY });
@@ -300,7 +300,7 @@ class MiniProgramController {
         }); // 最新的剩余次数
         return;
       }
-      console.log('test=>>userLimit', userLimit.chatLeftNums);
+      console.log('test=>>userLimit', userLimit.get("chatLeftNums"));
 
       res.status(RESPONSE_CODE.SUCCESS).json({
         code: RESPONSE_CODE.SUCCESS,

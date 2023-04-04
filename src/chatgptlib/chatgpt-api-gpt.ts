@@ -206,6 +206,7 @@ export class ChatGPTAPITURBO {
         stream,
       };
       console.log('/v1/chat/completions body=>>', JSON.stringify(body));
+      console.log('request url=>>', url);
 
       try {
         const response = await axios.post(url, body, {
@@ -293,6 +294,10 @@ export class ChatGPTAPITURBO {
 
   set apiKey(apiKey: string) {
     this._apiKey = apiKey;
+  }
+
+  set apiReverseProxyUrl(apiReverseProxyUrl: string) {
+    this._apiReverseProxyUrl = apiReverseProxyUrl;
   }
 
   protected async _buildPrompt(message: string, opts: types.SendMessageOptions) {

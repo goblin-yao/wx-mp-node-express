@@ -364,6 +364,10 @@ export class ChatGPTAPITURBOStream {
     this._apiKey = apiKey;
   }
 
+  set apiReverseProxyUrl(apiReverseProxyUrl: string) {
+    this._apiReverseProxyUrl = apiReverseProxyUrl;
+  }
+
   protected async _buildPrompt(message: string, opts: types.SendMessageOptions) {
     /*
       ChatGPT preamble example:

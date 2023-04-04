@@ -8,6 +8,7 @@ import { WXCustomSendMessage, WXMsgChecker } from '@/services/wxopenapi.service'
 import openAIService from '@services/openai.service';
 import { CONSTANTS } from '@/config';
 import { getTimeStampOfMonthLater } from '@/utils/util';
+import path from 'path';
 const { RESPONSE_CODE, GZH_DAKA_TEXTS, GZH_DAKA_1_TEXTS } = CONSTANTS;
 
 class GZHController {
@@ -180,6 +181,14 @@ class GZHController {
     const { unionid } = req.body;
     const result = await this._userLimitService.addUserLimitFromGZH(unionid);
     res.status(RESPONSE_CODE.SUCCESS).send({ data: result });
+  };
+
+  public gzhweb = (req: Request, res: Response, next: NextFunction) => {
+    try {
+      res.sendFile(path.join(__dirname, '../../gzh_web/index.html'));
+    } catch (error) {
+      next(error);
+    }
   };
 }
 

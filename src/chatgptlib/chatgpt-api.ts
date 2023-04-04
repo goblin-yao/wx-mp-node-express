@@ -211,6 +211,7 @@ export class ChatGPTAPI {
         stream,
       };
       console.log('/v1/completions body=>>', JSON.stringify(body));
+      console.log('request url=>>', url);
 
       if (this._debug) {
         const numTokens = await this._getTokenCount(body.prompt);
@@ -305,6 +306,10 @@ export class ChatGPTAPI {
 
   set apiKey(apiKey: string) {
     this._apiKey = apiKey;
+  }
+
+  set apiReverseProxyUrl(apiReverseProxyUrl: string) {
+    this._apiReverseProxyUrl = apiReverseProxyUrl;
   }
 
   protected async _buildPrompt(message: string, opts: types.SendMessageOptions) {
