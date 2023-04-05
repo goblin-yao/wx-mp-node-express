@@ -8,7 +8,7 @@ if (process.env.NODE_ENV === 'development') {
 // }
 
 export const USER_LABEL_DEFAULT = 'User';
-export const ASSISTANT_LABEL_DEFAULT = 'ChatGPT';
+export const ASSISTANT_LABEL_DEFAULT = 'Helpful Assistant';
 
 /**
  * 这些配置在微信云托管
