@@ -9,6 +9,7 @@
 /dist
 /logs
 /src/logs
+src_origin
 
 # misc
 .DS_Store

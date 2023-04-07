@@ -8,7 +8,7 @@ import axios from 'axios';
 
 import QuickLRU from 'quick-lru';
 
-import { CHATGPT_MODEL_GPT, USER_LABEL_DEFAULT, ASSISTANT_LABEL_DEFAULT } from '@config';
+import { CHATGPT_MODEL_GPT, USER_LABEL_DEFAULT, ASSISTANT_LABEL_DEFAULT, PROMPT_TEXT } from '@config';
 
 export class ChatGPTAPITURBO {
   protected _apiKey: string;
@@ -199,8 +199,7 @@ export class ChatGPTAPITURBO {
         max_tokens: maxTokens,
         ...this._completionParams,
         messages: [
-          // { role: "system", content: `你是${this._assistantLabel}.使用简洁，拟人化的方式回答问题` },
-          { role: 'system', content: `You are${this._assistantLabel}, respond to questions using concise, anthropomorphic style` },
+          { role: 'system', content: PROMPT_TEXT },
           { role: 'user', content: text },
         ],
         stream,

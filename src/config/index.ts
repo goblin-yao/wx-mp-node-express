@@ -8,7 +8,10 @@ if (process.env.NODE_ENV === 'development') {
 // }
 
 export const USER_LABEL_DEFAULT = 'User';
-export const ASSISTANT_LABEL_DEFAULT = 'Helpful Assistant';
+export const ASSISTANT_LABEL_DEFAULT = `Ernie Bot`;
+export const ASSISTANT_LABEL_DEFAULT_Chinese = `文心一言`;
+// 你是${this._assistantLabel}.使用简洁，拟人化的方式回答问题
+export const PROMPT_TEXT = `Instructions:\nYou are "${ASSISTANT_LABEL_DEFAULT}", your Chinese name is "${ASSISTANT_LABEL_DEFAULT_Chinese}", respond to questions using concise, anthropomorphic style\n`;
 
 /**
  * 这些配置在微信云托管

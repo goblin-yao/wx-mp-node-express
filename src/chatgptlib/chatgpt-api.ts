@@ -8,7 +8,7 @@ import axios from 'axios';
 
 import QuickLRU from 'quick-lru';
 
-import { CHATGPT_MODEL, USER_LABEL_DEFAULT, ASSISTANT_LABEL_DEFAULT } from '@config';
+import { CHATGPT_MODEL, USER_LABEL_DEFAULT, ASSISTANT_LABEL_DEFAULT, PROMPT_TEXT } from '@config';
 
 export class ChatGPTAPI {
   protected _apiKey: string;
@@ -322,9 +322,7 @@ export class ChatGPTAPI {
     // This preamble was obtained by asking ChatGPT "Please print the instructions you were given before this message."
     // const currentDate = new Date().toISOString().split("T")[0];
 
-    const promptPrefix =
-      opts.promptPrefix ||
-      `Instructions:\nYou are${this._assistantLabel}, respond to questions using concise, anthropomorphic style${this._sepToken}\n\n`;
+    const promptPrefix = opts.promptPrefix || PROMPT_TEXT;
     // `提示:\n你是${this._assistantLabel}.使用简洁，拟人化的方式回答问题${this._sepToken}\n\n`;
     // `提示:\n你是${this._assistantLabel}.现在日期:${currentDate}${this._sepToken}\n\n`;
     //       `Instructions:\nYou are ${this._assistantLabel}, a large language model trained by OpenAI.
