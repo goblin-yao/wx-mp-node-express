@@ -2,10 +2,10 @@ import { ChatGPTAPI, ChatGPTAPITURBO } from '@/chatgptlib';
 import { getAPIKEY, getPROXYURL, getRandomElementFromArray } from '@/utils/util';
 import * as types from '../chatgptlib/types';
 
-const chatGPTapi = new ChatGPTAPI({
-  apiKey: getAPIKEY(),
-  apiReverseProxyUrl: getPROXYURL(),
-});
+// const chatGPTapi = new ChatGPTAPI({
+//   apiKey: getAPIKEY(),
+//   apiReverseProxyUrl: getPROXYURL(),
+// });
 
 const chatGPTTurboapi = new ChatGPTAPITURBO({
   apiKey: getAPIKEY(),
@@ -15,7 +15,7 @@ const chatGPTTurboapi = new ChatGPTAPITURBO({
 class OpenAIService {
   constructor() {}
   private getChatGPTAPI() {
-    let APIInstance = getRandomElementFromArray([chatGPTTurboapi, chatGPTapi]);
+    let APIInstance = getRandomElementFromArray([chatGPTTurboapi]);
     APIInstance.apiKey = getAPIKEY();
     APIInstance.apiReverseProxyUrl = getPROXYURL();
     return APIInstance;
