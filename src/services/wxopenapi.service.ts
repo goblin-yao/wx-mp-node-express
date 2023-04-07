@@ -55,6 +55,9 @@ export async function WXMsgChecker(content, option) {
  * @returns
  */
 export async function WXSubscribeSend(option) {
+  if (!SUBSCRIBE_TEMPLATE_ID) {
+    return false;
+  }
   let url = `https://api.weixin.qq.com/cgi-bin/message/subscribe/send`;
   try {
     const result = await axios.post(

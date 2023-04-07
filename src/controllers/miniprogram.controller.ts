@@ -63,7 +63,7 @@ class MiniProgramController {
           });
           await userLimit.save();
         }
-        await WXSubscribeSend({ toOpenId: share_from_openid });
+        // await WXSubscribeSend({ toOpenId: share_from_openid });
       }
     }
   };
