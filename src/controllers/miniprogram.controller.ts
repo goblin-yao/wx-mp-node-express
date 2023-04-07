@@ -97,6 +97,23 @@ class MiniProgramController {
       });
     }
   };
+  public updateUser = async (req: Request, res: Response, next: NextFunction) => {
+    const openid = req.headers['x-wx-openid'] as string;
+    const unionid = req.headers['x-wx-unionid'] as string;
+    const { avatarUrl, nickName } = req.body;
+    try {
+      let result = await this._userService.updateUser(openid, { avatarUrl, nickName });
+
+      res.status(RESPONSE_CODE.SUCCESS).json({
+        code: RESPONSE_CODE.SUCCESS,
+        data: result,
+      });
+    } catch (error) {
+      res.status(RESPONSE_CODE.SUCCESS).json({
+        code: RESPONSE_CODE.ERROR,
+      });
+    }
+  };
 
   public userAuth = async (req: Request, res: Response, next: NextFunction) => {
     const openid = req.headers['x-wx-openid'] as string;
@@ -286,10 +303,10 @@ class MiniProgramController {
     let userLimit = null;
     try {
       userLimit = await this._userLimitService.serviceInstance.findOne({ where: { openid } });
-      console.log('test=>>userLimit', userLimit.get("chatLeftNums"), userLimit.get("updatedAt"));
+      console.log('test=>>userLimit', userLimit.get('chatLeftNums'), userLimit.get('updatedAt'));
       //最近更新时间小于今天凌晨0点 且当前次数小于最大次数, 说明需要更新了,
       if (
-        new Date(userLimit.get("updatedAt")).getTime() < new Date(new Date().toLocaleDateString()).getTime() &&
+        new Date(userLimit.get('updatedAt')).getTime() < new Date(new Date().toLocaleDateString()).getTime() &&
         userLimit.get('chatLeftNums') < MAX_LIMIT_PERDAY
       ) {
         await userLimit.update({ chatLeftNums: MAX_LIMIT_PERDAY });
@@ -300,7 +317,7 @@ class MiniProgramController {
         }); // 最新的剩余次数
         return;
       }
-      console.log('test=>>userLimit', userLimit.get("chatLeftNums"));
+      console.log('test=>>userLimit', userLimit.get('chatLeftNums'));
 
       res.status(RESPONSE_CODE.SUCCESS).json({
         code: RESPONSE_CODE.SUCCESS,

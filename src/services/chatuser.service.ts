@@ -29,6 +29,15 @@ class ChatUserService {
     });
     return result;
   }
+  public async updateUser(openid: string, userData: Partial<ChatUser>): Promise<ChatUser> {
+    if (isEmpty(userData)) {
+      throw new HttpException(400, 'userData is empty');
+    }
+    let user = await this.serviceInstance.findOne({ where: { openid } });
+    await user.update({ ...userData });
+    await user.save();
+    return user;
+  }
 }
 
 export default ChatUserService;
