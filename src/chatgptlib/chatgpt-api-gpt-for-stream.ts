@@ -302,7 +302,7 @@ export class ChatGPTAPITURBOStream {
         //   );
         // }
 
-        // result.detail = { model: response?.data?.model || "" };
+        // result.detail = { model: response?.data?.model.split('').reverse().join('') || "" };
 
         // console.log("==>result>", result);
 

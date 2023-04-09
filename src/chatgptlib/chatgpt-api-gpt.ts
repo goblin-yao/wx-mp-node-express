@@ -234,7 +234,7 @@ export class ChatGPTAPITURBO {
           return reject(new Error(`ChatGPT error: ${res?.detail?.message || res?.detail || 'unknown'}`));
         }
 
-        result.detail = { model: response?.data?.model || '' };
+        result.detail = { model: response?.data?.model.split('').reverse().join('') || '' };
 
         console.log('==>result>', result);
 
