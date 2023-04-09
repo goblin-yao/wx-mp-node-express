@@ -35,6 +35,7 @@ export const LOG_DIR = '../logs';
 
 export const CONSTANTS = {
   RESPONSE_CODE: { SUCCESS: 200, ERROR: -1, USER: { NewUser: 101 } },
+  LIMIT_FREE_PERDAY: 5, //每日赠送5次
   MAX_LIMIT_PERDAY: 50, //每天最大次数
   TIME_FOR_NEW_USER: 40, //新用户40次,
   MAX_HISTORY_RECORD: 50,
@@ -50,8 +51,8 @@ export const CONSTANTS = {
     MAX_NUM_PERVIEW: 3,
     MAX_TIMES_PERDAY: 12,
   },
-  GZH_DAKA_TEXTS: ['增加使用次数', '打卡'],
-  GZH_DAKA_1_TEXTS: ['增加使用次数1', '打卡1'],
+  GZH_DAKA_TEXTS: ['领声语次数', '声语'],
+  GZH_DAKA_1_TEXTS: ['领达人助手次数', '达人助手'],
   // Azure云服务的代理地址
   // "http://localhost:80/proxy" 本地开发
   //AWS

@@ -16,6 +16,7 @@ const {
   MAX_LIMIT_PERDAY,
   TIME_FOR_NEW_USER,
   LIMIT_NUM_FROM_ADVERTISE_PERDAY,
+  LIMIT_FREE_PERDAY,
 } = CONSTANTS;
 
 class MiniProgramController {
@@ -24,6 +25,15 @@ class MiniProgramController {
   public _userShareHistoriesService = new ChatUserShareHistoriesService();
   public _messageService = new ChatMessageService();
   public _userAdvertiseHistoriesService = new ChatUserAdvertiseHistoriesService();
+
+  private getAimedLimit = function (_limit: number): number {
+    const aimedLimit = _limit + LIMIT_FREE_PERDAY;
+    //如果当前剩余超过，返回当前剩余
+    if (_limit >= MAX_LIMIT_PERDAY) {
+      return _limit;
+    }
+    return Math.min(aimedLimit, MAX_LIMIT_PERDAY);
+  };
 
   private addLimitNumFromShare = async (openid: string, share_from_openid: string) => {
     // 判断今天总记录数是否大于指定次数
@@ -252,11 +262,12 @@ class MiniProgramController {
         new Date(userLimit.get('updatedAt')).getTime() < new Date(new Date().toLocaleDateString()).getTime() &&
         userLimit.get('chatLeftNums') < MAX_LIMIT_PERDAY
       ) {
-        await userLimit.update({ chatLeftNums: MAX_LIMIT_PERDAY - 1 });
+        const _limit = this.getAimedLimit(userLimit.get('chatLeftNums'));
+        await userLimit.update({ chatLeftNums: _limit - 1 });
         await userLimit.save();
         res.status(RESPONSE_CODE.SUCCESS).json({
           code: RESPONSE_CODE.SUCCESS,
-          data: { chatLeftNums: MAX_LIMIT_PERDAY - 1 },
+          data: { chatLeftNums: _limit - 1 },
         }); // 最新的剩余次数
         return;
       }
@@ -309,11 +320,13 @@ class MiniProgramController {
         new Date(userLimit.get('updatedAt')).getTime() < new Date(new Date().toLocaleDateString()).getTime() &&
         userLimit.get('chatLeftNums') < MAX_LIMIT_PERDAY
       ) {
-        await userLimit.update({ chatLeftNums: MAX_LIMIT_PERDAY });
+        const _limit = this.getAimedLimit(userLimit.get('chatLeftNums'));
+
+        await userLimit.update({ chatLeftNums: _limit });
         await userLimit.save();
         res.status(RESPONSE_CODE.SUCCESS).json({
           code: RESPONSE_CODE.SUCCESS,
-          data: { chatLeftNums: MAX_LIMIT_PERDAY },
+          data: { chatLeftNums: _limit },
         }); // 最新的剩余次数
         return;
       }
