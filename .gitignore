@@ -26,6 +26,7 @@ yarn-error.log*
 # IDE
 .idea
 _temp/
+gzh_web_temp
 Dockerfile.development
 docker-compose.yml
 .cloudbase

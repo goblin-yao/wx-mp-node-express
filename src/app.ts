@@ -8,6 +8,7 @@ import DB from '@databases';
 import { Routes } from '@interfaces/routes.interface';
 import errorMiddleware from '@middlewares/error.middleware';
 import { logger, stream } from '@utils/logger';
+import { join } from 'path';
 
 class App {
   public app: express.Application;
@@ -47,6 +48,7 @@ class App {
     this.app.use(morgan(LOG_FORMAT, { stream }));
     this.app.use(cors());
     this.app.use(express.json());
+    this.app.use(express.static(join(__dirname, '../public')));
     this.app.use(express.urlencoded({ extended: false }));
   }
 

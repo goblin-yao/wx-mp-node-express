@@ -55,6 +55,6 @@ export const CONSTANTS = {
   GZH_DAKA_1_TEXTS: ['领达人助手次数', '达人助手'],
   // Azure云服务的代理地址
   // "http://localhost:80/proxy" 本地开发
-  //AWS
-  OPENAI_PROXY_URL: ['https://wxchatnodeexpressazure.azurewebsites.net/proxy', 'https://dfpcwg6xrm.us-east-1.awsapprunner.com/proxy'],
+  //AWS https://dfpcwg6xrm.us-east-1.awsapprunner.com/proxy
+  OPENAI_PROXY_URL: ['https://wxchatnodeexpressazure.azurewebsites.net/proxy'],
 };

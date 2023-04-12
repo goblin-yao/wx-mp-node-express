@@ -232,7 +232,6 @@
     <p><button id="memberShip">memberShip</button></p>
 
     <p><button id="getModels">getModels</button></p>
-    <p><button id="proxySubmit">proxySubmit</button></p>
     <p><textarea id="result_textare" cols="100" rows="50"></textarea></p>
   </body>
   <script src="https://mat1.gtimg.com/www/asset/lib/jquery/jquery/jquery-1.11.1.min.js"></script>
@@ -316,26 +315,8 @@
           console.log('error=>', data);
         });
     };
-    proxySubmit.onclick = function () {
-      fetch('/proxyapi/chat', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'x-wx-openid': _openid.value,
-        },
-        body: JSON.stringify({ question: question.value }),
-      })
-        .then(response => response.json())
-        .then(data => {
-          console.log('success=>', data);
-          result_textare.value = data.text;
-        })
-        .catch(data => {
-          console.log('error=>', data);
-        });
-    };
     submit.onclick = function () {
-      fetch('/openai/chat', {
+      fetch('/proxyapi/chat', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
