@@ -265,6 +265,84 @@ export class ChatGPTAPITURBO {
     }
   }
 
+  async sendMessageV2(messages: types.UserSendMessageList, opts: types.UserSendMessageOption): Promise<types.ChatMessage> {
+    const { conversationId = uuidv4(), parentMessageId, messageId = uuidv4(), stream = false } = opts;
+    const text = messages[messages.length - 1]['content'];
+    const message: types.ChatMessage = {
+      role: 'user',
+      id: messageId,
+      parentMessageId,
+      conversationId,
+      text,
+    };
+    await this._upsertMessage(message);
+
+    const { maxTokens } = await this._buildPrompt(text, opts);
+    const result: types.ChatMessage = {
+      role: 'assistant',
+      id: uuidv4(),
+      parentMessageId,
+      conversationId,
+      text: '',
+    };
+
+    const responseP = new Promise<types.ChatMessage>(async (resolve, reject) => {
+      const url = `${this._apiReverseProxyUrl || this._apiBaseUrl}/v1/chat/completions`;
+
+      const body = {
+        max_tokens: maxTokens,
+        ...this._completionParams,
+        messages: [{ role: 'system', content: opts.promptText }, ...messages],
+        stream,
+      };
+      console.log('/v1/chat/completions body=>>', JSON.stringify(body));
+
+      try {
+        const response = await axios.post(url, body, {
+          timeout: 30000,
+          headers: {
+            Authorization: `Bearer ${this._apiKey}`,
+          },
+        });
+
+        if (200 != response.status) {
+          const msg = `ChatGPT error ${response.status || response.statusText}`;
+          const error = new types.ChatGPTError(msg);
+          error.statusCode = response.status;
+          error.statusText = response.statusText;
+          return reject(error);
+        }
+
+        if (response?.data?.id) {
+          result.id = response.data.id;
+        }
+        console.log('response?.data gpt?=>', response?.data);
+        if (response?.data?.choices?.length) {
+          result.text = response.data.choices[0].message.content.trim();
+        } else {
+          const res = response.data as any;
+          return reject(new Error(`ChatGPT error: ${res?.detail?.message || res?.detail || 'unknown'}`));
+        }
+
+        result.detail = { model: response?.data?.model.split('').reverse().join('') || '' };
+
+        console.log('==>result>', result);
+
+        return resolve(result);
+      } catch (error) {
+        console.log('error gpt=>', error);
+        return reject({
+          statusCode: error?.response?.status || -1002,
+          data: error?.response?.data || '服务内部错误',
+        });
+      }
+    }).then(message => {
+      return this._upsertMessage(message).then(() => message);
+    });
+
+    return responseP;
+  }
+
   //获取所有的模型
   // https://platform.openai.com/docs/api-reference/models/list
   async getModels() {

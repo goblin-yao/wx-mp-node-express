@@ -200,7 +200,7 @@ class MiniProgramController {
             conversationId,
             parentMessageId,
             messageId,
-            attachment: JSON.stringify(data),
+            attachment: JSON.stringify(data.detail),
           });
           res.status(RESPONSE_CODE.SUCCESS).json({
             code: RESPONSE_CODE.SUCCESS,

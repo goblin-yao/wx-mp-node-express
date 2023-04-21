@@ -1,4 +1,6 @@
-export type Role = "user" | "assistant";
+import { PROMPTS_TYPE } from '@config';
+
+export type Role = 'user' | 'assistant';
 
 export type SendMessageOptions = {
   conversationId?: string;
@@ -12,6 +14,21 @@ export type SendMessageOptions = {
   abortSignal?: AbortSignal;
 };
 
+export interface UserSendMessage {
+  content: string;
+  role: Role;
+}
+export interface UserSendMessageOption {
+  promptType?: keyof PROMPTS_TYPE;
+  promptText: string;
+  conversationId: string;
+  parentMessageId?: string;
+  messageId: string;
+  stream?: boolean;
+}
+
+export type UserSendMessageList = UserSendMessage[];
+
 export interface ChatMessage {
   id: string;
   text?: string;
@@ -21,7 +38,6 @@ export interface ChatMessage {
   conversationId?: string;
   detail?: any;
 }
-
 export class ChatGPTError extends Error {
   statusCode?: number;
   statusText?: string;

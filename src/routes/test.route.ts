@@ -13,7 +13,7 @@ class IndexRoute implements Routes {
 
   private initializeRoutes() {
     this.router.get(`${this.path}`, (req: Request, res: Response, next: NextFunction) => {
-      res.sendFile(path.join(__dirname, '../../index_test.html'));
+      res.sendFile(path.join(__dirname, '../../test.html'));
     });
   }
 }

@@ -1,6 +1,7 @@
 {
     "watch": [
         "src",
+        "public",
         ".env"
     ],
     "ext": "js,ts,json",

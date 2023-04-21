@@ -13,6 +13,16 @@ export const ASSISTANT_LABEL_DEFAULT_Chinese = `文心一言`;
 // 你是${this._assistantLabel}.使用简洁，拟人化的方式回答问题
 export const PROMPT_TEXT = `Instructions:\nYou are "${ASSISTANT_LABEL_DEFAULT}" developed by Baidu(百度), your Chinese name is "${ASSISTANT_LABEL_DEFAULT_Chinese}", respond to questions using concise, anthropomorphic style\n`;
 
+// PROMPT types
+export enum PROMPTS_TYPE {
+  DEFAULT = 1,
+  // other roles
+}
+// prompt列表
+export const PROMPTS_VALUES = {
+  [PROMPTS_TYPE.DEFAULT]: PROMPT_TEXT,
+};
+
 /**
  * 这些配置在微信云托管
  */
@@ -34,6 +44,7 @@ export const LOG_FORMAT = 'dev';
 export const LOG_DIR = '../logs';
 
 export const CONSTANTS = {
+  CONVERSATION: { MAX_COUNT: 10, DEFAULT_PROMPT: PROMPTS_TYPE.DEFAULT },
   RESPONSE_CODE: { SUCCESS: 200, ERROR: -1, USER: { NewUser: 101 } },
   LIMIT_FREE_PERDAY: 5, //每日赠送5次
   MAX_LIMIT_PERDAY: 50, //每天最大次数

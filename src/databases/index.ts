@@ -6,6 +6,7 @@ import ChatUserLimitModel from '@/models/chatuserlimit.model';
 import ChatUserShareHistoryModel from '@/models/chatusersharehistory.model';
 import ChatUserAdvertiseHistoryModel from '@/models/chatuseradvertisehistory.model';
 import ChatMemberShipModel from '@/models/chatmembership.model';
+import ChatConversationModel from '@/models/chatconversation.model';
 import { logger } from '@utils/logger';
 
 const [DB_HOST, DB_PORT] = MYSQL_ADDRESS.split(':');
@@ -35,6 +36,7 @@ const DB = {
   ChatUserShareHistory: ChatUserShareHistoryModel(sequelizeInstance),
   ChatUserAdvertiseHistory: ChatUserAdvertiseHistoryModel(sequelizeInstance),
   ChatMemberShip: ChatMemberShipModel(sequelizeInstance),
+  ChatConversation: ChatConversationModel(sequelizeInstance),
   sequelizeInstance, // connection instance (RAW queries)
   Sequelize, // library
 };

@@ -26,6 +26,12 @@ class OpenAIService {
   public async getAIModels(): Promise<types.ChatMessage> {
     return await this.getChatGPTAPI().getModels();
   }
+
+  // 携带历史消息，最多2条历史消息，同时加上默认的pormpt类型
+  public async chatV2(messages: types.UserSendMessageList, options: types.UserSendMessageOption): Promise<types.ChatMessage> {
+    // todo messages 只传过去3条
+    return await this.getChatGPTAPI().sendMessageV2(messages, options);
+  }
 }
 
 export default OpenAIService;
