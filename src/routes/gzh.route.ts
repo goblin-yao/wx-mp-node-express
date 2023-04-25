@@ -15,8 +15,6 @@ class GZHRoute implements Routes {
     this.router.post(`${this.path}/dakalimit`, this.controller.dakalimit);
     this.router.post(`${this.path}/message`, this.controller.messageHandler);
     this.router.post(`${this.path}/buy`, this.controller.buy);
-    //公众号web开发测试
-    this.router.get(`${this.path}/web`, this.controller.gzhweb);
     // 小程序调用，获取微信 Open ID
     // router.get('/wx_openid', async (req, res) => {
     //   if (req.headers['x-wx-source']) {

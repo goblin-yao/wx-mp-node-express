@@ -10,6 +10,7 @@ import openAIService from '@services/openai.service';
 import { CONSTANTS, PROMPTS_TYPE, PROMPTS_VALUES } from '@/config';
 import { ChatUserLimitModel } from '@/models/chatuserlimit.model';
 import { ChatConversation } from '@/interfaces/chatconversation.interface';
+import { webLoginLRUCache } from '@/utils/lrucache';
 import * as types from '../chatgptlib/types';
 type ChatResponse = { error?: any } & types.ChatMessage;
 
@@ -82,8 +83,7 @@ class WebController {
 
   // 和GPT聊天
   public chatWithGPT = async (req: Request, res: Response, next: NextFunction) => {
-    const openid = req.headers['x-web-openid'] as string;
-    const unionid = req.headers['x-web-unionid'] as string;
+    const { openid, unionid } = req.cookies;
 
     const { messages, options } = req.body; //从body中取prompt类型，同时保存聊天记录到数据库中
     // send a message and wait for the response
@@ -126,8 +126,8 @@ class WebController {
 
   public getMessagesHistory = async (req: Request, res: Response, next: NextFunction) => {
     try {
-      const openid = req.headers['x-web-openid'] as string;
-      const unionid = req.headers['x-web-unionid'] as string;
+      const { openid, unionid } = req.cookies;
+
       // 鉴权??
       const { conversationId } = req.body;
       const { count, rows } = await this._messageService.serviceInstance.findAndCountAll({
@@ -150,8 +150,8 @@ class WebController {
   public getAllConversation = async (req: Request, res: Response, next: NextFunction) => {
     try {
       // 未来根据实际情况调整-todo
-      const openid = req.headers['x-web-openid'] as string;
-      const unionid = req.headers['x-web-unionid'] as string;
+      const { openid, unionid } = req.cookies;
+
       //根据openid查询用户的信息
       const result = await this._conversationService.list(openid);
       //如果有，就查询第一个conversationid对应的消息列表
@@ -177,8 +177,8 @@ class WebController {
 
   public createConversation = async (req: Request, res: Response, next: NextFunction) => {
     try {
-      const openid = req.headers['x-web-openid'] as string;
-      const unionid = req.headers['x-web-unionid'] as string;
+      const { openid, unionid } = req.cookies;
+
       const { conversation } = req.body;
       conversation.createdBy = openid; //设置作者，其他的信息由前端传过来
       let result = await this._conversationService.create(conversation as ChatConversation);
@@ -196,8 +196,8 @@ class WebController {
   };
   public updateConversation = async (req: Request, res: Response, next: NextFunction) => {
     try {
-      const openid = req.headers['x-web-openid'] as string;
-      const unionid = req.headers['x-web-unionid'] as string;
+      const { openid, unionid } = req.cookies;
+
       const { conversation } = req.body;
       let result = await this._conversationService.update(openid, conversation as ChatConversation);
 
@@ -213,8 +213,8 @@ class WebController {
   };
   public deleteConversation = async (req: Request, res: Response, next: NextFunction) => {
     try {
-      const openid = req.headers['x-web-openid'] as string;
-      const unionid = req.headers['x-web-unionid'] as string;
+      const { openid, unionid } = req.cookies;
+
       const { conversation } = req.body;
       let result = await this._conversationService.delete(openid, conversation.conversationId as string);
 
@@ -232,8 +232,8 @@ class WebController {
   //删除全部，并且创建一条新的
   public deleteAllAndCreateOne = async (req: Request, res: Response, next: NextFunction) => {
     try {
-      const openid = req.headers['x-web-openid'] as string;
-      const unionid = req.headers['x-web-unionid'] as string;
+      const { openid, unionid } = req.cookies;
+
       const { conversation } = req.body;
       conversation.createdBy = openid; //设置作者，其他的信息由前端传过来
       let result = await this._conversationService.deleteAll(openid);
@@ -246,6 +246,36 @@ class WebController {
     } catch (error) {
       res.status(RESPONSE_CODE.SUCCESS).json({
         code: RESPONSE_CODE.ERROR,
+      });
+    }
+  };
+
+  public checkLogin = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      console.log(`0`);
+      //缓存中没有，说明需要重新登录了
+      const { openid, unionid } = req.cookies;
+      if (openid & unionid) {
+        const cKey = `${openid}:${unionid}`;
+        const cValue = webLoginLRUCache.get(cKey);
+        if (cValue) {
+          res.status(RESPONSE_CODE.SUCCESS).json({
+            code: RESPONSE_CODE.SUCCESS,
+            data: { login: true },
+          });
+        } else {
+          console.log(`${cKey} not found`);
+        }
+      }
+      res.status(403).json({
+        code: RESPONSE_CODE.ERROR,
+        data: { login: false },
+      });
+    } catch (error) {
+      console.log(`checkLogin [error]`, error);
+      res.status(403).json({
+        code: RESPONSE_CODE.ERROR,
+        data: { login: false },
       });
     }
   };

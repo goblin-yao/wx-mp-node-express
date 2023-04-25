@@ -13,7 +13,7 @@ class WebAPIRoute implements Routes {
     max: 1,
     keyGenerator: function (req) {
       // 根据 IP 地址和用户 ID, openid等 生成唯一标识
-      const userFlag = req.ip + '-' + (req.headers['x-web-openid'] || req.headers['x-wx-openid']);
+      const userFlag = req.ip + '-' + (req.cookies['openid'] || req.headers['x-wx-openid']);
 
       console.log('[userFlag]', userFlag);
       return userFlag;
@@ -26,6 +26,8 @@ class WebAPIRoute implements Routes {
   }
 
   private initializeRoutes() {
+    this.router.get(`${this.path}/checklogin`, this.controller.checkLogin);
+
     this.router.post(`${this.path}/baidu/chat`, this.limiter, this.controller.chatWithGPT);
     this.router.post(`${this.path}/conversation/list`, this.controller.getAllConversation);
     this.router.post(`${this.path}/conversation/create`, this.controller.createConversation);

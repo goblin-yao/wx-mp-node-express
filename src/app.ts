@@ -3,6 +3,7 @@ import express from 'express';
 import morgan from 'morgan';
 import swaggerJSDoc from 'swagger-jsdoc';
 import swaggerUi from 'swagger-ui-express';
+import cookieParser from 'cookie-parser';
 import { PORT, LOG_FORMAT, NODE_ENV } from '@config';
 import DB from '@databases';
 import { Routes } from '@interfaces/routes.interface';
@@ -46,6 +47,8 @@ class App {
   }
 
   private initializeMiddlewares() {
+    this.app.use(cookieParser());
+
     // 创建限流中间件
     this.app.use(
       rateLimit({
@@ -53,8 +56,16 @@ class App {
         max: 500, // 最多允许500次请求
         keyGenerator: function (req) {
           // 根据 IP 地址和用户 ID, openid等 生成唯一标识
-          return req.ip + '-' + (req.headers['x-web-openid'] || req.headers['x-wx-openid']);
+          return req.ip + '-' + (req.cookies['openid'] || req.headers['x-wx-openid']);
         },
+        // skip: (req, res) => {
+        //   console.log('req.path=>', req.path);
+        //   // 判断请求路径是否是静态文件路径
+        //   if (req.path.startsWith('/public/')) {
+        //     return true; // 跳过限流处理
+        //   }
+        //   return false;
+        // },
         message: '请求过于频繁，请稍后再试！',
       }),
     );
@@ -62,6 +73,7 @@ class App {
     this.app.use(cors());
     this.app.use(express.json());
     this.app.use(express.static(join(__dirname, '../public')));
+    this.app.use('/static', express.static(join(__dirname, '../public_static')));
     this.app.use(express.urlencoded({ extended: false }));
   }
 

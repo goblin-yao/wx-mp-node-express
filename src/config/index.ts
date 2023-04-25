@@ -34,6 +34,8 @@ export const {
   MYSQL_PASSWORD,
   MYSQL_ADDRESS,
   SUBSCRIBE_TEMPLATE_ID,
+  WEB_WX_APPID,
+  WEB_WX_SECRET_KEY,
 } = process.env;
 /**
  * 这些配置在本地

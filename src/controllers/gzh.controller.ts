@@ -182,14 +182,6 @@ class GZHController {
     const result = await this._userLimitService.addUserLimitFromGZH(unionid);
     res.status(RESPONSE_CODE.SUCCESS).send({ data: result });
   };
-
-  public gzhweb = (req: Request, res: Response, next: NextFunction) => {
-    try {
-      res.sendFile(path.join(__dirname, '../../gzh_web/index.html'));
-    } catch (error) {
-      next(error);
-    }
-  };
 }
 
 export default GZHController;

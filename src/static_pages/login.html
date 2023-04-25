@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>GeniusAI Login</title>
+    <script src="https://res.wx.qq.com/connect/zh_CN/htmledition/js/wxLogin.js"></script>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+      }
+      #wrapper {
+        z-index: 2;
+        position: fixed;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        inset: 0px;
+      }
+      /* 父容器样式 */
+      #main_container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        width: 300px;
+        height: 350px;
+        position: relative;
+        background: #fff;
+        border-radius: 8px;
+      }
+      /* 子容器样式 */
+      #qr_container {
+        width: 200px;
+        height: 200px;
+      }
+      #bg_container {
+        position: fixed;
+        inset: 0px;
+        z-index: 1;
+        background-color: rgba(0, 0, 0, 0.5);
+      }
+    </style>
+  </head>
+  <body>
+    <div id="bg_container"></div>
+    <div id="wrapper">
+      <div id="main_container">
+        <div>GeniusAI助手Web版</div>
+        <div id="qr_container"></div>
+        <div>微信扫码授权登录</div>
+      </div>
+    </div>
+    <script>
+      function generateRandomString(length) {
+        var result = '';
+        var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+        var charactersLength = characters.length;
+        for (var i = 0; i < length; i++) {
+          result += characters.charAt(Math.floor(Math.random() * charactersLength));
+        }
+        return result;
+      }
+
+      (function () {
+        var your_app_id = '';
+        var redirectBackUrl = 'https://puzhikeji.com.cn/callback';
+        var STATE = generateRandomString(32);
+        // 判断是否在微信环境下
+        function isWechat() {
+          var ua = navigator.userAgent.toLowerCase();
+          return ua.includes('micromessenger');
+        }
+
+        //如果是微信环境，就跳转到自动登录
+        if (isWechat()) {
+          // 拼接参数
+          var redirectUrl = isWechat() ? `${redirectBackUrl}?from=wechat` : redirectBackUrl;
+
+          // 使用拼接后的 URL 去请求微信授权登录
+          var wxLoginUrl = `https://open.weixin.qq.com/connect/qrconnect?redirect_uri=${encodeURIComponent(
+            redirectUrl,
+          )}&response_type=code&scope=snsapi_login&appid=${your_app_id}&state=${STATE}#wechat_redirect`;
+          window.location.href = wxLoginUrl;
+          return;
+        }
+
+        // 定义回调函数
+        function onWeChatLoginCallback(userInfo) {
+          // 这里是登录成功后的处理逻辑，userInfo中包含用户信息
+          console.log(userInfo);
+          debugger;
+        }
+
+        // 调用微信登录
+        var wxLogin = new WxLogin({
+          id: 'qr_container',
+          appid: your_app_id,
+          scope: 'snsapi_login',
+          redirect_uri: 'https://puzhikeji.com.cn/callback', //登陆完成后从callback重定向到聊天首页
+          state: STATE,
+          style: '',
+          href: '',
+        });
+
+        // 监听微信登录成功事件
+        wxLogin.onLogin = function (code) {
+          // 向后端发送请求，获取用户信息
+          fetch(`https://puzhikeji.com.cn/wxopenapi/getloginuserinfo?code=${code}`)
+            .then(response => response.json())
+            .then(userInfo => onWeChatLoginCallback(userInfo))
+            .catch(error => console.error(error));
+        };
+      })();
+    </script>
+  </body>
+</html>
