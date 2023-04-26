@@ -92,84 +92,24 @@ class GZHController {
       res.send('success');
       return;
       // 不做聊天
-      const msgResult = await WXMsgChecker(Content, {
-        openid: FromUserName,
-        appid,
-      });
-      let replyMsg = '';
-      if (msgResult.code === -1) {
-        replyMsg = '内容含有敏感词';
-      } else {
-        try {
-          let response = await this.aiService.chatToAI(Content);
-          replyMsg = response.text;
-        } catch (error) {
-          replyMsg = '服务器超时';
-        }
-      }
-      res.status(RESPONSE_CODE.SUCCESS).send('success');
+      // const msgResult = await WXMsgChecker(Content, {
+      //   openid: FromUserName,
+      //   appid,
+      // });
+      // let replyMsg = '';
+      // if (msgResult.code === -1) {
+      //   replyMsg = '内容含有敏感词';
+      // } else {
+      //   try {
+      //     let response = await this.aiService.chatToAI(Content);
+      //     replyMsg = response.text;
+      //   } catch (error) {
+      //     replyMsg = '服务器超时';
+      //   }
+      // }
+      // res.status(RESPONSE_CODE.SUCCESS).send('success');
     } else {
       res.status(RESPONSE_CODE.SUCCESS).send('success');
-    }
-  };
-
-  public buy = async (req: Request, res: Response, next: NextFunction) => {
-    const appid = req.headers['x-wx-from-appid'] || '';
-    const openid = req.headers['x-wx-openid'] as string;
-    const unionid = req.headers['x-wx-from-unionid'] as string;
-    const { type } = req.body;
-    // <select id="typeSelect">
-    //   <option value="11">会员1天</option>
-    //   <option value="12">会员1个月</option>
-    //   <option value="13">会员3个月</option>
-    //   <option value="21">10次</option>
-    //   <option value="22">35次</option>
-    //   <option value="23">60次</option>
-    //   <option value="24">85次</option>
-    // </select>
-    let result = {};
-    let _memberShipResult = null,
-      _limitResult = null;
-
-    try {
-      //添加操作日志-todo
-      switch (Number(type)) {
-        case 11:
-          _memberShipResult = await this._memberShipService.addMemberShip(openid, 24 * 3600 * 1000);
-          result = { type: 1, result: _memberShipResult };
-          break;
-        case 12:
-          _memberShipResult = await this._memberShipService.addMemberShip(openid, getTimeStampOfMonthLater(1));
-          result = { type: 1, result: _memberShipResult };
-          break;
-        case 13:
-          _memberShipResult = await this._memberShipService.addMemberShip(openid, getTimeStampOfMonthLater(3));
-          result = { type: 1, result: _memberShipResult };
-          break;
-        case 21:
-          _limitResult = await this._userLimitService.addUserLimit(openid, 10);
-          result = { type: 2, result: _limitResult };
-          break;
-        case 22:
-          _limitResult = await this._userLimitService.addUserLimit(openid, 35);
-          result = { type: 2, result: _limitResult };
-          break;
-        case 23:
-          _limitResult = await this._userLimitService.addUserLimit(openid, 60);
-          result = { type: 2, result: _limitResult };
-          break;
-        case 24:
-          _limitResult = await this._userLimitService.addUserLimit(openid, 85);
-          result = { type: 2, result: _limitResult };
-          break;
-
-        default:
-          break;
-      }
-
-      res.status(RESPONSE_CODE.SUCCESS).send({ code: RESPONSE_CODE.SUCCESS, data: result });
-    } catch (error) {
-      res.status(RESPONSE_CODE.ERROR).send({ code: RESPONSE_CODE.ERROR });
     }
   };
 
