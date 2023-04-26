@@ -87,7 +87,8 @@ class WxOpenAPIController {
       .get(urlGet)
       .then(response => {
         console.log('[sns/oauth2]', response.data);
-        if (response?.data?.errcode !== 0) {
+        if (!response?.data?.refresh_token) {
+          //如果没有返回refres_token就认为错了
           res.status(RESPONSE_CODE.SUCCESS).json({
             code: RESPONSE_CODE.ERROR,
             data: { data: response.data, url: urlGet },

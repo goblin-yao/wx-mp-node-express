@@ -3,16 +3,14 @@ import WxPay from 'wechatpay-node-v3';
 import fs from 'fs';
 
 import axios from 'axios';
-import { CONSTANTS, WEB_WX_APPID, WEB_WX_SECRET_KEY } from '@/config';
+import { CONSTANTS, GZH_APPID, WX_MERCHANTID } from '@/config';
 import path from 'path';
 const { RESPONSE_CODE, GZH_DAKA_TEXTS, GZH_DAKA_1_TEXTS } = CONSTANTS;
-const WX_GZH_APPID = 'wx41374d9ae1f0b6d4';
-const WX_MERCHANTID = '1641448691';
 
 // 基于 https://github.com/klover2/wechatpay-node-v3-ts 这个开发
 class WeChatPayController {
   public _wcPay = new WxPay({
-    appid: WX_GZH_APPID, //直连商户申请的公众号或移动应用appid
+    appid: GZH_APPID, //直连商户申请的公众号或移动应用appid
     mchid: WX_MERCHANTID, //公众号对应的商户号
     publicKey: fs.readFileSync(path.join(__dirname, '../wechatpay_files/apiclient_cert.pem')), // 公钥
     privateKey: fs.readFileSync(path.join(__dirname, '../wechatpay_files/apiclient_key.pem')), // 秘钥
