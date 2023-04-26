@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from 'express';
 import axios from 'axios';
 import { webLoginLRUCache } from '@/utils/lrucache';
-import { CONSTANTS, WEB_WX_APPID, WEB_WX_SECRET_KEY } from '@/config';
+import { CONSTANTS, WEB_WX_APPID, WEB_WX_SECRET_KEY, GZH_APPID, GZH_SECRET_KEY } from '@/config';
 import path from 'path';
 const { RESPONSE_CODE, GZH_DAKA_TEXTS, GZH_DAKA_1_TEXTS } = CONSTANTS;
 
@@ -80,15 +80,19 @@ class WxOpenAPIController {
   //登陆完成后的回调页面
   callback = async (req: Request, res: Response, next: NextFunction) => {
     const { code } = req.query;
+    //todo 需要配置WEB_WX_APPID和WEB_WX_SECRET_KEY
     // 向微信服务器发送请求，获取access_token和openid
+    const urlGet = `https://api.weixin.qq.com/sns/oauth2/access_token?appid=${GZH_APPID}&secret=${GZH_SECRET_KEY}&code=${code}&grant_type=authorization_code`;
     axios
-      .get(
-        `https://api.weixin.qq.com/sns/oauth2/access_token?appid=${WEB_WX_APPID}&secret=${WEB_WX_SECRET_KEY}&code=${code}&grant_type=authorization_code`,
-      )
+      .get(urlGet)
       .then(response => {
-        console.log('[sns/oauth2]', response);
+        console.log('[sns/oauth2]', response.data);
         if (response?.data?.errcode !== 0) {
-          res.redirect('/wxopenapi/login');
+          res.status(RESPONSE_CODE.SUCCESS).json({
+            code: RESPONSE_CODE.ERROR,
+            data: { data: response.data, url: urlGet },
+          });
+          // res.redirect('/wxopenapi/login');
         } else {
           console.log('[callback]', response.data);
           // {
