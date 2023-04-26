@@ -90,6 +90,7 @@ class WxOpenAPIController {
         if (response?.data?.errcode !== 0) {
           res.redirect('/wxopenapi/login');
         } else {
+          console.log('[callback]', response.data);
           // {
           //   "access_token":"ACCESS_TOKEN",
           //   "expires_in":7200,

@@ -6,6 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>GeniusAI Login</title>
     <script src="https://res.wx.qq.com/connect/zh_CN/htmledition/js/wxLogin.js"></script>
+    <!-- <script src="http://res.wx.qq.com/open/js/jweixin-1.6.0.js"></script> -->
+    <script src="/zepto.min.js"></script>
     <style>
       * {
         margin: 0;
@@ -45,12 +47,14 @@
     </style>
   </head>
   <body>
-    <div id="bg_container"></div>
-    <div id="wrapper">
-      <div id="main_container">
-        <div>GeniusAI助手Web版</div>
-        <div id="qr_container"></div>
-        <div>微信扫码授权登录</div>
+    <div id="top_container" style="display: none">
+      <div id="bg_container"></div>
+      <div id="wrapper">
+        <div id="main_container">
+          <div>GeniusAI助手Web版</div>
+          <div id="qr_container"></div>
+          <div>微信扫码授权登录</div>
+        </div>
       </div>
     </div>
     <script>
@@ -65,8 +69,8 @@
       }
 
       (function () {
-        var your_app_id = '';
-        var redirectBackUrl = 'https://puzhikeji.com.cn/callback';
+        var your_app_id = 'wx41374d9ae1f0b6d4';
+        var redirectBackUrl = 'https://puzhikeji.com.cn/wxopenapi/callback';
         var STATE = generateRandomString(32);
         // 判断是否在微信环境下
         function isWechat() {
@@ -77,15 +81,15 @@
         //如果是微信环境，就跳转到自动登录
         if (isWechat()) {
           // 拼接参数
-          var redirectUrl = isWechat() ? `${redirectBackUrl}?from=wechat` : redirectBackUrl;
-
           // 使用拼接后的 URL 去请求微信授权登录
-          var wxLoginUrl = `https://open.weixin.qq.com/connect/qrconnect?redirect_uri=${encodeURIComponent(
-            redirectUrl,
-          )}&response_type=code&scope=snsapi_login&appid=${your_app_id}&state=${STATE}#wechat_redirect`;
+          var wxLoginUrl = `https://open.weixin.qq.com/connect/oauth2/authorize?redirect_uri=${encodeURIComponent(
+            redirectBackUrl,
+          )}&response_type=code&scope=snsapi_userinfo&appid=${your_app_id}&state=${STATE}#wechat_redirect`;
           window.location.href = wxLoginUrl;
           return;
         }
+
+        $('#top_container').show();
 
         // 定义回调函数
         function onWeChatLoginCallback(userInfo) {
@@ -99,7 +103,7 @@
           id: 'qr_container',
           appid: your_app_id,
           scope: 'snsapi_login',
-          redirect_uri: 'https://puzhikeji.com.cn/callback', //登陆完成后从callback重定向到聊天首页
+          redirect_uri: 'https://puzhikeji.com.cn/wxopenapi/callback', //登陆完成后从callback重定向到聊天首页
           state: STATE,
           style: '',
           href: '',
