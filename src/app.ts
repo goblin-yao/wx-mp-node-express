@@ -73,7 +73,7 @@ class App {
     this.app.use(cors());
     this.app.use(express.json());
     this.app.use(express.static(join(__dirname, '../public'))); //存放html页面相关的，web版聊天
-    this.app.use('/static', express.static(join(__dirname, '../public_static')));//存放微信认证等相关的内容
+    this.app.use(express.static(join(__dirname, '../public_static'))); //存放微信认证等相关的内容
     this.app.use(express.urlencoded({ extended: false }));
   }
 
