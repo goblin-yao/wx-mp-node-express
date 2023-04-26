@@ -84,7 +84,7 @@
           // 拼接参数
           // 使用拼接后的 URL 去请求微信授权登录
           var wxLoginUrl = `https://open.weixin.qq.com/connect/oauth2/authorize?redirect_uri=${encodeURIComponent(
-            redirectBackUrl,
+            redirectBackUrl + '?from_where=wechat',
           )}&response_type=code&scope=snsapi_userinfo&appid=${gzh_app_id}&state=${STATE}#wechat_redirect`;
           window.location.href = wxLoginUrl;
           return;
@@ -104,7 +104,7 @@
           id: 'qr_container',
           appid: web_app_id,
           scope: 'snsapi_login',
-          redirect_uri: 'https://puzhikeji.com.cn/wxopenapi/callback', //登陆完成后从callback重定向到聊天首页
+          redirect_uri: redirectBackUrl + '?from_where=out_web', //登陆完成后从callback重定向到聊天首页
           state: STATE,
           style: '',
           href: '',

@@ -79,10 +79,13 @@ class WxOpenAPIController {
 
   //登陆完成后的回调页面
   callback = async (req: Request, res: Response, next: NextFunction) => {
-    const { code } = req.query;
+    const { code, from_where } = req.query;
     //todo 需要配置WEB_WX_APPID和WEB_WX_SECRET_KEY
     // 向微信服务器发送请求，获取access_token和openid
-    const urlGet = `https://api.weixin.qq.com/sns/oauth2/access_token?appid=${GZH_APPID}&secret=${GZH_SECRET_KEY}&code=${code}&grant_type=authorization_code`;
+    let urlGet = `https://api.weixin.qq.com/sns/oauth2/access_token?appid=${GZH_APPID}&secret=${GZH_SECRET_KEY}&code=${code}&grant_type=authorization_code`;
+    if (from_where === 'out_web') {
+      urlGet = `https://api.weixin.qq.com/sns/oauth2/access_token?appid=${WEB_WX_APPID}&secret=${WEB_WX_SECRET_KEY}&code=${code}&grant_type=authorization_code`;
+    }
     axios
       .get(urlGet)
       .then(response => {
