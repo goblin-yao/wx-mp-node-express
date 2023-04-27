@@ -17,7 +17,12 @@ class WeChatPayController {
   });
 
   public showPaymentPage = (req: Request, res: Response, next: NextFunction) => {
-    res.sendFile(path.join(__dirname, '../static_pages/pay.html'));
+    const { openid, unionid } = req.cookies;
+    if (!openid || !unionid) {
+      res.redirect('/wxopenapi/login');
+    } else {
+      res.sendFile(path.join(__dirname, '../static_pages/pay.html'));
+    }
   };
 
   // let result = {};
@@ -67,10 +72,8 @@ class WeChatPayController {
 
   //微信jsapi下单
   public checkout = async (req: Request, res: Response, next: NextFunction) => {
-    console.log('[req.headers]', req.headers);
-    const appid = req.headers['x-wx-from-appid'] || '';
-    const openid = req.headers['x-wx-openid'] as string;
-    const unionid = req.headers['x-wx-from-unionid'] as string;
+    console.log('[req.cookies]', req.cookies);
+    const { openid, unionid } = req.cookies;
     const { type } = req.body;
     // <select id="typeSelect">
     //   <option value="11">会员1天</option>
@@ -92,7 +95,7 @@ class WeChatPayController {
         currency: 'CNY',
       },
       payer: {
-        openid: 'drEc8QfY', //openid应该是公众号接口传过来的todo
+        openid: openid, //openid应该是公众号接口传过来的todo
       },
     };
     try {

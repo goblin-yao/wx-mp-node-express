@@ -17,16 +17,21 @@
         border:1px solid #000;
       }
     </style>
+    <script src="https://unpkg.com/vconsole@latest/dist/vconsole.min.js"></script>
+    <script>
+      // VConsole will be exported to `window.VConsole` by default.
+      var vConsole = new window.VConsole();
+    </script>
   </head>
   <body>
     <div id="bg_container">
-      <button class="btn-gradient red small checkout-btn" data-cktype="1">1天会员(¥4.99)</button><br>
-      <button class="btn-gradient red small checkout-btn" data-cktype="2">1个月会员(¥32.99)</button><br>
-      <button class="btn-gradient red small checkout-btn" data-cktype="3">3个月会员(¥69.99)</button>
+      <button class="btn-gradient red small checkout-btn" data-cktype="11">1天会员(¥4.99)</button><br>
+      <button class="btn-gradient red small checkout-btn" data-cktype="12">1个月会员(¥32.99)</button><br>
+      <button class="btn-gradient red small checkout-btn" data-cktype="13">3个月会员(¥69.99)</button>
       <div class='border-line'></div>
-      <button class="btn-gradient yellow small checkout-btn" data-cktype="4">10次(¥1.00)</button><br>
-      <button class="btn-gradient yellow small checkout-btn" data-cktype="5">35次(¥3.00)</button><br>
-      <button class="btn-gradient yellow small checkout-btn" data-cktype="6">60次(¥5.00)</button>
+      <button class="btn-gradient yellow small checkout-btn" data-cktype="21">10次(¥1.00)</button><br>
+      <button class="btn-gradient yellow small checkout-btn" data-cktype="22">35次(¥3.00)</button><br>
+      <button class="btn-gradient yellow small checkout-btn" data-cktype="23">60次(¥5.00)</button>
     </div>
     <script>
       //测试下单
@@ -40,7 +45,6 @@
           contentType: 'application/json',
           success: function (data) {
             console.log('[data:] ', data);
-            // "prepay_id": "wx26112221580621e9b071c00d9e093b0000"
             if (data?.data?.package) {
               //成功，这时候需要拉起支付jsbridge
               WeixinJSBridge.invoke('getBrandWCPayRequest', data.data, function (res) {
