@@ -37,8 +37,8 @@ export const {
   WX_MERCHANTID = '1641448691',
   GZH_APPID = 'wx41374d9ae1f0b6d4',
   GZH_SECRET_KEY = '7074401242607a5f5d591858bfeca914',
-  WEB_WX_APPID,
-  WEB_WX_SECRET_KEY = '7074401242607a5f5d591858bfeca914',
+  WEB_WX_APPID = 'wx8742408cc7f68cbd',
+  WEB_WX_SECRET_KEY = 'd7058287afea92b8f0da389da213bfaf',
 } = process.env;
 /**
  * 这些配置在本地

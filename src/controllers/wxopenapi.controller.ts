@@ -110,9 +110,9 @@ class WxOpenAPIController {
           const { access_token, openid, refresh_token, unionid, expires_in } = response.data;
           //设置cookie, todo 加密？？
           res.cookie('access_token', access_token, { maxAge: expires_in, httpOnly: true });
-          res.cookie('refresh_token', refresh_token, { httpOnly: true }); //有效期30天
-          res.cookie('openid', openid, { httpOnly: true }); //永久有效期
-          res.cookie('unionid', unionid, { httpOnly: true }); //永久有效期
+          res.cookie('refresh_token', refresh_token, { maxAge: 30 * 24 * 3600 * 1000, httpOnly: true }); //有效期1个月
+          res.cookie('openid', openid, { maxAge: 90 * 24 * 3600 * 1000, httpOnly: true }); //有效期3个月
+          res.cookie('unionid', unionid, { maxAge: 90 * 24 * 3600 * 1000, httpOnly: true }); //有效期3个月
 
           const cKey = `${openid}:${unionid}`;
           webLoginLRUCache.set(cKey, refresh_token); //设置refresh token缓存

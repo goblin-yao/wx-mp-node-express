@@ -27,17 +27,11 @@
         flex-direction: column;
         align-items: center;
         justify-content: center;
-        width: 300px;
-        height: 350px;
         position: relative;
         background: #fff;
         border-radius: 8px;
       }
       /* 子容器样式 */
-      #qr_container {
-        width: 200px;
-        height: 200px;
-      }
       #bg_container {
         position: fixed;
         inset: 0px;
@@ -45,7 +39,7 @@
         background-color: rgba(0, 0, 0, 0.5);
       }
     </style>
-    <script src="https://unpkg.com/vconsole@latest/dist/vconsole.min.js"></script>
+    <script src="/vconsole.min.js"></script>
     <script>
       // VConsole will be exported to `window.VConsole` by default.
       var vConsole = new window.VConsole();
@@ -56,9 +50,7 @@
       <div id="bg_container"></div>
       <div id="wrapper">
         <div id="main_container">
-          <div>GeniusAI助手Web版</div>
           <div id="qr_container"></div>
-          <div>微信扫码授权登录</div>
         </div>
       </div>
     </div>
@@ -75,7 +67,7 @@
 
       (function () {
         var gzh_app_id = 'wx41374d9ae1f0b6d4'; //在微信环境内是网页授权，使用公众号appid https://developers.weixin.qq.com/doc/offiaccount/OA_Web_Apps/Wechat_webpage_authorization.html
-        var web_app_id = 'wx41374d9ae1f0b6d4'; // 在非微信环境，使用的是网站应用登录https://developers.weixin.qq.com/doc/oplatform/Website_App/WeChat_Login/Wechat_Login.html
+        var web_app_id = 'wx8742408cc7f68cbd'; // 在非微信环境，使用的是网站应用登录https://developers.weixin.qq.com/doc/oplatform/Website_App/WeChat_Login/Wechat_Login.html
         var redirectBackUrl = 'https://puzhikeji.com.cn/wxopenapi/callback';
         var STATE = generateRandomString(32);
         // 判断是否在微信环境下
