@@ -69,8 +69,8 @@ export const CONSTANTS = {
     MAX_NUM_PERVIEW: 3,
     MAX_TIMES_PERDAY: 12,
   },
-  GZH_DAKA_TEXTS: ['领声语次数', '声语'],
-  GZH_DAKA_1_TEXTS: ['领GeniusAI助手次数', 'GeniusAI助手'],
+  GZH_DAKA_TEXTS: ['领GeniusAI助手次数', 'GeniusAI助手', '领次数'],
+  GZH_DAKA_1_TEXTS: ['领声语次数', '声语', '领声语次数'],
   // Azure云服务的代理地址
   // "http://localhost:80/proxy" 本地开发
   //AWS https://dfpcwg6xrm.us-east-1.awsapprunner.com/proxy
