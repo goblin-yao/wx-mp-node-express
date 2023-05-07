@@ -3,9 +3,23 @@ import axios from 'axios';
 // import { webLoginLRUCache } from '@/utils/lrucache';
 import { CONSTANTS, WEB_WX_APPID, WEB_WX_SECRET_KEY, GZH_APPID, GZH_SECRET_KEY } from '@/config';
 import path from 'path';
+import ChatUserService from '@/services/chatuser.service';
 const { RESPONSE_CODE, GZH_DAKA_TEXTS, GZH_DAKA_1_TEXTS } = CONSTANTS;
 
 class WxOpenAPIController {
+  public _userService = new ChatUserService();
+
+  private saveUserInfo = async (unionid: string, openid: string, from_where: string) => {
+    const params = from_where === 'out_web' ? { unionid, webOpenid: openid } : { unionid, gzhOpenid: openid };
+    const userFindResult = await this._userService.findUserFromWebLogin(params);
+    if (userFindResult) {
+      return false;
+    } else {
+      const result = await this._userService.findOrUpdateUserByUnionid(params);
+      return !!result;
+    }
+  };
+
   // how to use cookies
   // https://www.jianshu.com/p/2ca91bc5830a
   /**
@@ -20,7 +34,10 @@ class WxOpenAPIController {
     //1. 微信内跳转到callback根据code获取用户信息
     //2. 微信外扫码登陆，在这之前要先根据token刷新一下
     const { openid, unionid } = req.cookies;
+    const userAgent = req.headers['user-agent'] as string;
     if (openid && unionid) {
+      // 保存用户信息到用户信息表中-判断是否是微信环境
+      await this.saveUserInfo(unionid, openid, /MicroMessenger/i.test(userAgent) ? 'inner_web' : 'out_web');
       // const cKey = `${openid}:${unionid}`;
       // const cValue = webLoginLRUCache.get(cKey);
       // if (cValue) {
@@ -92,7 +109,7 @@ class WxOpenAPIController {
     }
     axios
       .get(urlGet)
-      .then(response => {
+      .then(async response => {
         console.log('[sns/oauth2]', response.data);
         if (!response?.data?.refresh_token) {
           //如果没有返回refres_token就认为错了
@@ -117,6 +134,9 @@ class WxOpenAPIController {
           res.cookie('refresh_token', refresh_token, { maxAge: 30 * 24 * 3600 * 1000, httpOnly: false }); //有效期1个月
           res.cookie('openid', openid, { maxAge: 90 * 24 * 3600 * 1000, httpOnly: false }); //有效期3个月
           res.cookie('unionid', unionid, { maxAge: 90 * 24 * 3600 * 1000, httpOnly: false }); //有效期3个月
+
+          // 保存用户信息到用户信息表中
+          await this.saveUserInfo(unionid, openid, from_where as string);
 
           // const cKey = `${openid}:${unionid}`;
           // webLoginLRUCache.set(cKey, refresh_token); //设置refresh token缓存

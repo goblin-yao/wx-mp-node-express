@@ -5,6 +5,7 @@ import ChatUserLimitService from '@/services/chatuserlimit.service';
 import ChatUserShareHistoriesService from '@/services/chatusershare.service';
 import ChatMessageService from '@/services/chatmessage.service';
 import ChatUserAdvertiseHistoriesService from '@/services/chatuseradvertisehistory.service';
+import ChatMemberShipService from '@/services/chatmembership.service';
 import { WXSubscribeSend, WXCustomSendMessage, WXMsgChecker } from '@/services/wxopenapi.service';
 import { CONSTANTS } from '@/config';
 import { ChatUserLimitModel } from '@/models/chatuserlimit.model';
@@ -25,6 +26,7 @@ class MiniProgramController {
   public _userShareHistoriesService = new ChatUserShareHistoriesService();
   public _messageService = new ChatMessageService();
   public _userAdvertiseHistoriesService = new ChatUserAdvertiseHistoriesService();
+  public _memberShipService = new ChatMemberShipService();
 
   private getAimedLimit = function (_limit: number): number {
     const aimedLimit = _limit + LIMIT_FREE_PERDAY;
@@ -253,6 +255,16 @@ class MiniProgramController {
   };
   public limitReduce = async (req: Request, res: Response, next: NextFunction) => {
     const openid = req.headers['x-wx-openid'] as string;
+    const unionid = req.headers['x-wx-unionid'] as string;
+    // 如果是会员就不减少次数
+    const isMemberShipe = await this._memberShipService.checkIfMemberShipVaild(unionid);
+    if (isMemberShipe) {
+      res.status(RESPONSE_CODE.SUCCESS).json({
+        code: RESPONSE_CODE.SUCCESS,
+        data: { chatLeftNums: -1000 }, //返回-1000表示就是会员了
+      }); // 最新的剩余次数
+      return;
+    }
 
     let userLimit: ChatUserLimitModel = null;
     try {
@@ -297,6 +309,7 @@ class MiniProgramController {
       if (!userLimit) {
         await this._userLimitService.serviceInstance.create({
           openid,
+          unionid,
           chatLeftNums: MAX_LIMIT_PERDAY - 1,
         });
       }
@@ -310,6 +323,16 @@ class MiniProgramController {
   };
   public limitGet = async (req: Request, res: Response, next: NextFunction) => {
     const openid = req.headers['x-wx-openid'] as string;
+    const unionid = req.headers['x-wx-unionid'] as string;
+    // 如果是会员就返回-1000
+    const isMemberShipe = await this._memberShipService.checkIfMemberShipVaild(unionid);
+    if (isMemberShipe) {
+      res.status(RESPONSE_CODE.SUCCESS).json({
+        code: RESPONSE_CODE.SUCCESS,
+        data: { chatLeftNums: -1000 }, //返回-1000表示就是会员了
+      }); // 最新的剩余次数
+      return;
+    }
 
     let userLimit = null;
     try {
@@ -343,6 +366,7 @@ class MiniProgramController {
       if (!userLimit) {
         await this._userLimitService.serviceInstance.create({
           openid,
+          unionid,
           chatLeftNums: TIME_FOR_NEW_USER,
         });
         res.status(RESPONSE_CODE.SUCCESS).json({

@@ -1,5 +1,5 @@
 export interface ChatMemberShip {
   id: number;
-  openid: string;
+  unionid: string;
   dueDate: Date;
 }

@@ -45,7 +45,7 @@ export const isEmpty = (value: string | number | object): boolean => {
 };
 
 /**
- * 获取当前时间3个月后的时间
+ * 获取当前时间N个月后的时间时间戳
  */
 export const getTimeStampOfMonthLater = (monthNums: number) => {
   let currentDate = new Date(); // 获取当前时间

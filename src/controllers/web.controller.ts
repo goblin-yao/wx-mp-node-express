@@ -1,17 +1,15 @@
 import { NextFunction, Request, Response } from 'express';
-import { Op } from 'sequelize';
 import ChatUserService from '@services/chatuser.service';
 import ChatUserLimitService from '@/services/chatuserlimit.service';
-import ChatUserShareHistoriesService from '@/services/chatusershare.service';
 import ChatMessageService from '@/services/chatmessage.service';
-import ChatUserAdvertiseHistoriesService from '@/services/chatuseradvertisehistory.service';
 import ChatConversationService from '@/services/chatconversation.service';
+import ChatMemberShipService from '@/services/chatmembership.service';
 import openAIService from '@services/openai.service';
 import { CONSTANTS, PROMPTS_TYPE, PROMPTS_VALUES } from '@/config';
-import { ChatUserLimitModel } from '@/models/chatuserlimit.model';
 import { ChatConversation } from '@/interfaces/chatconversation.interface';
 import { webLoginLRUCache } from '@/utils/lrucache';
 import * as types from '../chatgptlib/types';
+import { ChatUserLimitModel } from '@/models/chatuserlimit.model';
 type ChatResponse = { error?: any } & types.ChatMessage;
 
 const {
@@ -40,7 +38,20 @@ class WebController {
   public _userLimitService = new ChatUserLimitService();
   public _messageService = new ChatMessageService();
   public _conversationService = new ChatConversationService();
+  public _memberShipService = new ChatMemberShipService();
   public _openAIService = new openAIService();
+
+  private saveUserInfo = async (unionid: string, openid: string, from_where: string) => {
+    const params = from_where === 'out_web' ? { unionid, webOpenid: openid } : { unionid, gzhOpenid: openid };
+    const userFindResult = await this._userService.findUserFromWebLogin(params);
+    if (userFindResult) {
+      return false;
+    } else {
+      const result = await this._userService.findOrUpdateUserByUnionid(params);
+      return !!result;
+    }
+  };
+
   private saveMessage = async (data, opt: { msgType: number; openid: string }) => {
     try {
       const content = data.text;
@@ -81,6 +92,96 @@ class WebController {
     }
   };
 
+  private getAimedLimit = function (_limit: number): number {
+    const aimedLimit = _limit + LIMIT_FREE_PERDAY;
+    //如果当前剩余超过，返回当前剩余
+    if (_limit >= MAX_LIMIT_PERDAY) {
+      return _limit;
+    }
+    return Math.min(aimedLimit, MAX_LIMIT_PERDAY);
+  };
+
+  //后续这两个方法要独立成函数
+  private limitReduce = async (openid: string, unionid: string) => {
+    let userLimit: ChatUserLimitModel = null;
+    try {
+      userLimit = await this._userLimitService.serviceInstance.findOne({ where: { openid } });
+      //最近更新时间小于今天凌晨0点 且当前次数小于最大次数, 说明需要更新了,
+      if (
+        new Date(userLimit.get('updatedAt')).getTime() < new Date(new Date().toLocaleDateString()).getTime() &&
+        userLimit.get('chatLeftNums') < MAX_LIMIT_PERDAY
+      ) {
+        const _limit = this.getAimedLimit(userLimit.get('chatLeftNums'));
+        await userLimit.update({ chatLeftNums: _limit - 1 });
+        await userLimit.save();
+        return _limit - 1;
+      }
+
+      let leftTimes = userLimit.get('chatLeftNums');
+
+      if (leftTimes == 0) {
+        return 0;
+      } else {
+        leftTimes--;
+      }
+
+      await userLimit.update({ chatLeftNums: leftTimes });
+      await userLimit.save();
+
+      return leftTimes;
+    } catch (error) {
+      //没有记录，创建最新的
+      if (!userLimit) {
+        await this._userLimitService.serviceInstance.create({
+          openid,
+          unionid,
+          chatLeftNums: MAX_LIMIT_PERDAY - 1,
+        });
+      }
+      return MAX_LIMIT_PERDAY - 1;
+    }
+  };
+
+  //后续这两个方法要独立成函数
+  private limitGet = async (openid: string, unionid: string): Promise<number> => {
+    // 如果是会员就返回-1000
+    const isMemberShipe = await this._memberShipService.checkIfMemberShipVaild(unionid);
+    if (isMemberShipe) {
+      return -1000;
+    }
+
+    let userLimit = null;
+    try {
+      userLimit = await this._userLimitService.serviceInstance.findOne({ where: { openid } });
+      console.log('test=>>userLimit', userLimit.get('chatLeftNums'), userLimit.get('updatedAt'));
+      //最近更新时间小于今天凌晨0点 且当前次数小于最大次数, 说明需要更新了,
+      if (
+        new Date(userLimit.get('updatedAt')).getTime() < new Date(new Date().toLocaleDateString()).getTime() &&
+        userLimit.get('chatLeftNums') < MAX_LIMIT_PERDAY
+      ) {
+        const _limit = this.getAimedLimit(userLimit.get('chatLeftNums'));
+
+        await userLimit.update({ chatLeftNums: _limit });
+        await userLimit.save();
+        return _limit;
+      }
+      console.log('test=>>userLimit', userLimit.get('chatLeftNums'));
+      return userLimit.get('chatLeftNums');
+    } catch (error) {
+      console.log('111', userLimit);
+      //没有记录，创建最新的
+      if (!userLimit) {
+        await this._userLimitService.serviceInstance.create({
+          openid,
+          unionid,
+          chatLeftNums: TIME_FOR_NEW_USER,
+        });
+        return TIME_FOR_NEW_USER;
+      }
+      return MAX_LIMIT_PERDAY;
+    }
+  };
+
   // 和GPT聊天
   public chatWithGPT = async (req: Request, res: Response, next: NextFunction) => {
     const { openid, unionid } = req.cookies;
@@ -88,8 +189,19 @@ class WebController {
     const { messages, options } = req.body; //从body中取prompt类型，同时保存聊天记录到数据库中
     // send a message and wait for the response
     let response = {} as ChatResponse;
+    let chatLeftNums = 0; //剩余多少次，如果到0就不能聊天
     const statTime = Number(new Date());
     try {
+      // 每次聊天返回最新的会员信息
+      // 如果不是会员就减少次数，次数为0就不能用了
+      const isMemberShipe = await this._memberShipService.checkIfMemberShipVaild(unionid);
+      if (isMemberShipe) {
+        chatLeftNums = -1000;
+      } else {
+        //如果不是会员，就减少次数
+        chatLeftNums = await this.limitReduce(openid, unionid);
+      }
+
       //如果没有值
       if (!PROMPTS_VALUES[options.promptType]) {
         //如果没有就用默认的
@@ -120,8 +232,9 @@ class WebController {
       console.log('post chat request error!!');
       response.error = error;
     }
+    const newRep = { ...response, ...{ chatLeftNums } };
     console.log('post request time=>', Number(new Date()) - statTime);
-    res.status(RESPONSE_CODE.SUCCESS).json(response);
+    res.status(RESPONSE_CODE.SUCCESS).json(newRep);
   };
 
   public getMessagesHistory = async (req: Request, res: Response, next: NextFunction) => {
@@ -251,9 +364,12 @@ class WebController {
   };
 
   public checkLogin = async (req: Request, res: Response, next: NextFunction) => {
+    let chatLeftNums = 0;
     try {
       //缓存中没有，说明需要重新登录了
       const { openid, unionid } = req.cookies;
+      const userAgent = req.headers['user-agent'] as string;
+      const from_where = /MicroMessenger/i.test(userAgent) ? 'inner_web' : 'out_web';
       if (openid && unionid) {
         // 删除缓存的处理
         // const cKey = `${openid}:${unionid}`;
@@ -266,21 +382,26 @@ class WebController {
         // } else {
         //   console.log(`${cKey} not found`);
         // }
+
+        // 保存用户信息到用户信息表中
+        await this.saveUserInfo(unionid, openid, from_where as string);
+        chatLeftNums = await this.limitGet(openid, unionid);
+
         res.status(RESPONSE_CODE.SUCCESS).json({
           code: RESPONSE_CODE.SUCCESS,
-          data: { login: true },
+          data: { login: true, chatLeftNums },
         });
       } else {
         res.status(403).json({
           code: RESPONSE_CODE.ERROR,
-          data: { login: false },
+          data: { login: false, chatLeftNums },
         });
       }
     } catch (error) {
       console.log(`checkLogin [error]`, error);
       res.status(403).json({
         code: RESPONSE_CODE.ERROR,
-        data: { login: false },
+        data: { login: false, chatLeftNums },
       });
     }
   };

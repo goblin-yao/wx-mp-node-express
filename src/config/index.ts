@@ -1,3 +1,4 @@
+import { getTimeStampOfMonthLater } from '@/utils/util';
 import { config } from 'dotenv';
 // live环境配置在微信云托管
 if (process.env.NODE_ENV === 'development') {
@@ -39,6 +40,7 @@ export const {
   GZH_SECRET_KEY = '7074401242607a5f5d591858bfeca914',
   WEB_WX_APPID = 'wx8742408cc7f68cbd', //网页版的appid用于网页版的支付
   WEB_WX_SECRET_KEY = 'd7058287afea92b8f0da389da213bfaf',
+  APIV3KEY = '3d6be0a4035d839573b04816624a415e', //【微信商户平台—>账户设置—>API安全—>设置APIv3密钥】
 } = process.env;
 /**
  * 这些配置在本地
@@ -73,4 +75,52 @@ export const CONSTANTS = {
   // "http://localhost:80/proxy" 本地开发
   //AWS https://dfpcwg6xrm.us-east-1.awsapprunner.com/proxy
   OPENAI_PROXY_URL: ['https://wxchatnodeexpressazure.azurewebsites.net/proxy'],
+};
+
+/**
+ * 购买类型和时间的配置
+ */
+export const WX_BUYER = {
+  '11': {
+    totalMoney: 1,
+    type: 'MemberShip',
+    ranger: () => {
+      return 24 * 3600;
+    },
+  },
+  '12': {
+    totalMoney: 2,
+    type: 'MemberShip',
+    ranger: () => {
+      return getTimeStampOfMonthLater(1);
+    },
+  },
+  '13': {
+    totalMoney: 3,
+    type: 'MemberShip',
+    ranger: () => {
+      return getTimeStampOfMonthLater(3);
+    },
+  },
+  '21': {
+    totalMoney: 4,
+    type: 'BuyTimes',
+    ranger: () => {
+      return 10;
+    },
+  },
+  '22': {
+    totalMoney: 5,
+    type: 'BuyTimes',
+    ranger: () => {
+      return 35;
+    },
+  },
+  '23': {
+    totalMoney: 6,
+    type: 'BuyTimes',
+    ranger: () => {
+      return 60;
+    },
+  },
 };

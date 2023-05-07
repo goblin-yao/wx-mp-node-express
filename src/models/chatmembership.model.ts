@@ -1,11 +1,9 @@
 import { Sequelize, DataTypes, Model, Optional } from 'sequelize';
 import { ChatMemberShip } from '@/interfaces/chatmembership.interface';
 
-export type UserCreationAttributes = Optional<ChatMemberShip, 'openid'>;
-
-export class ChatMemberShipModel extends Model<ChatMemberShip, UserCreationAttributes> implements ChatMemberShip {
+export class ChatMemberShipModel extends Model<ChatMemberShip> implements ChatMemberShip {
   public readonly id!: number;
-  public openid: string;
+  public unionid: string;
   public dueDate: Date;
 
   public readonly createdAt!: Date;
@@ -20,9 +18,9 @@ export default function (sequelize: Sequelize): typeof ChatMemberShipModel {
         primaryKey: true,
         type: DataTypes.INTEGER,
       },
-      openid: {
+      unionid: {
         type: DataTypes.STRING(64),
-        allowNull: true,
+        allowNull: false,
       },
       //会员截止日期
       dueDate: {

@@ -6,6 +6,7 @@ export type UserCreationAttributes = Optional<ChatUserLimit, 'chatLeftNums' | 'l
 export class ChatUserLimitModel extends Model<ChatUserLimit, UserCreationAttributes> implements ChatUserLimit {
   public readonly id!: number;
   public openid: string;
+  public unionid: string;
   public chatLeftNums: number;
   public lastAddFromGzh: Date; //最近一次从公众号上获取
 
@@ -22,6 +23,10 @@ export default function (sequelize: Sequelize): typeof ChatUserLimitModel {
         type: DataTypes.INTEGER,
       },
       openid: {
+        type: DataTypes.STRING(64),
+        allowNull: false,
+      },
+      unionid: {
         type: DataTypes.STRING(64),
         allowNull: false,
       },

@@ -12,6 +12,7 @@ class WeChatPayRoute implements Routes {
   }
 
   private initializeRoutes() {
+    this.router.get(`${this.path}/notitest`, this.controller.notiTest);
     this.router.get(`${this.path}/payment`, this.controller.showPaymentPage);
 
     //支付下单

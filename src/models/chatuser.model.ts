@@ -8,6 +8,7 @@ export class ChatUserModel extends Model<ChatUser, UserCreationAttributes> imple
   public openid: string;
   public unionid: string;
   public gzhOpenid: string;
+  public webOpenid: string;
   public avatarUrl: string;
   public nickName: string;
 
@@ -34,6 +35,10 @@ export default function (sequelize: Sequelize): typeof ChatUserModel {
       // 公众号的openid，打通 unionid，后期全部通过unionid标记身份
       // head头的信息参考项目中的 _temp/request_head.md
       gzhOpenid: {
+        type: DataTypes.STRING(64),
+        allowNull: true,
+      },
+      webOpenid: {
         type: DataTypes.STRING(64),
         allowNull: true,
       },
