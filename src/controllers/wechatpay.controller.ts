@@ -49,7 +49,6 @@ class WeChatPayController {
 
   //微信jsapi下单
   public checkout = async (req: Request, res: Response, next: NextFunction) => {
-    console.log('[req.cookies]', req.cookies);
     const { openid, unionid } = req.cookies;
     const { type } = req.body;
 
@@ -129,7 +128,6 @@ class WeChatPayController {
   public noti = async (req: Request, res: Response, next: NextFunction) => {
     try {
       const { resource } = req.body;
-      console.log('[resource]', resource);
       // noti 数据例子
       //  {
       //     id: '16c4adb3-caa6-54c3-8c74-f1c501b28d02',
@@ -138,13 +136,13 @@ class WeChatPayController {
       //     event_type: 'TRANSACTION.SUCCESS',
       //     summary: '支付成功',
       //     resource: {
-      //       original_type: 'transaction',
-      //       algorithm: 'AEAD_AES_256_GCM',
-      //       ciphertext:
-      //         '68JREx0skXh4P8fsQaobh7o4YACo1Cq3PjT+lzBMJqiKmadosSQYViS7T8VIKYOHyX5ieiyGtepOU3afiU+B/jkuCwLG87Wz5Qxv6Sa0WZNXaDZhccIwezXlhEmErkl4v3tr4AQssAqzCLMpfMGtIMsATjKNexYc9JttDRBIXI1aljpn22Vb4jwNj8wNp1F7EtoWYrB5bV3SsbFwvxbOh8zGLUge5hLB0ZGjAp1U6y7jZtnFnoeomfqGQBwIGJQXI2aqtlaFQ3rZlnQ1Z9qktFAYy25/r6Ei/sVPUh+yOrgF8NCCbgXEGS9NVY4kqBqj5Gh/kSINVCQDFd5FK1EZ2AEcH7A9RCLXqH1OotO1Y5XBdYcd5a+O7GUOwwAGi56NfqTshIxgF67rWpppjT0J0hJAKVnqPXXqWBhg9uGLta6pDfQprQoNrYSLR34tOJKJByt5X3LqqtHajJ10w6Mylp6+800gsLpMPL9hXLfX+wyZVU3m8f3+l9/YwjRsVM464am3TZJqS0dXtQyxsw0H1aRKgoaUuOoFKy0tmNeZXgj42FxsuoByO/6yXC73ZTV1',
-      //       associated_data: 'transaction',
-      //       nonce: 'mDITB5wGOX5f',
-      //     },
+      //   original_type: 'transaction',
+      //   algorithm: 'AEAD_AES_256_GCM',
+      //   ciphertext:
+      //     'CRwwr90weOtMrFZhekGk4XfmILZgIz1pmSRLAk88ANWHCxUNSa07EyD+HmvmyFNcfCIAPzW58WfH3NVG9DmCPp4iOQO0/NiN/k59Q5P3aWnoobZAIcXSMXkynyYmiqbSkmGvMjrgxOopJCg24w8L6wDguPSLjkyqH6xEckzsdbfAby+WJ9K7qY8w0p3qgyikMpvf0XAQEZMIbP11x6NRwGePhe0+WtNc/0TQxcqlC9QUEmmnjoQCBFsVnFVXyid6jFauwHuxKdfsNdwfDSXtavz5DkGZYF1WoOhlWBPm+ch/U2DCrKkAE1uVXAm8gVi/PjVxPM3/uO/I8avChjzQ+dOwXv0ERAucs28gDqz0MhcQp8BEfcOooGgGYX3/P9VCtRIy/lWBujP9lBmWIU9Uv56nOWmrthM0yZdCA1o3lRE+n0sb4OV8D5/GciRMqdZYGK69aXLDejFpYI6TSohLbs6cJ2k3XBtY2DKuncsqGAPsnr8lstmtpp/SD36WQPui6KE+RI+Stu0e47d+QmGceGebcWyoNtHQROdeLxz4HbV6HN434LOATtVwCPlgZpcOwJtvSA==',
+      //   associated_data: 'transaction',
+      //   nonce: 'kKD2qXaaqFsE',
+      // }
       //   };
       const result: NotiGCMResult = this._wcPay.decipher_gcm(resource.ciphertext, resource.associated_data, resource.nonce, APIV3KEY);
       // 解密后的数据类型
@@ -210,9 +208,9 @@ class WeChatPayController {
           original_type: 'transaction',
           algorithm: 'AEAD_AES_256_GCM',
           ciphertext:
-            '68JREx0skXh4P8fsQaobh7o4YACo1Cq3PjT+lzBMJqiKmadosSQYViS7T8VIKYOHyX5ieiyGtepOU3afiU+B/jkuCwLG87Wz5Qxv6Sa0WZNXaDZhccIwezXlhEmErkl4v3tr4AQssAqzCLMpfMGtIMsATjKNexYc9JttDRBIXI1aljpn22Vb4jwNj8wNp1F7EtoWYrB5bV3SsbFwvxbOh8zGLUge5hLB0ZGjAp1U6y7jZtnFnoeomfqGQBwIGJQXI2aqtlaFQ3rZlnQ1Z9qktFAYy25/r6Ei/sVPUh+yOrgF8NCCbgXEGS9NVY4kqBqj5Gh/kSINVCQDFd5FK1EZ2AEcH7A9RCLXqH1OotO1Y5XBdYcd5a+O7GUOwwAGi56NfqTshIxgF67rWpppjT0J0hJAKVnqPXXqWBhg9uGLta6pDfQprQoNrYSLR34tOJKJByt5X3LqqtHajJ10w6Mylp6+800gsLpMPL9hXLfX+wyZVU3m8f3+l9/YwjRsVM464am3TZJqS0dXtQyxsw0H1aRKgoaUuOoFKy0tmNeZXgj42FxsuoByO/6yXC73ZTV1',
+            'CRwwr90weOtMrFZhekGk4XfmILZgIz1pmSRLAk88ANWHCxUNSa07EyD+HmvmyFNcfCIAPzW58WfH3NVG9DmCPp4iOQO0/NiN/k59Q5P3aWnoobZAIcXSMXkynyYmiqbSkmGvMjrgxOopJCg24w8L6wDguPSLjkyqH6xEckzsdbfAby+WJ9K7qY8w0p3qgyikMpvf0XAQEZMIbP11x6NRwGePhe0+WtNc/0TQxcqlC9QUEmmnjoQCBFsVnFVXyid6jFauwHuxKdfsNdwfDSXtavz5DkGZYF1WoOhlWBPm+ch/U2DCrKkAE1uVXAm8gVi/PjVxPM3/uO/I8avChjzQ+dOwXv0ERAucs28gDqz0MhcQp8BEfcOooGgGYX3/P9VCtRIy/lWBujP9lBmWIU9Uv56nOWmrthM0yZdCA1o3lRE+n0sb4OV8D5/GciRMqdZYGK69aXLDejFpYI6TSohLbs6cJ2k3XBtY2DKuncsqGAPsnr8lstmtpp/SD36WQPui6KE+RI+Stu0e47d+QmGceGebcWyoNtHQROdeLxz4HbV6HN434LOATtVwCPlgZpcOwJtvSA==',
           associated_data: 'transaction',
-          nonce: 'mDITB5wGOX5f',
+          nonce: 'kKD2qXaaqFsE',
         },
       };
       const { resource } = testdata;

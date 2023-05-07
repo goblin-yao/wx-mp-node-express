@@ -114,7 +114,7 @@ class GZHController {
   };
 
   /**
-   * 增加每天打卡次数，主要用来给语音小程序使用，增加每天打卡次数
+   * 增加每天打卡次数，主要用来给语音小程序使用，因为数据没有互通-共享账号，增加每天打卡次数
    * 公众号接口调用语音小程序的外部接口增加次数
    */
   public dakalimit = async (req: Request, res: Response, next: NextFunction) => {

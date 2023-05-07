@@ -35,7 +35,7 @@ class ChatMemberShipService {
       where: {
         unionid,
         dueDate: {
-          [Op.lt]: new Date(),
+          [Op.gt]: new Date(), //比当前时间大的
         },
       },
     });

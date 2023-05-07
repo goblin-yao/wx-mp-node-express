@@ -12,29 +12,28 @@ class ChatUserLimitService {
     console.log('addUserLimitFromGZH=>unionid', unionid);
     try {
       // 根据unionid找到小程序的openid，然后给小程序增加次数
-      const res = await this._userServiceInstance.findOne({ where: { unionid } });
-      console.log(`res=>>'cc`, res.toJSON());
-      if (res) {
-        let userLimit = await this.serviceInstance.findOne({
-          where: {
-            openid: res.get('openid'),
-          },
-        });
-        //每天只能增加一次
-        if (userLimit) {
-          //没有或者小于当天0点时间戳，说明当天没更新过，增加次数
-          if (
-            !userLimit.get('lastAddFromGzh') ||
-            new Date(userLimit.get('lastAddFromGzh')).getTime() < new Date(new Date().toLocaleDateString()).getTime()
-          ) {
-            await userLimit.update({
-              chatLeftNums: userLimit.get('chatLeftNums') + LIMIT_NUM_FROM_GZH,
-              lastAddFromGzh: new Date(),
-            });
-            await userLimit.save();
-            console.log('userLimit add=>', userLimit.toJSON());
-            return { result: true, addLimit: LIMIT_NUM_FROM_GZH };
-          }
+      // const res = await this._userServiceInstance.findOne({ where: { unionid } });
+      // console.log(`res=>>'cc`, res.toJSON());
+      let userLimit = await this.serviceInstance.findOne({
+        where: {
+          // openid: res.get('openid'),
+          unionid,
+        },
+      });
+      //每天只能增加一次
+      if (userLimit) {
+        //没有或者小于当天0点时间戳，说明当天没更新过，增加次数
+        if (
+          !userLimit.get('lastAddFromGzh') ||
+          new Date(userLimit.get('lastAddFromGzh')).getTime() < new Date(new Date().toLocaleDateString()).getTime()
+        ) {
+          await userLimit.update({
+            chatLeftNums: userLimit.get('chatLeftNums') + LIMIT_NUM_FROM_GZH,
+            lastAddFromGzh: new Date(),
+          });
+          await userLimit.save();
+          console.log('userLimit add=>', userLimit.toJSON());
+          return { result: true, addLimit: LIMIT_NUM_FROM_GZH };
         }
       }
     } catch (error) {

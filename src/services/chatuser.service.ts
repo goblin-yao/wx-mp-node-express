@@ -33,6 +33,13 @@ class ChatUserService {
     return result ? result.get('unionid') : '';
   }
 
+  public async findUnionidFromMPOpenid(mpOpenid: string): Promise<string> {
+    const result = await this.serviceInstance.findOne({
+      where: { openid: mpOpenid },
+    });
+    return result ? result.get('unionid') : '';
+  }
+
   public async findOrUpdateUserByUnionid(params: { unionid: string; webOpenid?: string; gzhOpenid?: string }): Promise<ChatUser> {
     if (isEmpty(params.unionid)) {
       throw new HttpException(400, 'unionid is empty');

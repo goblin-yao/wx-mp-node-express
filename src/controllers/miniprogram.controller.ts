@@ -47,6 +47,7 @@ class MiniProgramController {
         },
       },
     });
+    const unionid = await this._userService.findUnionidFromMPOpenid(share_from_openid);
     console.log('recordToday=>', recordToday);
     if (recordToday < LIMIT_NUM_FROM_SHARE_PERDAY.MAX_USER_NUM) {
       // 查询两个openid的分享交互，如果有创建时间大于今天0点的内容。就不增加次数
@@ -66,7 +67,7 @@ class MiniProgramController {
 
         // 增加10次次数
         let userLimit = await this._userLimitService.serviceInstance.findOne({
-          where: { openid: share_from_openid },
+          where: { unionid },
         });
         if (userLimit) {
           //最近更新时间小于今天凌晨0点 且当前次数小于最大次数, 说明需要更新了,
@@ -268,7 +269,7 @@ class MiniProgramController {
 
     let userLimit: ChatUserLimitModel = null;
     try {
-      userLimit = await this._userLimitService.serviceInstance.findOne({ where: { openid } });
+      userLimit = await this._userLimitService.serviceInstance.findOne({ where: { unionid } });
       //最近更新时间小于今天凌晨0点 且当前次数小于最大次数, 说明需要更新了,
       if (
         new Date(userLimit.get('updatedAt')).getTime() < new Date(new Date().toLocaleDateString()).getTime() &&
@@ -336,7 +337,7 @@ class MiniProgramController {
 
     let userLimit = null;
     try {
-      userLimit = await this._userLimitService.serviceInstance.findOne({ where: { openid } });
+      userLimit = await this._userLimitService.serviceInstance.findOne({ where: { unionid } });
       console.log('test=>>userLimit', userLimit.get('chatLeftNums'), userLimit.get('updatedAt'));
       //最近更新时间小于今天凌晨0点 且当前次数小于最大次数, 说明需要更新了,
       if (
@@ -391,6 +392,7 @@ class MiniProgramController {
   // },
   public addLimitFromAdvertise = async (req: Request, res: Response, next: NextFunction) => {
     const openid = req.headers['x-wx-openid'] as string;
+    const unionid = req.headers['x-wx-unionid'] as string;
     // 判断今天总记录数是否大于指定次数
     const recordToday = await this._userAdvertiseHistoriesService.serviceInstance.count({
       where: {
@@ -402,7 +404,7 @@ class MiniProgramController {
     });
     // 增加次数
     let [userLimit] = await this._userLimitService.serviceInstance.findOrCreate({
-      where: { openid },
+      where: { unionid },
     });
     console.log('recordToday advertise=>', recordToday);
     // 小于今天次数
