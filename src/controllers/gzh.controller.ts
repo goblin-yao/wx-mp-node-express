@@ -9,7 +9,7 @@ import openAIService from '@services/openai.service';
 import { CONSTANTS } from '@/config';
 import { getTimeStampOfMonthLater } from '@/utils/util';
 import path from 'path';
-const { RESPONSE_CODE, GZH_DAKA_TEXTS, GZH_DAKA_1_TEXTS } = CONSTANTS;
+const { RESPONSE_CODE, GZH_DAKA_TEXTS, GZH_DAKA_ShengyuPro_TEXTS } = CONSTANTS;
 
 class GZHController {
   public aiService = new openAIService();
@@ -44,13 +44,15 @@ class GZHController {
     if (MsgType === 'text') {
       try {
         const _content = Content.replace(/\s/g, '');
-        if ([...GZH_DAKA_TEXTS, ...GZH_DAKA_1_TEXTS].includes(_content)) {
+        if ([...GZH_DAKA_TEXTS, ...GZH_DAKA_ShengyuPro_TEXTS].includes(_content)) {
           // 小程序、公众号可用
           let temp = { result: false, addLimit: 0 };
+          let mpName = '声语Pro'; //GeniusAI助手
           if (GZH_DAKA_TEXTS.includes(_content)) {
+            mpName = 'GeniusAI助手';
             temp = await this._userLimitService.addUserLimitFromGZH(unionid);
           }
-          if (GZH_DAKA_1_TEXTS.includes(_content)) {
+          if (GZH_DAKA_ShengyuPro_TEXTS.includes(_content)) {
             let _temp1 = await axios.post(
               'https://express-bnkr-40873-8-1317602977.sh.run.tcloudbase.com/gzh/dakalimit',
               { unionid },
@@ -67,7 +69,7 @@ class GZHController {
               touser: FromUserName,
               msgtype: 'text',
               text: {
-                content: temp.result ? `使用次数增加${temp.addLimit}` : `今天已经增加过了`,
+                content: temp.result ? `${mpName}使用次数增加${temp.addLimit}` : `${mpName}今天已经增加过了`,
               },
             },
             appid,

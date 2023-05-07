@@ -4,7 +4,7 @@ import axios from 'axios';
 import { CONSTANTS, WEB_WX_APPID, WEB_WX_SECRET_KEY, GZH_APPID, GZH_SECRET_KEY } from '@/config';
 import path from 'path';
 import ChatUserService from '@/services/chatuser.service';
-const { RESPONSE_CODE, GZH_DAKA_TEXTS, GZH_DAKA_1_TEXTS } = CONSTANTS;
+const { RESPONSE_CODE, GZH_DAKA_TEXTS, GZH_DAKA_ShengyuPro_TEXTS } = CONSTANTS;
 
 class WxOpenAPIController {
   public _userService = new ChatUserService();
