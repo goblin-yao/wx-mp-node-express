@@ -34,10 +34,10 @@ export const {
   MYSQL_PASSWORD,
   MYSQL_ADDRESS,
   SUBSCRIBE_TEMPLATE_ID,
-  WX_MERCHANTID = '1641448691',
-  GZH_APPID = 'wx41374d9ae1f0b6d4',
+  WX_MERCHANTID = '1641448691', // 微信支付的商户ID
+  GZH_APPID = 'wx41374d9ae1f0b6d4', //公众号的appid用于公众号的网页H5支付和公众号登录
   GZH_SECRET_KEY = '7074401242607a5f5d591858bfeca914',
-  WEB_WX_APPID = 'wx8742408cc7f68cbd',
+  WEB_WX_APPID = 'wx8742408cc7f68cbd', //网页版的appid用于网页版的支付
   WEB_WX_SECRET_KEY = 'd7058287afea92b8f0da389da213bfaf',
 } = process.env;
 /**

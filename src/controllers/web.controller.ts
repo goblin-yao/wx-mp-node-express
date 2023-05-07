@@ -252,25 +252,30 @@ class WebController {
 
   public checkLogin = async (req: Request, res: Response, next: NextFunction) => {
     try {
-      console.log(`0`);
       //缓存中没有，说明需要重新登录了
       const { openid, unionid } = req.cookies;
-      if (openid & unionid) {
-        const cKey = `${openid}:${unionid}`;
-        const cValue = webLoginLRUCache.get(cKey);
-        if (cValue) {
-          res.status(RESPONSE_CODE.SUCCESS).json({
-            code: RESPONSE_CODE.SUCCESS,
-            data: { login: true },
-          });
-        } else {
-          console.log(`${cKey} not found`);
-        }
+      if (openid && unionid) {
+        // 删除缓存的处理
+        // const cKey = `${openid}:${unionid}`;
+        // const cValue = webLoginLRUCache.get(cKey);
+        // if (cValue) {
+        //   res.status(RESPONSE_CODE.SUCCESS).json({
+        //     code: RESPONSE_CODE.SUCCESS,
+        //     data: { login: true },
+        //   });
+        // } else {
+        //   console.log(`${cKey} not found`);
+        // }
+        res.status(RESPONSE_CODE.SUCCESS).json({
+          code: RESPONSE_CODE.SUCCESS,
+          data: { login: true },
+        });
+      } else {
+        res.status(403).json({
+          code: RESPONSE_CODE.ERROR,
+          data: { login: false },
+        });
       }
-      res.status(403).json({
-        code: RESPONSE_CODE.ERROR,
-        data: { login: false },
-      });
     } catch (error) {
       console.log(`checkLogin [error]`, error);
       res.status(403).json({

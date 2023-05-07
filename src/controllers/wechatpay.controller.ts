@@ -2,6 +2,8 @@ import { NextFunction, Request, Response } from 'express';
 import WxPay from 'wechatpay-node-v3';
 import fs from 'fs';
 
+import WeChatPayRecordService from '@/services/wechatpayrecord.service';
+import ChatMemberShipService from '@/services/chatmembership.service';
 import axios from 'axios';
 import { CONSTANTS, GZH_APPID, WX_MERCHANTID } from '@/config';
 import path from 'path';
@@ -16,12 +18,15 @@ class WeChatPayController {
     privateKey: fs.readFileSync(path.join(__dirname, '../wechatpay_files/apiclient_key.pem')), // 秘钥
   });
 
+  public _wxPayRerocdService = new WeChatPayRecordService();
+  public _memberShipService = new ChatMemberShipService();
+
   public showPaymentPage = (req: Request, res: Response, next: NextFunction) => {
     const { openid, unionid } = req.cookies;
-    if (!openid || !unionid) {
-      res.redirect('/wxopenapi/login');
-    } else {
+    if (openid && unionid) {
       res.sendFile(path.join(__dirname, '../static_pages/pay.html'));
+    } else {
+      res.redirect('/wxopenapi/login');
     }
   };
 
@@ -99,6 +104,7 @@ class WeChatPayController {
       },
     };
     try {
+      await this._wxPayRerocdService.create({ source: 'user', createdBy: openid, params: JSON.stringify(params) });
       // 下单成功时保存数据到订单记录表格中 todo
       let result = await this._wcPay.transactions_jsapi(params);
       // 为了测试
@@ -113,6 +119,7 @@ class WeChatPayController {
       // console.log(result);
       //如果返回有package，说明下单成功，否则其他的情况认为支付失败
       if (result?.package) {
+        await this._wxPayRerocdService.create({ source: 'wechatpayment', createdBy: openid, params: JSON.stringify(result) });
         //成功下单,生成参数直接给前端使用
         res.status(RESPONSE_CODE.SUCCESS).json({
           code: RESPONSE_CODE.SUCCESS,
@@ -135,7 +142,10 @@ class WeChatPayController {
 
   //用来接受支付完成之后的noti，对方会发送一个post请求过来
   public noti = async (req: Request, res: Response, next: NextFunction) => {
-    throw new Error('Method not implemented.');
+    // const result = this._wcPay.decipher_gcm(ciphertext, associated_data, nonce, key);
+    //根据回调内容，确定用户会员关系
+
+    await this._wxPayRerocdService.create({ source: 'wechatpayment', createdBy: 'paymentnoti', params: JSON.stringify(req.body) });
   };
 }
 

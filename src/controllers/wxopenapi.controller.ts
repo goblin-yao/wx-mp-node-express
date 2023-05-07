@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from 'express';
 import axios from 'axios';
-import { webLoginLRUCache } from '@/utils/lrucache';
+// import { webLoginLRUCache } from '@/utils/lrucache';
 import { CONSTANTS, WEB_WX_APPID, WEB_WX_SECRET_KEY, GZH_APPID, GZH_SECRET_KEY } from '@/config';
 import path from 'path';
 const { RESPONSE_CODE, GZH_DAKA_TEXTS, GZH_DAKA_1_TEXTS } = CONSTANTS;
@@ -20,16 +20,20 @@ class WxOpenAPIController {
     //1. 微信内跳转到callback根据code获取用户信息
     //2. 微信外扫码登陆，在这之前要先根据token刷新一下
     const { openid, unionid } = req.cookies;
-    if (openid & unionid) {
-      const cKey = `${openid}:${unionid}`;
-      const cValue = webLoginLRUCache.get(cKey);
-      if (cValue) {
-        //如果缓存中有，说明用户是合法的，直接重定向到聊天首页，流程结束
-        res.redirect('/index.html');
-        return;
-      } else {
-        console.log(`${cKey} not found`);
-      }
+    if (openid && unionid) {
+      // const cKey = `${openid}:${unionid}`;
+      // const cValue = webLoginLRUCache.get(cKey);
+      // if (cValue) {
+      //   //如果缓存中有，说明用户是合法的，直接重定向到聊天首页，流程结束
+      //   res.redirect('/index.html');
+      //   return;
+      // } else {
+      //   console.log(`${cKey} not found`);
+      // }
+
+      // 删除缓存的处理，后面有redis之类的再配置
+      res.redirect('/index.html');
+      return;
     }
 
     res.sendFile(path.join(__dirname, '../static_pages/login.html'));
@@ -109,13 +113,13 @@ class WxOpenAPIController {
           //   }
           const { access_token, openid, refresh_token, unionid, expires_in } = response.data;
           //设置cookie, todo 加密？？
-          res.cookie('access_token', access_token, { maxAge: expires_in, httpOnly: true });
-          res.cookie('refresh_token', refresh_token, { maxAge: 30 * 24 * 3600 * 1000, httpOnly: true }); //有效期1个月
-          res.cookie('openid', openid, { maxAge: 90 * 24 * 3600 * 1000, httpOnly: true }); //有效期3个月
-          res.cookie('unionid', unionid, { maxAge: 90 * 24 * 3600 * 1000, httpOnly: true }); //有效期3个月
+          res.cookie('access_token', access_token, { maxAge: expires_in, httpOnly: false });
+          res.cookie('refresh_token', refresh_token, { maxAge: 30 * 24 * 3600 * 1000, httpOnly: false }); //有效期1个月
+          res.cookie('openid', openid, { maxAge: 90 * 24 * 3600 * 1000, httpOnly: false }); //有效期3个月
+          res.cookie('unionid', unionid, { maxAge: 90 * 24 * 3600 * 1000, httpOnly: false }); //有效期3个月
 
-          const cKey = `${openid}:${unionid}`;
-          webLoginLRUCache.set(cKey, refresh_token); //设置refresh token缓存
+          // const cKey = `${openid}:${unionid}`;
+          // webLoginLRUCache.set(cKey, refresh_token); //设置refresh token缓存
 
           res.redirect('/index.html');
         }
