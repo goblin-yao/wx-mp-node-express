@@ -14,11 +14,12 @@ class ChatUserLimitService {
       // 根据unionid找到小程序的openid，然后给小程序增加次数
       // const res = await this._userServiceInstance.findOne({ where: { unionid } });
       // console.log(`res=>>'cc`, res.toJSON());
-      let [userLimit, isCreated] = await this.serviceInstance.findOrCreate({
+      let [userLimit] = await this.serviceInstance.findOrCreate({
         where: {
           // openid: res.get('openid'),
           unionid,
         },
+        defaults: { chatLeftNums: TIME_FOR_NEW_USER },
       });
       //每天只能增加一次
       if (userLimit) {
@@ -28,7 +29,7 @@ class ChatUserLimitService {
           new Date(userLimit.get('lastAddFromGzh')).getTime() < new Date(new Date().toLocaleDateString()).getTime()
         ) {
           await userLimit.update({
-            chatLeftNums: (isCreated ? TIME_FOR_NEW_USER : userLimit.get('chatLeftNums')) + LIMIT_NUM_FROM_GZH,
+            chatLeftNums: userLimit.get('chatLeftNums') + LIMIT_NUM_FROM_GZH,
             lastAddFromGzh: new Date(),
           });
           await userLimit.save();
@@ -46,6 +47,9 @@ class ChatUserLimitService {
   public async addUserLimit(openid: string, nums: number): Promise<ChatUserLimit> {
     let [userLimit] = await this.serviceInstance.findOrCreate({
       where: { openid },
+      defaults: {
+        chatLeftNums: TIME_FOR_NEW_USER,
+      },
     });
     await userLimit.update({
       chatLeftNums: userLimit.get('chatLeftNums') + nums,
@@ -57,6 +61,9 @@ class ChatUserLimitService {
   public async addUserLimitFromUinionid(unionid: string, nums: number): Promise<ChatUserLimit> {
     let [userLimit] = await this.serviceInstance.findOrCreate({
       where: { unionid },
+      defaults: {
+        chatLeftNums: TIME_FOR_NEW_USER,
+      },
     });
     await userLimit.update({
       chatLeftNums: userLimit.get('chatLeftNums') + nums,

@@ -66,16 +66,18 @@ class MiniProgramController {
         }
 
         // 增加10次次数
-        let userLimit = await this._userLimitService.serviceInstance.findOne({
+        let [userLimit] = await this._userLimitService.serviceInstance.findOrCreate({
           where: { unionid },
+          defaults: {
+            chatLeftNums: TIME_FOR_NEW_USER,
+          },
         });
-        if (userLimit) {
-          //最近更新时间小于今天凌晨0点 且当前次数小于最大次数, 说明需要更新了,
-          await userLimit.update({
-            chatLeftNums: userLimit.get('chatLeftNums') + LIMIT_NUM_FROM_SHARE_PERDAY.MAX_NUM_PERSHARE,
-          });
-          await userLimit.save();
-        }
+        //最近更新时间小于今天凌晨0点 且当前次数小于最大次数, 说明需要更新了,
+        await userLimit.update({
+          chatLeftNums: userLimit.get('chatLeftNums') + LIMIT_NUM_FROM_SHARE_PERDAY.MAX_NUM_PERSHARE,
+        });
+        await userLimit.save();
+
         // await WXSubscribeSend({ toOpenId: share_from_openid });
       }
     }
@@ -405,6 +407,7 @@ class MiniProgramController {
     // 增加次数
     let [userLimit] = await this._userLimitService.serviceInstance.findOrCreate({
       where: { unionid },
+      defaults: { chatLeftNums: TIME_FOR_NEW_USER },
     });
     console.log('recordToday advertise=>', recordToday);
     // 小于今天次数
@@ -415,13 +418,11 @@ class MiniProgramController {
       });
       console.log('advertise: [record]', record.toJSON());
 
-      if (userLimit) {
-        //最近更新时间小于今天凌晨0点 且当前次数小于最大次数, 说明需要更新了,
-        await userLimit.update({
-          chatLeftNums: userLimit.get('chatLeftNums') + LIMIT_NUM_FROM_ADVERTISE_PERDAY.MAX_NUM_PERVIEW,
-        });
-        await userLimit.save();
-      }
+      //最近更新时间小于今天凌晨0点 且当前次数小于最大次数, 说明需要更新了,
+      await userLimit.update({
+        chatLeftNums: userLimit.get('chatLeftNums') + LIMIT_NUM_FROM_ADVERTISE_PERDAY.MAX_NUM_PERVIEW,
+      });
+      await userLimit.save();
     }
 
     res.status(RESPONSE_CODE.SUCCESS).json({
