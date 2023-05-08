@@ -14,7 +14,7 @@ class ChatUserLimitService {
       // 根据unionid找到小程序的openid，然后给小程序增加次数
       // const res = await this._userServiceInstance.findOne({ where: { unionid } });
       // console.log(`res=>>'cc`, res.toJSON());
-      let userLimit = await this.serviceInstance.findOne({
+      let [userLimit] = await this.serviceInstance.findOrCreate({
         where: {
           // openid: res.get('openid'),
           unionid,

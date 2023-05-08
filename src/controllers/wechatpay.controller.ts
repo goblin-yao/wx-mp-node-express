@@ -168,27 +168,32 @@ class WeChatPayController {
       //根据回调内容，确定用户会员关系`pzck-${type}-${new Date().getTime()}`;
       const outTradeNo = result.out_trade_no;
       const payType = outTradeNo.split('-')[1];
+      let unionid = '';
+      try {
+        if (WX_BUYER[payType]) {
+          unionid = await this._userService.findUnionidFromWebOrGZHOpenid({ gzhOpenid: result?.payer?.openid });
+
+          if (WX_BUYER[payType]['type'] === 'MemberShip') {
+            // 先获取unionid，然后更加会员时间
+            await this._memberShipService.addMemberShip(unionid, WX_BUYER[payType]['ranger']());
+          }
+          if (WX_BUYER[payType]['type'] === 'BuyTimes') {
+            await this._userLimitService.addUserLimitFromUinionid(unionid, WX_BUYER[payType]['ranger']());
+          }
+        }
+      } catch (error) {
+        console.log('WX_BUYER error', error.toString());
+      }
 
       //保存记录
       await this._wxPayRerocdService.create({
         source: 'paymentnoti',
         createdBy: result?.payer?.openid || '',
+        createdByUnionid: unionid,
         outTradeNo: outTradeNo,
         transactionId: result.transaction_id,
         params: JSON.stringify(result),
       });
-
-      if (WX_BUYER[payType]) {
-        const unionid = await this._userService.findUnionidFromWebOrGZHOpenid({ gzhOpenid: result?.payer?.openid });
-
-        if (WX_BUYER[payType]['type'] === 'MemberShip') {
-          // 先获取unionid，然后更加会员时间
-          await this._memberShipService.addMemberShip(unionid, WX_BUYER[payType]['ranger']());
-        }
-        if (WX_BUYER[payType]['type'] === 'BuyTimes') {
-          await this._userLimitService.addUserLimitFromUinionid(unionid, WX_BUYER[payType]['ranger']());
-        }
-      }
     } catch (error) {
       console.log('[noti]', error);
     }

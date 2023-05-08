@@ -276,7 +276,7 @@ class MiniProgramController {
         userLimit.get('chatLeftNums') < MAX_LIMIT_PERDAY
       ) {
         const _limit = this.getAimedLimit(userLimit.get('chatLeftNums'));
-        await userLimit.update({ chatLeftNums: _limit - 1 });
+        await userLimit.update({ chatLeftNums: _limit - 1, openid });
         await userLimit.save();
         res.status(RESPONSE_CODE.SUCCESS).json({
           code: RESPONSE_CODE.SUCCESS,
@@ -298,7 +298,7 @@ class MiniProgramController {
         leftTimes--;
       }
 
-      await userLimit.update({ chatLeftNums: leftTimes });
+      await userLimit.update({ chatLeftNums: leftTimes, openid });
       await userLimit.save();
       res.status(RESPONSE_CODE.SUCCESS).json({
         code: RESPONSE_CODE.SUCCESS,
@@ -346,7 +346,7 @@ class MiniProgramController {
       ) {
         const _limit = this.getAimedLimit(userLimit.get('chatLeftNums'));
 
-        await userLimit.update({ chatLeftNums: _limit });
+        await userLimit.update({ chatLeftNums: _limit, openid });
         await userLimit.save();
         res.status(RESPONSE_CODE.SUCCESS).json({
           code: RESPONSE_CODE.SUCCESS,

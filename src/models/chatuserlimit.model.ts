@@ -24,7 +24,7 @@ export default function (sequelize: Sequelize): typeof ChatUserLimitModel {
       },
       openid: {
         type: DataTypes.STRING(64),
-        allowNull: false,
+        allowNull: true,
       },
       unionid: {
         type: DataTypes.STRING(64),
