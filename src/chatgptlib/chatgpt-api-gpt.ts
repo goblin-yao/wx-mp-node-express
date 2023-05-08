@@ -299,7 +299,7 @@ export class ChatGPTAPITURBO {
 
       try {
         const response = await axios.post(url, body, {
-          timeout: 30000,
+          timeout: 60000,
           headers: {
             Authorization: `Bearer ${this._apiKey}`,
           },

@@ -25,7 +25,7 @@ export async function WXMsgChecker(content, option) {
       },
       {
         headers: { 'Content-Type': 'application/json' },
-        timeout: 130000,
+        timeout: 30000,
       },
     );
     console.log('WXMsgCheckerdata=>', result.data);
