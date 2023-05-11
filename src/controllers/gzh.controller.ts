@@ -62,6 +62,7 @@ class GZHController {
               },
             );
             temp = _temp1.data;
+            console.log('[ShengyuPro dakalimit]', temp);
           }
 
           let _reslut = await WXCustomSendMessage(
