@@ -82,42 +82,42 @@ export const CONSTANTS = {
  */
 export const WX_BUYER = {
   '11': {
-    totalMoney: 1,
+    totalMoney: 499,
     type: 'MemberShip',
     ranger: () => {
       return 24 * 3600;
     },
   },
   '12': {
-    totalMoney: 2,
+    totalMoney: 3299,
     type: 'MemberShip',
     ranger: () => {
       return getTimeStampOfMonthLater(1);
     },
   },
   '13': {
-    totalMoney: 3,
+    totalMoney: 6999,
     type: 'MemberShip',
     ranger: () => {
       return getTimeStampOfMonthLater(3);
     },
   },
   '21': {
-    totalMoney: 4,
+    totalMoney: 100,
     type: 'BuyTimes',
     ranger: () => {
       return 10;
     },
   },
   '22': {
-    totalMoney: 5,
+    totalMoney: 300,
     type: 'BuyTimes',
     ranger: () => {
       return 35;
     },
   },
   '23': {
-    totalMoney: 6,
+    totalMoney: 500,
     type: 'BuyTimes',
     ranger: () => {
       return 60;
