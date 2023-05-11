@@ -61,7 +61,7 @@ class GZHController {
                 timeout: 10000,
               },
             );
-            temp = _temp1.data;
+            temp = _temp1.data.data;
             console.log('[ShengyuPro dakalimit]', temp);
           }
 
