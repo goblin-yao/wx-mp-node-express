@@ -200,6 +200,12 @@ class WeChatPayController {
   };
   //用来接受支付完成之后的noti，对方会发送一个post请求过来
   public notiTest = async (req: Request, res: Response, next: NextFunction) => {
+    res.status(RESPONSE_CODE.SUCCESS).json({
+      code: RESPONSE_CODE.SUCCESS,
+      data: {},
+    });
+    return;
+
     try {
       // const { resource } = req.body;
       // noti 数据例子
