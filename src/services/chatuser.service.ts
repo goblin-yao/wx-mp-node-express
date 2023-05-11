@@ -2,6 +2,7 @@ import DB from '@databases';
 import { HttpException } from '@exceptions/HttpException';
 import { ChatUser } from '@/interfaces/chatuser.interface';
 import { isEmpty } from '@utils/util';
+import { USER_LABEL_DEFAULT } from '@/config';
 
 class ChatUserService {
   public serviceInstance = DB.ChatUser;
@@ -64,7 +65,7 @@ class ChatUserService {
       gzhOpenid: userData.gzhOpenid || '',
       webOpenid: userData.webOpenid || '',
       avatarUrl: userData.avatarUrl || '1',
-      nickName: userData.nickName || '2',
+      nickName: userData.nickName || USER_LABEL_DEFAULT,
     });
     return result;
   }

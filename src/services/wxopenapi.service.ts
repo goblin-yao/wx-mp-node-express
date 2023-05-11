@@ -66,7 +66,7 @@ export async function WXSubscribeSend(option) {
         touser: option.toOpenId,
         template_id: SUBSCRIBE_TEMPLATE_ID,
         page: '/pages/index/index',
-        miniprogram_state: 'trial', //跳转小程序类型：developer为开发版；trial为体验版；formal为正式版；默认为正式版
+        miniprogram_state: 'formal', //跳转小程序类型：developer为开发版；trial为体验版；formal为正式版；默认为正式版
         lang: 'zh_CN',
         data: {
           //积分类型
