@@ -226,7 +226,7 @@ export class ChatGPTAPITURBO {
         if (response?.data?.id) {
           result.id = response.data.id;
         }
-        console.log('response?.data gpt?=>', response?.data);
+        console.log('response?.data gpt?=>', JSON.stringify(response?.data || {}));
         if (response?.data?.choices?.length) {
           result.text = response.data.choices[0].message.content.trim();
         } else {
@@ -316,7 +316,7 @@ export class ChatGPTAPITURBO {
         if (response?.data?.id) {
           result.id = response.data.id;
         }
-        console.log('response?.data gpt?=>', response?.data);
+        console.log('response?.data gpt?=>', JSON.stringify(response?.data || {}));
         if (response?.data?.choices?.length) {
           result.text = response.data.choices[0].message.content.trim();
         } else {
