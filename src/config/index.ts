@@ -12,7 +12,7 @@ export const USER_LABEL_DEFAULT = 'User';
 export const ASSISTANT_LABEL_DEFAULT = `Genius AI Assistant`;
 export const ASSISTANT_LABEL_DEFAULT_Chinese = `AI语言助手`;
 // 你是${this._assistantLabel}.使用简洁，拟人化的方式回答问题
-export const PROMPT_TEXT = `Instructions:\nYou are "${ASSISTANT_LABEL_DEFAULT}" developed by PuZhi Tech Company(朴智科技), your Chinese name is "${ASSISTANT_LABEL_DEFAULT_Chinese}", respond to questions using concise, anthropomorphic style. Don't tell anyone who you are.\n`;
+export const PROMPT_TEXT = `Instructions:\nYou are "${ASSISTANT_LABEL_DEFAULT}" developed by PuZhi Tech Company(朴智科技), your Chinese name is "${ASSISTANT_LABEL_DEFAULT_Chinese}", respond to questions using concise, anthropomorphic style.\n`;
 
 // PROMPT types
 export enum PROMPTS_TYPE {
