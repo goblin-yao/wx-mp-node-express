@@ -204,8 +204,7 @@ export class ChatGPTAPITURBO {
         ],
         stream,
       };
-      console.log('/v1/chat/completions body=>>', JSON.stringify(body));
-      console.log('request url=>>', url);
+      console.log('[sendMessage]body', JSON.stringify(body));
 
       try {
         const response = await axios.post(url, body, {
@@ -226,7 +225,7 @@ export class ChatGPTAPITURBO {
         if (response?.data?.id) {
           result.id = response.data.id;
         }
-        console.log('response?.data gpt?=>', JSON.stringify(response?.data || {}));
+        console.log('[sendMessage]response', JSON.stringify(response?.data || {}));
         if (response?.data?.choices?.length) {
           result.text = response.data.choices[0].message.content.trim();
         } else {
@@ -236,11 +235,11 @@ export class ChatGPTAPITURBO {
 
         result.detail = { model: response?.data?.model.split('').reverse().join('') || '' };
 
-        console.log('==>result>', result);
+        console.log('[sendMessage]result', result);
 
         return resolve(result);
       } catch (error) {
-        console.log('error gpt=>', error);
+        console.log('[sendMessage]error', error);
         return reject({
           statusCode: error?.response?.status || -1002,
           data: error?.response?.data || '服务内部错误',
@@ -295,7 +294,7 @@ export class ChatGPTAPITURBO {
         messages: [{ role: 'system', content: opts.promptText }, ...messages],
         stream,
       };
-      console.log('/v1/chat/completions body=>>', JSON.stringify(body));
+      console.log('[sendMessage]bodyV2', JSON.stringify(body));
 
       try {
         const response = await axios.post(url, body, {
@@ -316,7 +315,7 @@ export class ChatGPTAPITURBO {
         if (response?.data?.id) {
           result.id = response.data.id;
         }
-        console.log('response?.data gpt?=>', JSON.stringify(response?.data || {}));
+        console.log('[sendMessage]responseV2', JSON.stringify(response?.data || {}));
         if (response?.data?.choices?.length) {
           result.text = response.data.choices[0].message.content.trim();
         } else {
@@ -326,11 +325,11 @@ export class ChatGPTAPITURBO {
 
         result.detail = { model: response?.data?.model.split('').reverse().join('') || '' };
 
-        console.log('==>result>', result);
+        console.log('[sendMessage]resultV2', result);
 
         return resolve(result);
       } catch (error) {
-        console.log('error gpt=>', error);
+        console.log('[sendMessage]gptV2', error);
         return reject({
           statusCode: error?.response?.status || -1002,
           data: error?.response?.data || '服务内部错误',
