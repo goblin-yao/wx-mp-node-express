@@ -28,7 +28,7 @@ export async function WXMsgChecker(content, option) {
         timeout: 30000,
       },
     );
-    console.log('WXMsgCheckerdata=>', result.data);
+    // console.log('WXMsgCheckerdata=>', result.data);
     // data: {
     //     errcode: 41001,
     //     errmsg: 'access_token missing rid: 64083e89-5d0117e2-419e0f1d'
@@ -43,7 +43,7 @@ export async function WXMsgChecker(content, option) {
       };
     }
   } catch (error) {
-    console.log('error=>', error);
+    console.log('WXMsgChecker error:', error);
     return {
       code: RESPONSE_CODE.ERROR,
     };
