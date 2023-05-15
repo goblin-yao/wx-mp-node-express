@@ -15,6 +15,8 @@ class GZHController {
   public aiService = new openAIService();
   public _userLimitService = new ChatUserLimitService();
   public _memberShipService = new ChatMemberShipService();
+  // 发送客服消息参考
+  // https://developers.weixin.qq.com/miniprogram/dev/OpenApiDoc/kf-mgnt/kf-message/sendCustomMessage.html
   public messageHandler = async (req: Request, res: Response, next: NextFunction) => {
     // 从 header 中取appid，如果 from-appid 不存在，则不是资源复用场景，可以直接传空字符串，使用环境所属账号发起云调用
     const appid = req.headers['x-wx-from-appid'] || '';
@@ -40,7 +42,7 @@ class GZHController {
     // 'x-wx-from-appid': 'wx41374d9ae1f0b6d4',
     // 'x-wx-from-openid': 'oOY7b56-yJerlctP0flOf-JewU8U',
     // 'content-type': 'application/json'
-    const { ToUserName, FromUserName, MsgType, Content, CreateTime } = req.body;
+    const { ToUserName, FromUserName, MsgType, Content, CreateTime, Event } = req.body;
     console.log('[gzh msg body]', req.body);
     if (MsgType === 'text') {
       const _content = Content.replace(/\s/g, '');
@@ -137,7 +139,28 @@ class GZHController {
       //     replyMsg = '服务器超时';
       //   }
       // }
-      // res.status(RESPONSE_CODE.SUCCESS).send('success');
+    } else if (MsgType === 'event' && Event === 'subscribe') {
+      //订阅
+      // ToUserName: 'gh_b2964b254956',
+      // FromUserName: 'oOY7b56-yJerlctP0flOf-JewU8U',
+      // CreateTime: 0,
+      // MsgType: 'event',
+      // Event: 'subscribe',
+      // EventKey: ''
+      let _reslut = await WXCustomSendMessage(
+        {
+          touser: FromUserName,
+          msgtype: 'text',
+          text: {
+            content: `公众号中输入“领次数”可以每日免费领取“GeniusAI“答题次数10次
+输入“领声语次数”可以每日免费领取“声语pro“10次对话
+在公众号右下角“会员”菜单中，可以购买会员或者充次数
+使用tips：
+公众号无法直接与AI聊天，请进入小程序与AI对话`,
+          },
+        },
+        appid,
+      );
     } else {
       res.status(RESPONSE_CODE.SUCCESS).send('success');
     }
