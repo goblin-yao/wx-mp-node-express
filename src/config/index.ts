@@ -70,6 +70,7 @@ export const CONSTANTS = {
     MAX_TIMES_PERDAY: 12,
   },
   GZH_DAKA_TEXTS: ['领GeniusAI助手次数', 'GeniusAI助手', '领次数'],
+  GZH_DAKA_PAY_TEXTS: ['会员', '充值'],
   GZH_DAKA_ShengyuPro_TEXTS: ['领声语次数', '声语'],
   // Azure云服务的代理地址
   // "http://localhost:80/proxy" 本地开发

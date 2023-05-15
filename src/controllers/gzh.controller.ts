@@ -9,7 +9,7 @@ import openAIService from '@services/openai.service';
 import { CONSTANTS } from '@/config';
 import { getTimeStampOfMonthLater } from '@/utils/util';
 import path from 'path';
-const { RESPONSE_CODE, GZH_DAKA_TEXTS, GZH_DAKA_ShengyuPro_TEXTS } = CONSTANTS;
+const { RESPONSE_CODE, GZH_DAKA_TEXTS, GZH_DAKA_PAY_TEXTS, GZH_DAKA_ShengyuPro_TEXTS } = CONSTANTS;
 
 class GZHController {
   public aiService = new openAIService();
@@ -42,8 +42,9 @@ class GZHController {
     // 'content-type': 'application/json'
     const { ToUserName, FromUserName, MsgType, Content, CreateTime } = req.body;
     if (MsgType === 'text') {
+      const _content = Content.replace(/\s/g, '');
       try {
-        const _content = Content.replace(/\s/g, '');
+        // 打卡回复
         if ([...GZH_DAKA_TEXTS, ...GZH_DAKA_ShengyuPro_TEXTS].includes(_content)) {
           // 小程序、公众号可用
           let temp = { result: false, addLimit: 0 };
@@ -75,7 +76,32 @@ class GZHController {
             },
             appid,
           );
-          console.log('_reslut', _reslut);
+          console.log('[WXCustomSendMessage]result', _reslut);
+        } else if (GZH_DAKA_PAY_TEXTS.filter(e => _content.includes(e)).length) {
+          // 会员/充值
+          let _reslut = await WXCustomSendMessage(
+            {
+              touser: FromUserName,
+              msgtype: 'text',
+              text: {
+                content: `请在公众号“会员”菜单中申请会员或充值次数`,
+              },
+            },
+            appid,
+          );
+          console.log('[WXCustomSendMessage]result', _reslut);
+        } else {
+          //其他情况，进入小程序与AI畅通对话
+          await WXCustomSendMessage(
+            {
+              touser: FromUserName,
+              msgtype: 'text',
+              text: {
+                content: `进入小程序与AI畅通对话`,
+              },
+            },
+            appid,
+          );
         }
       } catch (error) {
         let _reslut = await WXCustomSendMessage(
@@ -83,7 +109,7 @@ class GZHController {
             touser: FromUserName,
             msgtype: 'text',
             text: {
-              content: `添加次数失败，请联系管理员`,
+              content: `后台服务异常，请联系管理员`,
             },
           },
           appid,

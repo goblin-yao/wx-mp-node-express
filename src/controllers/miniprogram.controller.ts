@@ -6,7 +6,7 @@ import ChatUserShareHistoriesService from '@/services/chatusershare.service';
 import ChatMessageService from '@/services/chatmessage.service';
 import ChatUserAdvertiseHistoriesService from '@/services/chatuseradvertisehistory.service';
 import ChatMemberShipService from '@/services/chatmembership.service';
-import { WXSubscribeSend, WXCustomSendMessage, WXMsgChecker } from '@/services/wxopenapi.service';
+import { WXSubscribeSend, WXMsgChecker } from '@/services/wxopenapi.service';
 import { CONSTANTS } from '@/config';
 import { ChatUserLimitModel } from '@/models/chatuserlimit.model';
 const {
