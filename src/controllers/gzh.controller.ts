@@ -41,6 +41,7 @@ class GZHController {
     // 'x-wx-from-openid': 'oOY7b56-yJerlctP0flOf-JewU8U',
     // 'content-type': 'application/json'
     const { ToUserName, FromUserName, MsgType, Content, CreateTime } = req.body;
+    console.log('[gzh msg body]', req.body);
     if (MsgType === 'text') {
       const _content = Content.replace(/\s/g, '');
       try {
