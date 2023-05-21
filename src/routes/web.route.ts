@@ -29,6 +29,7 @@ class WebAPIRoute implements Routes {
     this.router.get(`${this.path}/checklogin`, this.controller.checkLogin);
 
     this.router.post(`${this.path}/baidu/chat`, this.limiter, this.controller.chatWithGPT);
+    this.router.post(`${this.path}/baidu/chatstream`, this.limiter, this.controller.chatWithGPTStream);
     this.router.post(`${this.path}/conversation/list`, this.controller.getAllConversation);
     this.router.post(`${this.path}/conversation/create`, this.controller.createConversation);
     this.router.post(`${this.path}/conversation/update`, this.controller.updateConversation);

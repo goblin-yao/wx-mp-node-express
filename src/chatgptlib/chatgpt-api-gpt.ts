@@ -5,6 +5,7 @@ import { v4 as uuidv4 } from 'uuid';
 
 import * as types from './types';
 import axios from 'axios';
+const request = require('request');
 
 import QuickLRU from 'quick-lru';
 
@@ -335,6 +336,122 @@ export class ChatGPTAPITURBO {
           data: error?.response?.data || '服务内部错误',
         });
       }
+    }).then(message => {
+      return this._upsertMessage(message).then(() => message);
+    });
+
+    return responseP;
+  }
+
+  async sendMessageStream(messages: types.UserSendMessageList, onProgress, opts: types.UserSendMessageOption): Promise<types.ChatMessage> {
+    const { conversationId = uuidv4(), parentMessageId, messageId = uuidv4() } = opts;
+    const text = messages[messages.length - 1]['content'];
+    const message: types.ChatMessage = {
+      role: 'user',
+      id: messageId,
+      parentMessageId,
+      conversationId,
+      text,
+    };
+    await this._upsertMessage(message);
+
+    const { maxTokens } = await this._buildPrompt(text, opts);
+    const result: types.ChatMessage = {
+      role: 'assistant',
+      id: uuidv4(),
+      parentMessageId,
+      conversationId,
+      text: '',
+    };
+
+    const responseP = new Promise<types.ChatMessage>(async (resolve, reject) => {
+      const url = `${this._apiReverseProxyUrl || this._apiBaseUrl}/v1/chat/completions`;
+
+      const body = {
+        max_tokens: maxTokens,
+        ...this._completionParams,
+        messages: [{ role: 'system', content: opts.promptText }, ...messages],
+        stream: true,
+      };
+
+      console.log('/v1/chat/completions sendMessageStream=>>', JSON.stringify(body));
+
+      const options = {
+        url,
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${this._apiKey}`,
+        },
+        json: body,
+      };
+
+      const reqStream = request(options);
+
+      // Handle the response stream
+      reqStream.on('data', chunk => {
+        try {
+          let chunkData = new TextDecoder().decode(chunk);
+          // console.log(`===[${chunkData}]===`);
+          // 处理这种情况
+          // `[data: {"id":"chatcmpl-7IIQYeWeJiGb8UtYKGfF3TXvFicWl","object":"chat.completion.chunk","created":1684595094,"model":"gpt-3.5-turbo-0301","choices":[{"delta":{"role":"assistant"},"index":0,"finish_reason":null}]}
+
+          // data: {"id":"chatcmpl-7IIQYeWeJiGb8UtYKGfF3TXvFicWl","object":"chat.completion.chunk","created":1684595094,"model":"gpt-3.5-turbo-0301","choices":[{"delta":{"content":"1"},"index":0,"finish_reason":null}]}
+
+          // ]`
+
+          chunkData = chunkData
+            .trim()
+            .substr('`data: {'.length - 1)
+            .replace(/\\n/g, '\\n');
+          if (chunkData.trim().endsWith('[DONE]')) {
+            result.text = result.text.trim();
+            return resolve(result);
+          }
+
+          let response = {} as types.openai.CompletionResponse;
+          try {
+            response = JSON.parse(chunkData);
+          } catch (error) {
+            // 处理第一次请求有两个data: 的情况
+            const tempCData = chunkData.split('data: {');
+            tempCData.map(e => {
+              try {
+                response = JSON.parse('{' + e);
+              } catch (_e) {}
+            });
+          }
+          if (response.id) {
+            result.id = response.id;
+          }
+
+          if (response?.choices?.length) {
+            result.text += response?.choices[0]?.delta?.content || '';
+            // result.detail = response;
+
+            onProgress?.(result);
+          }
+        } catch (error) {
+          console.warn('ChatGPT stream event unexpected error', new TextDecoder().decode(chunk), error);
+
+          return reject({
+            statusCode: error?.response?.status || -1002,
+            data: error?.response?.data || '服务内部错误',
+          });
+        }
+      });
+
+      reqStream.on('end', () => {
+        console.log('No more data');
+      });
+
+      reqStream.on('error', error => {
+        console.error(`Error receiving data: ${error}`);
+        return reject({
+          statusCode: error?.response?.status || -1003,
+          data: error?.response?.data || '服务内部错误',
+        });
+      });
     }).then(message => {
       return this._upsertMessage(message).then(() => message);
     });

@@ -182,18 +182,11 @@ class WebController {
     }
   };
 
-  // 和GPT聊天
-  public chatWithGPT = async (req: Request, res: Response, next: NextFunction) => {
-    const { openid, unionid } = req.cookies;
-
-    const { messages, options } = req.body; //从body中取prompt类型，同时保存聊天记录到数据库中
-    // send a message and wait for the response
-    let response = {} as ChatResponse;
+  private beforeChat = async (openid, unionid, messages, options) => {
     let chatLeftNums = 0; //剩余多少次，如果到0就不能聊天
-    const statTime = Number(new Date());
+    // 每次聊天返回最新的会员信息
+    // 如果不是会员就减少次数，次数为0就不能用了
     try {
-      // 每次聊天返回最新的会员信息
-      // 如果不是会员就减少次数，次数为0就不能用了
       const isMemberShipe = await this._memberShipService.checkIfMemberShipVaild(unionid);
       if (isMemberShipe) {
         chatLeftNums = -1000;
@@ -201,33 +194,42 @@ class WebController {
         //如果不是会员，就减少次数
         chatLeftNums = await this.limitReduce(openid, unionid);
       }
+    } catch (error) {}
 
-      //如果没有值
-      if (!PROMPTS_VALUES[options.promptType]) {
-        //如果没有就用默认的
-        options.promptType = PROMPTS_TYPE.DEFAULT;
-      }
-      //设置prompt
-      options.promptText = PROMPTS_VALUES[options.promptType];
-      const newMessage: types.UserSendMessageList = messages.map(v => ({
-        role: v.role,
-        content: v.content,
-      }));
-
+    //如果没有值
+    if (!PROMPTS_VALUES[options.promptType]) {
+      //如果没有就用默认的
+      options.promptType = PROMPTS_TYPE.DEFAULT;
+    }
+    //设置prompt
+    options.promptText = PROMPTS_VALUES[options.promptType];
+    const newMessage: types.UserSendMessageList = messages.map(v => ({
+      role: v.role,
+      content: v.content,
+    }));
+    try {
       await this.saveMessage(makeMessageFromUserBeforSave(newMessage, options), { openid, msgType: 1 });
-      response = await this._openAIService.chatV2(newMessage, options);
+    } catch (error) {}
 
-      await this.saveMessage(response, { openid, msgType: 2 });
-      // newMessage[newMessage.length-1] 保存两条消息
-      //保存聊天记录-todo, 用户和聊天记录
-      // {
-      //   role: 'assistant',
-      //   id: 'chatcmpl-771CkJi6QsTKjPSJLnf0ro6gabxeq',
-      //   parentMessageId: undefined,
-      //   conversationId: '68bc49f8-87f6-4215-9e22-28e459580489',
-      //   text: '2',
-      //   detail: { model: '1030-obrut-5.3-tpg' }
-      // }
+    return { newMessage, newOptions: options, chatLeftNums };
+  };
+
+  // 和GPT聊天
+  public chatWithGPT = async (req: Request, res: Response, next: NextFunction) => {
+    const { openid, unionid } = req.cookies;
+
+    const { messages, options } = req.body; //从body中取prompt类型，同时保存聊天记录到数据库中
+
+    // send a message and wait for the response
+    let response = {} as ChatResponse;
+    const statTime = Number(new Date());
+    const { newMessage, newOptions, chatLeftNums } = await this.beforeChat(openid, unionid, messages, options);
+
+    try {
+      response = await this._openAIService.chatV2(newMessage, newOptions);
+      try {
+        await this.saveMessage(response, { openid, msgType: 2 });
+      } catch (error) {}
     } catch (error) {
       console.log('post chat request error!!');
       response.error = error;
@@ -235,6 +237,42 @@ class WebController {
     const newRep = { ...response, ...{ chatLeftNums } };
     console.log('post request time=>', Number(new Date()) - statTime);
     res.status(RESPONSE_CODE.SUCCESS).json(newRep);
+  };
+
+  // stream的方式请求
+  public chatWithGPTStream = async (req: Request, res: Response, next: NextFunction) => {
+    const { openid, unionid } = req.cookies;
+
+    const { messages, options } = req.body; //从body中取prompt类型，同时保存聊天记录到数据库中
+
+    // send a message and wait for the response
+    let response = {} as ChatResponse;
+    const statTime = Number(new Date());
+    const { newMessage, newOptions, chatLeftNums } = await this.beforeChat(openid, unionid, messages, options);
+    try {
+      // res.set({
+      //   'Content-Type': 'text/event-stream',
+      //   'Cache-Control': 'no-cache',
+      //   Connection: 'keep-alive',
+      // });
+      const onProgress = function (e) {
+        // console.log('[onProgress]', e);
+        e.chatLeftNums = chatLeftNums;
+        res.write(`${JSON.stringify(e)}|pzkj|jkzp|`); //用|pzkj|jkzp|做特殊标记
+      };
+
+      response = await this._openAIService.chatInStream(newMessage, onProgress, newOptions);
+      console.log('[chatInStream response]', response);
+      try {
+        await this.saveMessage(response, { openid, msgType: 2 });
+      } catch (error) {}
+    } catch (error) {
+      console.log('post chat request error!!');
+      response.error = error;
+    }
+    res.end();
+    // const newRep = { ...response, ...{ chatLeftNums } };
+    // res.status(RESPONSE_CODE.SUCCESS).json(newRep);
   };
 
   public getMessagesHistory = async (req: Request, res: Response, next: NextFunction) => {
