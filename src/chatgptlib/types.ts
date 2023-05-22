@@ -37,6 +37,8 @@ export interface ChatMessage {
   parentMessageId?: string;
   conversationId?: string;
   detail?: any;
+  isDone?: boolean; //为小程序设计
+  isFirstResponse?: boolean; //为小程序设计
 }
 export class ChatGPTError extends Error {
   statusCode?: number;

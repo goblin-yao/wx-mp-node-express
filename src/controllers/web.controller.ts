@@ -218,7 +218,7 @@ class WebController {
   public chatWithGPT = async (req: Request, res: Response, next: NextFunction) => {
     const { openid, unionid } = req.cookies;
 
-    const { messages, options } = req.body; //从body中取prompt类型，同时保存聊天记录到数据库中
+    const { messages, options = {} } = req.body; //从body中取prompt类型，同时保存聊天记录到数据库中
 
     // send a message and wait for the response
     let response = {} as ChatResponse;
@@ -250,15 +250,9 @@ class WebController {
     const statTime = Number(new Date());
     const { newMessage, newOptions, chatLeftNums } = await this.beforeChat(openid, unionid, messages, options);
     try {
-      // res.set({
-      //   'Content-Type': 'text/event-stream',
-      //   'Cache-Control': 'no-cache',
-      //   Connection: 'keep-alive',
-      // });
       const onProgress = function (e) {
-        // console.log('[onProgress]', e);
         e.chatLeftNums = chatLeftNums;
-        res.write(`${JSON.stringify(e)}|pzkj|jkzp|`); //用|pzkj|jkzp|做特殊标记
+        res.write(`${JSON.stringify(e)}$@@$`); //用$@@$做特殊标记
       };
 
       response = await this._openAIService.chatInStream(newMessage, onProgress, newOptions);

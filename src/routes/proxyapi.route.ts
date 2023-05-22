@@ -13,6 +13,8 @@ class ProxyAPIRoute implements Routes {
 
   private initializeRoutes() {
     this.router.post(`${this.path}/chat`, this.controller.chat);
+    this.router.post(`${this.path}/chatstreamstart`, this.controller.chatWithStreamStart);
+    this.router.post(`${this.path}/chatstreaminterval`, this.controller.chatWithStreamInterval);
     this.router.get(`${this.path}/getmodels`, this.controller.getModels);
 
     // 小程序调用，获取微信 Open ID

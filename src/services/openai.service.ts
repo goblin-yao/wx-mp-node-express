@@ -1,4 +1,5 @@
 import { ChatGPTAPI, ChatGPTAPITURBO } from '@/chatgptlib';
+import { messagesLRUCache } from '@/utils/lrucache';
 import { getAPIKEY, getPROXYURL, getRandomElementFromArray } from '@/utils/util';
 import * as types from '../chatgptlib/types';
 
@@ -10,6 +11,7 @@ import * as types from '../chatgptlib/types';
 const chatGPTTurboapi = new ChatGPTAPITURBO({
   apiKey: getAPIKEY(),
   apiReverseProxyUrl: getPROXYURL(),
+  messageStore: messagesLRUCache,
 });
 
 class OpenAIService {
@@ -37,6 +39,10 @@ class OpenAIService {
   public async chatInStream(messages: types.UserSendMessageList, onProgress, options: types.UserSendMessageOption): Promise<types.ChatMessage> {
     // todo messages 只传过去3条
     return await this.getChatGPTAPI().sendMessageStream(messages, onProgress, options);
+  }
+
+  public async getChatDataByMessageId(messageId: string) {
+    return await this.getChatGPTAPI().getChatDataByMessageId(messageId);
   }
 }
 

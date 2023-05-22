@@ -58,14 +58,18 @@ class App {
           // 根据 IP 地址和用户 ID, openid等 生成唯一标识
           return req.ip + '-' + (req.cookies['openid'] || req.headers['x-wx-openid']);
         },
-        // skip: (req, res) => {
-        //   console.log('req.path=>', req.path);
-        //   // 判断请求路径是否是静态文件路径
-        //   if (req.path.startsWith('/public/')) {
-        //     return true; // 跳过限流处理
-        //   }
-        //   return false;
-        // },
+        skip: (req, res) => {
+          console.log('[req.path]', req.path);
+          // 判断请求路径是否是静态文件路径
+          if (req.path.startsWith('/public/')) {
+            return true; // 跳过限流处理
+          }
+          if (req.path.includes('/proxyapi/chatstreaminvterval')) {
+            return true; // 跳过限流处理
+          }
+
+          return false;
+        },
         message: '请求过于频繁，请稍后再试！',
       }),
     );

@@ -1,3 +1,8 @@
-import { LRUCache } from 'lru-cache';
+import Keyv from 'keyv';
+import QuickLRU from 'quick-lru';
+import * as types from '../chatgptlib/types';
 
-export const webLoginLRUCache = new LRUCache({ max: 10000, ttl: 1000 * 60 * 60 * 24 * 30 });
+//十万条数据的缓存
+export const messagesLRUCache = new Keyv<types.ChatMessage, any>({
+  store: new QuickLRU<string, types.ChatMessage>({ maxSize: 100000 }),
+});

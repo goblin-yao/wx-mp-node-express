@@ -406,6 +406,10 @@ export class ChatGPTAPITURBO {
             .replace(/\\n/g, '\\n');
           if (chunkData.trim().endsWith('[DONE]')) {
             result.text = result.text.trim();
+            if (result?.isFirstResponse) {
+              delete result.isFirstResponse;
+            }
+            result.isDone = true;
             return resolve(result);
           }
 
@@ -428,7 +432,10 @@ export class ChatGPTAPITURBO {
           if (response?.choices?.length) {
             result.text += response?.choices[0]?.delta?.content || '';
             // result.detail = response;
-
+            if (result?.isFirstResponse) {
+              delete result.isFirstResponse;
+            }
+            this._upsertMessage(result); //更新消息
             onProgress?.(result);
           }
         } catch (error) {
@@ -457,6 +464,10 @@ export class ChatGPTAPITURBO {
     });
 
     return responseP;
+  }
+
+  async getChatDataByMessageId(messgaeId: string) {
+    return await this._getMessageById(messgaeId);
   }
 
   //获取所有的模型
@@ -578,7 +589,7 @@ export class ChatGPTAPITURBO {
 
   protected async _defaultGetMessageById(id: string): Promise<types.ChatMessage> {
     const res = await this._messageStore.get(id);
-    console.log('getMessageById', id, res);
+    // console.log('getMessageById', id, res);
     return res;
   }
 
