@@ -87,7 +87,8 @@ class GZHController {
               touser: FromUserName,
               msgtype: 'text',
               text: {
-                content: `请在公众号“会员”菜单中申请会员或充值次数`,
+                content: `请在公众号“会员”菜单中申请会员或充值次数
+https://puzhikeji.com.cn/wechatpay/payment`,
               },
             },
             appid,
