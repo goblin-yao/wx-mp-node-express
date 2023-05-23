@@ -87,7 +87,7 @@ class GZHController {
               touser: FromUserName,
               msgtype: 'text',
               text: {
-                content: `点击🔗
+                content: `点击进入会员/充值页面
 https://puzhikeji.com.cn/wechatpay/payment`,
               },
             },
@@ -101,8 +101,8 @@ https://puzhikeji.com.cn/wechatpay/payment`,
               touser: FromUserName,
               msgtype: 'text',
               text: {
-                content: `点击🔗进入小程序与AI畅通对话
-                #小程序://GeniusAI助手/U1vLIctpzEWadmb`,
+                content: `点击进入小程序与AI畅通对话
+#小程序://GeniusAI助手/I9oA6pdtilC7XPA`,
               },
             },
             appid,
