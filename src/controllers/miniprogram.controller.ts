@@ -229,7 +229,7 @@ class MiniProgramController {
         where: { openid },
         order: [
           // 将转义 title 并针对有效方向列表进行降序排列
-          ['createdAt', 'DESC'],
+          ['createdAt', 'ASC'],
         ],
         limit: MAX_HISTORY_RECORD,
       });
