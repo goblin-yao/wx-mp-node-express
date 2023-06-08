@@ -1,6 +1,7 @@
 import { NextFunction, Request, Response } from 'express';
 import { CONSTANTS } from '@/config';
 import { exampleLoginLRUCache } from '@/utils/lrucache';
+import path from 'path';
 const { RESPONSE_CODE } = CONSTANTS;
 
 class ExampleController {
@@ -81,6 +82,18 @@ class ExampleController {
         data: { message: '注册用户失败.' },
       });
     }
+  };
+
+  public exampleIndex = (req: Request, res: Response, next: NextFunction) => {
+    const { email_user } = req.cookies;
+    if (!email_user) {
+      res.sendFile(path.join(__dirname, '../../public_static/example.html'));
+    } else {
+      res.redirect('/');
+    }
+  };
+  public exampleRegister = (req: Request, res: Response, next: NextFunction) => {
+    res.sendFile(path.join(__dirname, '../../public_static/register.html'));
   };
 }
 
