@@ -7,7 +7,6 @@ import ChatMemberShipService from '@/services/chatmembership.service';
 import openAIService from '@services/openai.service';
 import { CONSTANTS, PROMPTS_TYPE, PROMPTS_VALUES } from '@/config';
 import { ChatConversation } from '@/interfaces/chatconversation.interface';
-import { webLoginLRUCache } from '@/utils/lrucache';
 import * as types from '../chatgptlib/types';
 import { ChatUserLimitModel } from '@/models/chatuserlimit.model';
 type ChatResponse = { error?: any } & types.ChatMessage;
@@ -182,8 +181,26 @@ class WebController {
     }
   };
 
-  private beforeChat = async (openid, unionid, messages, options) => {
+  private beforeChat = async (openid, unionid, messages, options, isEmailUser = false) => {
     let chatLeftNums = 0; //剩余多少次，如果到0就不能聊天
+    if (isEmailUser) {
+      chatLeftNums = -1000;
+
+      //如果没有值
+      if (!PROMPTS_VALUES[options.promptType]) {
+        //如果没有就用默认的
+        options.promptType = PROMPTS_TYPE.DEFAULT;
+      }
+      //设置prompt
+      options.promptText = PROMPTS_VALUES[options.promptType];
+      const newMessage: types.UserSendMessageList = messages.map(v => ({
+        role: v.role,
+        content: v.content,
+      }));
+
+      return { newMessage, newOptions: options, chatLeftNums };
+    }
+
     // 每次聊天返回最新的会员信息
     // 如果不是会员就减少次数，次数为0就不能用了
     try {
@@ -203,6 +220,10 @@ class WebController {
     }
     //设置prompt
     options.promptText = PROMPTS_VALUES[options.promptType];
+    //如果长度大于6，截取长度最后3条消息
+    if (messages.length > 6) {
+      messages = messages.slice(-3);
+    }
     const newMessage: types.UserSendMessageList = messages.map(v => ({
       role: v.role,
       content: v.content,
@@ -241,24 +262,31 @@ class WebController {
 
   // stream的方式请求
   public chatWithGPTStream = async (req: Request, res: Response, next: NextFunction) => {
-    const { openid, unionid } = req.cookies;
+    const { openid, unionid, email_user } = req.cookies;
 
     const { messages, options } = req.body; //从body中取prompt类型，同时保存聊天记录到数据库中
 
     // send a message and wait for the response
     let response = {} as ChatResponse;
     const statTime = Number(new Date());
-    const { newMessage, newOptions, chatLeftNums } = await this.beforeChat(openid, unionid, messages, options);
+    const { newMessage, newOptions, chatLeftNums } = await this.beforeChat(openid, unionid, messages, options, !!email_user);
     try {
       const onProgress = function (e) {
         e.chatLeftNums = chatLeftNums;
         res.write(`${JSON.stringify(e)}$@@$`); //用$@@$做特殊标记
       };
-
-      response = await this._openAIService.chatInStream(newMessage, onProgress, newOptions);
+      // 如果是邮箱用户，特殊处理
+      if (email_user) {
+        response = await this._openAIService.chatInStreamExample(newMessage, onProgress, newOptions);
+      } else {
+        response = await this._openAIService.chatInStream(newMessage, onProgress, newOptions);
+      }
       console.log('[chatInStream response]', response);
       try {
-        await this.saveMessage(response, { openid, msgType: 2 });
+        // 如果不是邮箱用户，保存消息
+        if (!email_user) {
+          await this.saveMessage(response, { openid, msgType: 2 });
+        }
       } catch (error) {}
     } catch (error) {
       console.log('post chat request error!!');
@@ -295,7 +323,14 @@ class WebController {
   public getAllConversation = async (req: Request, res: Response, next: NextFunction) => {
     try {
       // 未来根据实际情况调整-todo
-      const { openid, unionid } = req.cookies;
+      const { openid, unionid, email_user } = req.cookies;
+      if (email_user) {
+        res.status(RESPONSE_CODE.SUCCESS).json({
+          code: RESPONSE_CODE.SUCCESS,
+          data: { result: [], firstConversationMessages: [] },
+        });
+        return;
+      }
 
       //根据openid查询用户的信息
       const result = await this._conversationService.list(openid);
@@ -322,7 +357,15 @@ class WebController {
 
   public createConversation = async (req: Request, res: Response, next: NextFunction) => {
     try {
-      const { openid, unionid } = req.cookies;
+      const { openid, unionid, email_user } = req.cookies;
+
+      if (email_user) {
+        res.status(RESPONSE_CODE.SUCCESS).json({
+          code: RESPONSE_CODE.SUCCESS,
+          data: {},
+        });
+        return;
+      }
 
       const { conversation } = req.body;
       conversation.createdBy = openid; //设置作者，其他的信息由前端传过来
@@ -341,7 +384,15 @@ class WebController {
   };
   public updateConversation = async (req: Request, res: Response, next: NextFunction) => {
     try {
-      const { openid, unionid } = req.cookies;
+      const { openid, unionid, email_user } = req.cookies;
+
+      if (email_user) {
+        res.status(RESPONSE_CODE.SUCCESS).json({
+          code: RESPONSE_CODE.SUCCESS,
+          data: {},
+        });
+        return;
+      }
 
       const { conversation } = req.body;
       let result = await this._conversationService.update(openid, conversation as ChatConversation);
@@ -358,8 +409,15 @@ class WebController {
   };
   public deleteConversation = async (req: Request, res: Response, next: NextFunction) => {
     try {
-      const { openid, unionid } = req.cookies;
+      const { openid, unionid, email_user } = req.cookies;
 
+      if (email_user) {
+        res.status(RESPONSE_CODE.SUCCESS).json({
+          code: RESPONSE_CODE.SUCCESS,
+          data: {},
+        });
+        return;
+      }
       const { conversation } = req.body;
       let result = await this._conversationService.delete(openid, conversation.conversationId as string);
 
@@ -377,8 +435,15 @@ class WebController {
   //删除全部，并且创建一条新的
   public deleteAllAndCreateOne = async (req: Request, res: Response, next: NextFunction) => {
     try {
-      const { openid, unionid } = req.cookies;
+      const { openid, unionid, email_user } = req.cookies;
 
+      if (email_user) {
+        res.status(RESPONSE_CODE.SUCCESS).json({
+          code: RESPONSE_CODE.SUCCESS,
+          data: {},
+        });
+        return;
+      }
       const { conversation } = req.body;
       conversation.createdBy = openid; //设置作者，其他的信息由前端传过来
       let result = await this._conversationService.deleteAll(openid);
@@ -398,8 +463,16 @@ class WebController {
   public checkLogin = async (req: Request, res: Response, next: NextFunction) => {
     let chatLeftNums = 0;
     try {
+      const { openid, unionid, email_user } = req.cookies;
+      // email_user不需要做任何判断
+      if (email_user) {
+        res.status(RESPONSE_CODE.SUCCESS).json({
+          code: RESPONSE_CODE.SUCCESS,
+          data: { login: true, chatLeftNums: -1000 },
+        });
+        return;
+      }
       //缓存中没有，说明需要重新登录了
-      const { openid, unionid } = req.cookies;
       const userAgent = req.headers['user-agent'] as string;
       const from_where = /MicroMessenger/i.test(userAgent) ? 'inner_web' : 'out_web';
       if (openid && unionid) {

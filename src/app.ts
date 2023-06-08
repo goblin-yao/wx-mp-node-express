@@ -61,7 +61,7 @@ class App {
         skip: (req, res) => {
           console.log('[req.path]', req.path);
           // 判断请求路径是否是静态文件路径
-          if (req.path.startsWith('/public/')) {
+          if (req.path.startsWith('/public/') || req.path.startsWith('/asserts/')|| req.path.endsWith('.html')) {
             return true; // 跳过限流处理
           }
           if (req.path.includes('/proxyapi/chatstreaminvterval')) {

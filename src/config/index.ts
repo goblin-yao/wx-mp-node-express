@@ -29,6 +29,7 @@ export const PROMPTS_VALUES = {
  */
 export const {
   OPENAI_API_KEY,
+  OPENAI_API_KEY_EXAMPLE,
   CHATGPT_MODEL_GPT = 'gpt-3.5-turbo',
   CHATGPT_MODEL = 'text-davinci-003',
   MYSQL_USERNAME,
