@@ -15,7 +15,7 @@ class IndexRoute implements Routes {
     this.router.get(`${this.path}`, (req: Request, res: Response, next: NextFunction) => {
       const { unionid } = req.cookies;
       //超级管理员才能进入测试页面
-      if (unionid == 'ob881412W91pK_Tm_R-pekQdogEI') {
+      if (unionid == 'ob88142Vub0qvrT0gVzDDkF0B4F8') {
         res.sendFile(path.join(__dirname, '../static_pages/test.html'));
       } else {
         res.status(403).json({
