@@ -233,14 +233,17 @@ class MiniProgramController {
         ],
         limit: MAX_HISTORY_RECORD,
       });
+
+      const sortedRows = rows.map(row => row.toJSON());
+
       try {
         // 给消息记录排序
-        for (let index = 0; index < rows.length && index + 1 < rows.length; ) {
+        for (let index = 0; index < sortedRows.length && index + 1 < sortedRows.length; ) {
           // 这个和下一个是一对消息，就调换消息
-          if (rows[index]['msgType'] === 2 && rows[index + 1]['msgType'] === 1) {
-            const temp = rows[index];
-            rows[index] = rows[index + 1];
-            rows[index + 1] = temp;
+          if (sortedRows[index]['msgType'] === 2 && sortedRows[index + 1]['msgType'] === 1) {
+            const temp = sortedRows[index];
+            sortedRows[index] = sortedRows[index + 1];
+            sortedRows[index + 1] = temp;
             index += 2;
           } else {
             index++;
@@ -250,7 +253,7 @@ class MiniProgramController {
 
       res.status(RESPONSE_CODE.SUCCESS).json({
         code: RESPONSE_CODE.SUCCESS,
-        data: { count, rows },
+        data: { count, rows: sortedRows },
       });
       //超过记录数，删除总数之前的一半
       if (count > MAX_HISTORY_SAVE) {
