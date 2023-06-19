@@ -209,7 +209,7 @@
   </head>
 
   <body>
-    <p>openid: <input id="_openid" value="onsoC5hahyobTFb4CIdAHklo-5CU" /></p>
+    <p>openid: <input id="_openid" value="ob881412W91pK_Tm_R-pekQdogEI" /></p>
     <p>question: <input id="question" value="1+1=?" /></p>
     <p><button id="submit">Submit</button></p>
     <p><button id="userAuth">userAuth</button></p>
@@ -248,7 +248,7 @@
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ unionid: 'ob-vI5p5P9MOmSr4tIc1fH5yetCQ' }),
+        body: JSON.stringify({ unionid: 'ob881412W91pK_Tm_R-pekQdogEI' }),
       })
         .then(response => response.json())
         .then(data => {
@@ -264,7 +264,7 @@
         headers: {
           'Content-Type': 'application/json',
           'x-wx-openid': _openid.value,
-          'x-wx-from-unionid': 'ob-vI5p5P9MOmSr4tIc1fH5yetCQ',
+          'x-wx-from-unionid': 'ob881412W91pK_Tm_R-pekQdogEI',
         },
         body: JSON.stringify({
           ToUserName: 'gh_31cb7255c884',
@@ -288,7 +288,7 @@
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'x-wx-unionid': "ob-vI5p5P9MOmSr4tIc1fH5yetCQ",
+          'x-wx-unionid': "ob881412W91pK_Tm_R-pekQdogEI",
         },
         body: JSON.stringify({ type: typeSelect.value }),
       })

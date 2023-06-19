@@ -66,7 +66,7 @@ class MiniProgramController {
         }
 
         // 增加10次次数
-        let [userLimit] = await this._userLimitService.serviceInstance.findOrCreate({
+        const [userLimit] = await this._userLimitService.serviceInstance.findOrCreate({
           where: { unionid },
           defaults: {
             chatLeftNums: TIME_FOR_NEW_USER,
@@ -87,7 +87,7 @@ class MiniProgramController {
     const unionid = req.headers['x-wx-unionid'] as string;
     const { avatarUrl, nickName } = req.body;
     try {
-      let hasUser = await this._userService.findUser(openid);
+      const hasUser = await this._userService.findUser(openid);
       if (hasUser) {
         res.status(RESPONSE_CODE.SUCCESS).json({
           code: RESPONSE_CODE.ERROR,
@@ -117,7 +117,7 @@ class MiniProgramController {
     const unionid = req.headers['x-wx-unionid'] as string;
     const { avatarUrl, nickName } = req.body;
     try {
-      let result = await this._userService.updateUser(openid, { avatarUrl, nickName });
+      const result = await this._userService.updateUser(openid, { avatarUrl, nickName });
 
       res.status(RESPONSE_CODE.SUCCESS).json({
         code: RESPONSE_CODE.SUCCESS,
@@ -135,7 +135,7 @@ class MiniProgramController {
     const unionid = req.headers['x-wx-unionid'] as string;
     const { share_from_openid } = req.body;
     try {
-      let hasUser = await this._userService.findUser(openid);
+      const hasUser = await this._userService.findUser(openid);
       if (hasUser) {
         res.status(RESPONSE_CODE.SUCCESS).json({
           code: RESPONSE_CODE.SUCCESS,
@@ -233,6 +233,21 @@ class MiniProgramController {
         ],
         limit: MAX_HISTORY_RECORD,
       });
+      try {
+        // 给消息记录排序
+        for (let index = 0; index < rows.length && index + 1 < rows.length; ) {
+          // 这个和下一个是一对消息，就调换消息
+          if (rows[index]['msgType'] === 2 && rows[index + 1]['msgType'] === 1) {
+            const temp = rows[index];
+            rows[index] = rows[index + 1];
+            rows[index + 1] = temp;
+            index += 2;
+          } else {
+            index++;
+          }
+        }
+      } catch (error) {}
+
       res.status(RESPONSE_CODE.SUCCESS).json({
         code: RESPONSE_CODE.SUCCESS,
         data: { count, rows },
@@ -246,7 +261,7 @@ class MiniProgramController {
             // 将转义 title 并针对有效方向列表进行降序排列
             ['createdAt', 'DESC'],
           ],
-          limit: MAX_HISTORY_SAVE - MAX_HISTORY_RECORD, //超过这个数值，删掉一半数据
+          limit: count - MAX_HISTORY_SAVE, //超过这个数值，删掉一半数据
         });
       }
     } catch (error) {
@@ -405,7 +420,7 @@ class MiniProgramController {
       },
     });
     // 增加次数
-    let [userLimit] = await this._userLimitService.serviceInstance.findOrCreate({
+    const [userLimit] = await this._userLimitService.serviceInstance.findOrCreate({
       where: { unionid },
       defaults: { chatLeftNums: TIME_FOR_NEW_USER },
     });
