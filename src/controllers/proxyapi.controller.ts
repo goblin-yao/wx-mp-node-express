@@ -24,18 +24,16 @@ class ProxyAPIController {
   };
 
   public chatWithStreamStart = async (req: Request, res: Response, next: NextFunction) => {
-    const { question, messages, options = {} } = req.body;
+    const { messages, options = {} } = req.body;
     // send a message and wait for the response
     let response = {} as ChatResponse;
 
     try {
-      //如果没有值
+      //设置prompt，优先使用promptText，设置promptType和promptText,就用默认值
       if (!PROMPTS_VALUES[options.promptType]) {
-        //如果没有就用默认的
         options.promptType = PROMPTS_TYPE.DEFAULT;
       }
-      //设置prompt
-      options.promptText = PROMPTS_VALUES[options.promptType];
+      options.promptText = options.promptText || PROMPTS_VALUES[options.promptType];
       const newMessage: types.UserSendMessageList = messages.map(v => ({
         role: v.role,
         content: v.content,
