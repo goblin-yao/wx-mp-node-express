@@ -9,6 +9,11 @@
     <!-- <script src="http://res.wx.qq.com/open/js/jweixin-1.6.0.js"></script> -->
     <script src="/zepto.min.js"></script>
     <style>
+      html,
+      body {
+        height: 100%;
+        width: 100%;
+      }
       * {
         margin: 0;
         padding: 0;
@@ -93,7 +98,6 @@
         function onWeChatLoginCallback(userInfo) {
           // 这里是登录成功后的处理逻辑，userInfo中包含用户信息
           console.log(userInfo);
-          debugger;
         }
 
         // 调用微信登录
@@ -117,5 +121,12 @@
         };
       })();
     </script>
+    <div style="text-align: center;bottom: 0;position: absolute;width: 100%;">
+      <nav>
+        <span>Copyright © 2023-2024 WuHan PUZHITeck. All Rights Reserved.&nbsp;武汉朴智科技有限公司&nbsp;版权所有</span>
+        <br />
+        <a href="http://beian.miit.gov.cn" style="color: inherit" target="_blank">ICP备案/许可证号: 鄂ICP备2023006007号-1</a>
+      </nav>
+    </div>
   </body>
 </html>

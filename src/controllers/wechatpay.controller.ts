@@ -68,7 +68,7 @@ class WeChatPayController {
     try {
       // await this._wxPayRerocdService.create({ source: 'user', createdBy: openid, createdByUnionid: unionid, params: JSON.stringify(params) });
       // 下单成功时保存数据到订单记录表格中 todo
-      let result = await this._wcPay.transactions_jsapi(params);
+      const result = await this._wcPay.transactions_jsapi(params);
       // 为了测试
       // result = {
       //   appId: 'appid',
