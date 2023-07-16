@@ -16,16 +16,16 @@ const chatGPTTurboapi = new ChatGPTAPITURBO({
 });
 
 class OpenAIService {
-  constructor() {}
+  // constructor() {}
 
   private getChatGPTAPIExample() {
-    let APIInstance = getRandomElementFromArray([chatGPTTurboapi]);
+    const APIInstance = getRandomElementFromArray([chatGPTTurboapi]);
     APIInstance.apiKey = OPENAI_API_KEY_EXAMPLE;
     APIInstance.apiReverseProxyUrl = getPROXYURL();
     return APIInstance;
   }
   private getChatGPTAPI() {
-    let APIInstance = getRandomElementFromArray([chatGPTTurboapi]);
+    const APIInstance = getRandomElementFromArray([chatGPTTurboapi]);
     APIInstance.apiKey = getAPIKEY();
     APIInstance.apiReverseProxyUrl = getPROXYURL();
     return APIInstance;

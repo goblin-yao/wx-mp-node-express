@@ -9,17 +9,24 @@ const { RESPONSE_CODE } = CONSTANTS;
 class ProxyAPIController {
   public aiService = new openAIService();
   public chat = async (req: Request, res: Response, next: NextFunction) => {
-    const { question } = req.body;
+    const { messages, options = {} } = req.body;
     // send a message and wait for the response
     let response = {} as ChatResponse;
-    const statTime = Number(new Date());
     try {
-      response = await this.aiService.chatToAI(question);
+      //设置prompt，优先使用promptText，设置promptType和promptText,就用默认值
+      if (!PROMPTS_VALUES[options.promptType]) {
+        options.promptType = PROMPTS_TYPE.DEFAULT;
+      }
+      options.promptText = options.promptText || PROMPTS_VALUES[options.promptType];
+      const newMessage: types.UserSendMessageList = messages.map(v => ({
+        role: v.role,
+        content: v.content,
+      }));
+      response = await this.aiService.chatV2(newMessage, options);
     } catch (error) {
       console.log('post chat request error!!');
       response.error = error;
     }
-    console.log('post request time=>', Number(new Date()) - statTime);
     res.status(RESPONSE_CODE.SUCCESS).json(response);
   };
 
