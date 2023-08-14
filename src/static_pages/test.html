@@ -330,7 +330,7 @@
           'Content-Type': 'application/json',
           'x-wx-openid': _openid.value,
         },
-        body: JSON.stringify({ question: question.value }),
+        body: JSON.stringify({ messages: [{ role: 'user', content: question.value }] }),
       })
         .then(response => response.json())
         .then(data => {

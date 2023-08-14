@@ -1,10 +1,42 @@
 import { NextFunction, Request, Response } from 'express';
-import { CONSTANTS } from '@/config';
+import { CONSTANTS, SuperAdminUser, SuperAdminPwd } from '@/config';
 import { exampleLoginLRUCache } from '@/utils/lrucache';
 import path from 'path';
 const { RESPONSE_CODE } = CONSTANTS;
 
 class ExampleController {
+  public checkLoginTemp = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const { email_user } = req.cookies;
+      const { email, password } = req.body;
+      const emailTrimed = email.trim();
+      const passwordlTrimed = password.trim();
+
+      if (SuperAdminUser === email_user) {
+        res.redirect('/');
+      } else {
+        if (emailTrimed) {
+          // 账号密码匹配
+          if (SuperAdminPwd === passwordlTrimed) {
+            res.cookie('email_user', emailTrimed, { maxAge: 30 * 24 * 3600 * 1000, httpOnly: false });
+            res.redirect('/');
+          } else {
+            res.status(403).json({
+              code: RESPONSE_CODE.ERROR,
+              data: { message: '账号&密码登录校验失败' },
+            });
+          }
+        }
+      }
+    } catch (error) {
+      console.log(`checkLogin [error]`, error);
+      res.status(403).json({
+        code: RESPONSE_CODE.ERROR,
+        data: { message: '登录失败！' },
+      });
+    }
+  };
+
   public checkLogin = async (req: Request, res: Response, next: NextFunction) => {
     try {
       const { email_user } = req.cookies;
@@ -21,13 +53,13 @@ class ExampleController {
           console.log('[ccc]', cValue);
           // 没有账号就自动注册
           if (!cValue) {
-            if (passwordlTrimed.trim()) {
+            if (passwordlTrimed) {
               res.cookie('email_user', emailTrimed, { maxAge: 30 * 24 * 3600 * 1000, httpOnly: false });
               res.redirect('/');
             }
           } else {
             // 账号密码匹配
-            if (cValue === password.trim()) {
+            if (cValue === passwordlTrimed) {
               res.cookie('email_user', emailTrimed, { maxAge: 30 * 24 * 3600 * 1000, httpOnly: false });
               res.redirect('/');
             } else {

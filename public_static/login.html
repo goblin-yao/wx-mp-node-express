@@ -4,7 +4,7 @@
     <meta charset="utf-8" />
     <meta name="author" content="Kodinger" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <title>GeniusAI Login</title>
+    <title>登录</title>
     <link rel="stylesheet" href="/asserts/css/bootstrap.min.css" />
     <link rel="stylesheet" type="text/css" href="/asserts/css/my-login.css" />
     <script src="https://res.wx.qq.com/connect/zh_CN/htmledition/js/wxLogin.js"></script>
@@ -62,16 +62,7 @@
                 <form method="POST" action="/example/checkLoginTemp" class="my-login-validation" novalidate="">
                   <div class="form-group">
                     <label for="email">邮箱地址</label>
-                    <input
-                      id="email"
-                      type="email"
-                      class="form-control"
-                      placeholder="输入管理员提供的邮箱地址"
-                      name="email"
-                      value=""
-                      required
-                      autofocus
-                    />
+                    <input id="email" type="email" class="form-control" placeholder="输入管理员提供的邮箱地址" name="email" value="" required autofocus />
                     <div class="invalid-feedback">邮箱地址格式不正确</div>
                   </div>
 
@@ -98,7 +89,7 @@
                   </div>
                   <div class="mt-4 text-center">
                     <!-- <a href="/example/register">注册账号</a> -->
-                    <div id="show_top_container" class="btn btn-xs btn-info">微信登录</div>
+                    <div id="show_top_container" class="btn btn-xs btn-info">微信扫码登录</div>
                   </div>
                 </form>
               </div>
@@ -154,22 +145,22 @@
         }
 
         $('#show_top_container').click(function () {
-          //如果是微信环境，就跳转到自动登录
-          if (isWechat()) {
-            // 拼接参数
-            // 使用拼接后的 URL 去请求微信授权登录
-            var wxLoginUrl = `https://open.weixin.qq.com/connect/oauth2/authorize?redirect_uri=${encodeURIComponent(
-              redirectBackUrl + '?from_where=wechat',
-            )}&response_type=code&scope=snsapi_userinfo&appid=${gzh_app_id}&state=${STATE}#wechat_redirect`;
-            window.location.href = wxLoginUrl;
-            return;
-          } else {
-            $('#top_container').show();
-          }
+          $('#top_container').show();
         });
         $('#top_container').click(function () {
           $('#top_container').hide();
         });
+
+        //如果是微信环境，就跳转到自动登录
+        if (isWechat()) {
+          // 拼接参数
+          // 使用拼接后的 URL 去请求微信授权登录
+          var wxLoginUrl = `https://open.weixin.qq.com/connect/oauth2/authorize?redirect_uri=${encodeURIComponent(
+            redirectBackUrl + '?from_where=wechat',
+          )}&response_type=code&scope=snsapi_userinfo&appid=${gzh_app_id}&state=${STATE}#wechat_redirect`;
+          window.location.href = wxLoginUrl;
+          return;
+        }
 
         // 定义回调函数
         function onWeChatLoginCallback(userInfo) {

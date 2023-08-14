@@ -28,6 +28,8 @@ export const PROMPTS_VALUES = {
  * 这些配置在微信云托管
  */
 export const {
+  SuperAdminUser,
+  SuperAdminPwd,
   OPENAI_API_KEY,
   OPENAI_API_KEY_EXAMPLE,
   CHATGPT_MODEL_GPT = 'gpt-3.5-turbo',

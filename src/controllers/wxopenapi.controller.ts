@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from 'express';
 import axios from 'axios';
 // import { webLoginLRUCache } from '@/utils/lrucache';
-import { CONSTANTS, WEB_WX_APPID, WEB_WX_SECRET_KEY, GZH_APPID, GZH_SECRET_KEY } from '@/config';
+import { CONSTANTS, WEB_WX_APPID, WEB_WX_SECRET_KEY, GZH_APPID, GZH_SECRET_KEY, SuperAdminUser } from '@/config';
 import path from 'path';
 import ChatUserService from '@/services/chatuser.service';
 const { RESPONSE_CODE } = CONSTANTS;
@@ -33,7 +33,7 @@ class WxOpenAPIController {
     //缓存中没有，说明需要重新登录了，就去登录页面，然后在登录页面进行下一步操作：
     //1. 微信内跳转到callback根据code获取用户信息
     //2. 微信外扫码登陆，在这之前要先根据token刷新一下
-    const { openid, unionid } = req.cookies;
+    const { openid, unionid, email_user } = req.cookies;
     const userAgent = req.headers['user-agent'] as string;
     if (openid && unionid) {
       // 保存用户信息到用户信息表中-判断是否是微信环境
@@ -49,6 +49,9 @@ class WxOpenAPIController {
       // }
 
       // 删除缓存的处理，后面有redis之类的再配置
+      res.redirect('/index.html');
+      return;
+    } else if (email_user === SuperAdminUser) {
       res.redirect('/index.html');
       return;
     }

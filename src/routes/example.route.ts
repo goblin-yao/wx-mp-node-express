@@ -12,6 +12,7 @@ class WebAPIRoute implements Routes {
   }
 
   private initializeRoutes() {
+    this.router.post(`${this.path}/checkLoginTemp`, this.controller.checkLoginTemp);
     this.router.post(`${this.path}/checklogin`, this.controller.checkLogin);
     this.router.post(`${this.path}/registeruser`, this.controller.registerUser);
     this.router.get(`${this.path}/index`, this.controller.exampleIndex);

@@ -24,7 +24,7 @@ class ProxyAPIController {
       }));
       response = await this.aiService.chatV2(newMessage, options);
     } catch (error) {
-      console.log('post chat request error!!');
+      console.log('post chat request error!', error);
       response.error = error;
     }
     res.status(RESPONSE_CODE.SUCCESS).json(response);

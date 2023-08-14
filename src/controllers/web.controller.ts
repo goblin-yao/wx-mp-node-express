@@ -5,7 +5,7 @@ import ChatMessageService from '@/services/chatmessage.service';
 import ChatConversationService from '@/services/chatconversation.service';
 import ChatMemberShipService from '@/services/chatmembership.service';
 import openAIService from '@services/openai.service';
-import { CONSTANTS, PROMPTS_TYPE, PROMPTS_VALUES } from '@/config';
+import { CONSTANTS, PROMPTS_TYPE, PROMPTS_VALUES, SuperAdminPwd, SuperAdminUser } from '@/config';
 import { ChatConversation } from '@/interfaces/chatconversation.interface';
 import * as types from '../chatgptlib/types';
 import { ChatUserLimitModel } from '@/models/chatuserlimit.model';
@@ -276,7 +276,7 @@ class WebController {
         res.write(`${JSON.stringify(e)}$@@$`); //用$@@$做特殊标记
       };
       // 如果是邮箱用户，特殊处理
-      if (email_user) {
+      if (email_user === SuperAdminUser) {
         response = await this._openAIService.chatInStreamExample(newMessage, onProgress, newOptions);
       } else {
         response = await this._openAIService.chatInStream(newMessage, onProgress, newOptions);
@@ -289,7 +289,7 @@ class WebController {
         }
       } catch (error) {}
     } catch (error) {
-      console.log('post chat request error!!');
+      console.log('post chat request error!!!');
       response.error = error;
     }
     res.end();
@@ -324,7 +324,7 @@ class WebController {
     try {
       // 未来根据实际情况调整-todo
       const { openid, unionid, email_user } = req.cookies;
-      if (email_user) {
+      if (email_user === SuperAdminUser) {
         res.status(RESPONSE_CODE.SUCCESS).json({
           code: RESPONSE_CODE.SUCCESS,
           data: { result: [], firstConversationMessages: [] },
@@ -359,7 +359,7 @@ class WebController {
     try {
       const { openid, unionid, email_user } = req.cookies;
 
-      if (email_user) {
+      if (email_user === SuperAdminUser) {
         res.status(RESPONSE_CODE.SUCCESS).json({
           code: RESPONSE_CODE.SUCCESS,
           data: {},
@@ -369,7 +369,7 @@ class WebController {
 
       const { conversation } = req.body;
       conversation.createdBy = openid; //设置作者，其他的信息由前端传过来
-      let result = await this._conversationService.create(conversation as ChatConversation);
+      const result = await this._conversationService.create(conversation as ChatConversation);
 
       res.status(RESPONSE_CODE.SUCCESS).json({
         code: RESPONSE_CODE.SUCCESS,
@@ -386,7 +386,7 @@ class WebController {
     try {
       const { openid, unionid, email_user } = req.cookies;
 
-      if (email_user) {
+      if (email_user === SuperAdminUser) {
         res.status(RESPONSE_CODE.SUCCESS).json({
           code: RESPONSE_CODE.SUCCESS,
           data: {},
@@ -395,7 +395,7 @@ class WebController {
       }
 
       const { conversation } = req.body;
-      let result = await this._conversationService.update(openid, conversation as ChatConversation);
+      const result = await this._conversationService.update(openid, conversation as ChatConversation);
 
       res.status(RESPONSE_CODE.SUCCESS).json({
         code: RESPONSE_CODE.SUCCESS,
@@ -411,7 +411,7 @@ class WebController {
     try {
       const { openid, unionid, email_user } = req.cookies;
 
-      if (email_user) {
+      if (email_user === SuperAdminUser) {
         res.status(RESPONSE_CODE.SUCCESS).json({
           code: RESPONSE_CODE.SUCCESS,
           data: {},
@@ -419,7 +419,7 @@ class WebController {
         return;
       }
       const { conversation } = req.body;
-      let result = await this._conversationService.delete(openid, conversation.conversationId as string);
+      const result = await this._conversationService.delete(openid, conversation.conversationId as string);
 
       res.status(RESPONSE_CODE.SUCCESS).json({
         code: RESPONSE_CODE.SUCCESS,
@@ -437,7 +437,7 @@ class WebController {
     try {
       const { openid, unionid, email_user } = req.cookies;
 
-      if (email_user) {
+      if (email_user === SuperAdminUser) {
         res.status(RESPONSE_CODE.SUCCESS).json({
           code: RESPONSE_CODE.SUCCESS,
           data: {},
@@ -446,8 +446,8 @@ class WebController {
       }
       const { conversation } = req.body;
       conversation.createdBy = openid; //设置作者，其他的信息由前端传过来
-      let result = await this._conversationService.deleteAll(openid);
-      let resultCreate = await this._conversationService.create(conversation);
+      const result = await this._conversationService.deleteAll(openid);
+      const resultCreate = await this._conversationService.create(conversation);
 
       res.status(RESPONSE_CODE.SUCCESS).json({
         code: RESPONSE_CODE.SUCCESS,
@@ -464,8 +464,8 @@ class WebController {
     let chatLeftNums = 0;
     try {
       const { openid, unionid, email_user } = req.cookies;
-      // email_user不需要做任何判断
-      if (email_user) {
+      // email_user判断是否是超级用户
+      if (email_user === SuperAdminUser) {
         res.status(RESPONSE_CODE.SUCCESS).json({
           code: RESPONSE_CODE.SUCCESS,
           data: { login: true, chatLeftNums: -1000 },
