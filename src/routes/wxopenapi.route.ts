@@ -13,6 +13,7 @@ class WXOpenAPIRoute implements Routes {
 
   private initializeRoutes() {
     this.router.get(`${this.path}/login`, this.controller.login);
+    this.router.get(`${this.path}/logout`, this.controller.logout);
     this.router.get(`${this.path}/callback`, this.controller.callback);
     this.router.get(`${this.path}/getloginuserinfo`, this.controller.getLoginUserInfo);
   }
