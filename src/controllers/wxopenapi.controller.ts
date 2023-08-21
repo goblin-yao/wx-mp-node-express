@@ -181,6 +181,17 @@ class WxOpenAPIController {
         res.status(500).send('Internal server error');
       });
   };
+
+  //注销，清除全部cookie跳转到登录页面
+  logout = async (req: Request, res: Response, next: NextFunction) => {
+    const cookies = Object.keys(req.cookies);
+    // 遍历 cookies 并清除每个 cookie
+    cookies.forEach(cookieName => {
+      res.clearCookie(cookieName);
+    });
+
+    res.redirect('/wxopenapi/login');
+  };
 }
 
 export default WxOpenAPIController;
